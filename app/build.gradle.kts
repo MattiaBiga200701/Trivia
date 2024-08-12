@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.trivia"
+    namespace = "com.example.provatrivia"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.trivia"
-        minSdk = 26
+        applicationId = "com.example.provatrivia"
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -51,6 +51,14 @@ android {
 
 dependencies {
 
+    implementation("androidx.core:core-ktx:1.10.1")
+
+    // Aggiungi manualmente queste dipendenze per Jetpack Compose e Navigation
+    implementation("androidx.compose.ui:ui:1.6.0")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha03")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.navigation:navigation-compose:2.7.2")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,7 +67,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.room.common)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
