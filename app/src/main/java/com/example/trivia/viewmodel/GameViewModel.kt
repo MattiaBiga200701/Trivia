@@ -1,0 +1,32 @@
+package com.example.trivia.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.trivia.persistence.Question
+import com.example.trivia.utils.Repository
+
+
+class GameViewModel: ViewModel() {
+
+
+    private val _questions = MutableLiveData<List<Question>>()
+    val questions: LiveData<List<Question>> get() = _questions
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
+    suspend fun loadQuestions(category: String, difficulty: String) {
+
+        val rep = Repository()
+
+        _isLoading.postValue(true)
+        val categoryID = rep.getCategoryID(category)
+        val result = rep.fetchQuestions(categoryID, difficulty)
+        _questions.postValue(result)
+        _isLoading.postValue(false)
+    }
+
+
+
+}
