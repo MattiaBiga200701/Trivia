@@ -52,6 +52,9 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
 import android.text.Html
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.RadioButton
+import androidx.compose.runtime.mutableStateMapOf
 import com.example.trivia.ui.theme.TriviaTheme
 
 
@@ -131,6 +134,7 @@ fun Homepage(navController: NavController){
         )
     }
 }
+
 
 
 @Composable
@@ -247,11 +251,17 @@ fun MenuATendina(
     }
 }
 
+data class Question(
+    val question: String,
+    val options: List<String>,
+    val correctAnswer: String
+)
 
 @Composable
 fun QuizScreen(category: String, difficulty: String) {
-    val questions = remember { mutableStateListOf<String>() }
+    val questions = remember { mutableStateListOf<Question>() }
     var isLoading by remember { mutableStateOf(true) }
+    var selectedOption = remember { mutableStateMapOf<Int, String?>() }
 
     LaunchedEffect(category, difficulty) {
         isLoading = true
@@ -277,34 +287,67 @@ fun QuizScreen(category: String, difficulty: String) {
         }
     } else {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-            questions.forEach { question ->
-                Text(text = question)
+            questions.forEachIndexed { index, question ->
+                Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                    Text(text = question.question, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+
+                    question.options.forEach { option ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .clickable {
+                                    selectedOption[index] = option
+                                },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = selectedOption[index] == option,
+                                onClick = { selectedOption[index] = option }
+                            )
+                            Text(text = option, fontSize = 16.sp)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
 
-suspend fun fetchQuestions(categoryID: String, difficulty: String): List<String> {
+
+
+suspend fun fetchQuestions(categoryID: String, difficulty: String): List<Question> {
     return withContext(Dispatchers.IO) {
         try {
             val url = "https://opentdb.com/api.php?amount=10&category=$categoryID&difficulty=$difficulty&type=multiple"
             val response = URL(url).readText()
             val json = JSONObject(response)
-            val questions = mutableListOf<String>()
+            val questions = mutableListOf<Question>()
             val results = json.getJSONArray("results")
             for (i in 0 until results.length()) {
-                val question = results.getJSONObject(i).getString("question")
-                val decodedQuestion = Html.fromHtml(question, Html.FROM_HTML_MODE_LEGACY).toString()
-                questions.add(decodedQuestion)
+                val questionObj = results.getJSONObject(i)
+                val question = Html.fromHtml(questionObj.getString("question"), Html.FROM_HTML_MODE_LEGACY).toString()
+                val correctAnswer = Html.fromHtml(questionObj.getString("correct_answer"), Html.FROM_HTML_MODE_LEGACY).toString()
+                val incorrectAnswers = questionObj.getJSONArray("incorrect_answers")
+
+                val options = mutableListOf<String>()
+                for (j in 0 until incorrectAnswers.length()) {
+                    options.add(Html.fromHtml(incorrectAnswers.getString(j), Html.FROM_HTML_MODE_LEGACY).toString())
+                }
+                options.add(correctAnswer)
+                options.shuffle()
+
+                questions.add(Question(question, options, correctAnswer))
             }
             questions
         } catch (e: Exception) {
             Log.e("FetchQuestions", "Error fetching questions", e)
-            emptyList<String>()
+            emptyList()
         }
     }
 }
+
 
 
 
