@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.trivia.screens.EndScreen
 import com.example.trivia.screens.Homepage
 import com.example.trivia.screens.PlayScreen
 import com.example.trivia.screens.QuizScreen
@@ -47,6 +48,7 @@ fun TriviaApp() {
             val difficulty = backStackEntry.arguments?.getString("difficulty")
             QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "")
         }
+        composable("end"){EndScreen(navController)}
     }
 }
 
