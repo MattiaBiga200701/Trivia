@@ -18,8 +18,9 @@ import androidx.navigation.NavController
 import com.example.trivia.viewmodel.SettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 
+
 @Composable
-fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel = viewModel() ) {
+fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel = viewModel()) {
 
     val context = LocalContext.current
 
@@ -27,10 +28,13 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel = v
     val darkThemeEnabled by viewModel.themeState.observeAsState(initial = false)
 
 
+
     val soundEnabled by viewModel.soundState.observeAsState(initial = false)
 
 
     val notificationsEnabled by viewModel.notificationsState.observeAsState(initial = false)
+
+    print(darkThemeEnabled)
 
     Column(
         modifier = Modifier
