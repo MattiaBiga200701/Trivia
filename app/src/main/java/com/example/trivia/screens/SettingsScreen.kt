@@ -110,7 +110,7 @@ fun OptionsScreen(navController: NavController) {
 fun toastMessage(message: String, context: Context, check: Boolean){
     Toast.makeText(
         context,
-        message + if (check) "Enabled" else "Disabled",
+        message + " " + if (check) "Enabled" else "Disabled",
         Toast.LENGTH_SHORT
     ).show()
 }
