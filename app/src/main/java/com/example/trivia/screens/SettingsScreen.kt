@@ -1,5 +1,6 @@
 package com.example.trivia.screens
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -52,11 +53,7 @@ fun OptionsScreen(navController: NavController) {
                 checked = darkThemeEnabled,
                 onCheckedChange = { isChecked ->
                     darkThemeEnabled = isChecked
-                    Toast.makeText(
-                        context,
-                        "Dark Theme ${if (isChecked) "Enabled" else "Disabled"}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toastMessage(message = "Dark Theme", context = context , check = isChecked )
                 }
             )
         }
@@ -74,11 +71,7 @@ fun OptionsScreen(navController: NavController) {
                 checked = soundEnabled,
                 onCheckedChange = { isChecked ->
                     soundEnabled = isChecked
-                    Toast.makeText(
-                        context,
-                        "Sound ${if (isChecked) "Enabled" else "Disabled"}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toastMessage(message = "Sound", context = context , check = isChecked )
                 }
             )
         }
@@ -96,11 +89,7 @@ fun OptionsScreen(navController: NavController) {
                 checked = notificationsEnabled,
                 onCheckedChange = { isChecked ->
                     notificationsEnabled = isChecked
-                    Toast.makeText(
-                        context,
-                        "Notifications ${if (isChecked) "Enabled" else "Disabled"}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toastMessage(message = "Notifications", context = context , check = isChecked )
                 }
             )
         }
@@ -115,4 +104,13 @@ fun OptionsScreen(navController: NavController) {
             Text(text = "Save & Return to Main Menu")
         }
     }
+}
+
+
+fun toastMessage(message: String, context: Context, check: Boolean){
+    Toast.makeText(
+        context,
+        message + if (check) "Enabled" else "Disabled",
+        Toast.LENGTH_SHORT
+    ).show()
 }
