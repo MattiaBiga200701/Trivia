@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -31,19 +32,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun QuizScreen(
-               navController: NavController,
-               category: String,
-               difficulty: String,
-               viewModel: GameViewModel = viewModel()
+    navController: NavController,
+    category: String,
+    difficulty: String,
+    viewModel: GameViewModel = viewModel()
 ) {
     val questions by viewModel.questions.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
     val selectedOption = remember { mutableStateMapOf<Int, String?>() }
 
     LaunchedEffect(category, difficulty) {
-
         viewModel.loadQuestions(category, difficulty)
-
     }
 
     if (isLoading) {
@@ -61,10 +60,13 @@ fun QuizScreen(
             Text(text = "No questions available", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
     } else {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)) {
-            questions.forEachIndexed { index, question ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            items(questions.size) { index ->
+                val question = questions[index]
                 Column(modifier = Modifier.padding(vertical = 8.dp)) {
                     Text(text = question.question, fontSize = 18.sp, fontWeight = FontWeight.Bold)
 
