@@ -18,6 +18,8 @@ import com.example.trivia.screens.OptionsScreen
 import com.example.trivia.screens.PlayScreen
 import com.example.trivia.screens.QuizScreen
 import com.example.trivia.ui.theme.TriviaTheme
+import com.example.trivia.viewmodel.SettingsViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -40,10 +42,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TriviaApp() {
     val navController = rememberNavController()
+    val settingsViewModel: SettingsViewModel = viewModel()
     NavHost(navController = navController, startDestination = "homepage") {
         composable("homepage") { Homepage(navController) }
         composable("play") { PlayScreen(navController) }
-        composable("options"){OptionsScreen(navController)}
+        composable("options"){OptionsScreen(navController, settingsViewModel)}
         composable("quiz/{category}/{difficulty}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")
             val difficulty = backStackEntry.arguments?.getString("difficulty")

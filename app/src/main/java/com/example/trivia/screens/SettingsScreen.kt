@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.viewmodel.SettingsViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 
 @Composable
-fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel = viewModel()) {
+fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
 
     val context = LocalContext.current
 
