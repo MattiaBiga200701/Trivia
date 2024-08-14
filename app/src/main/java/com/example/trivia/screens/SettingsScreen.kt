@@ -34,7 +34,6 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
 
     val notificationsEnabled by viewModel.notificationsState.observeAsState(initial = false)
 
-    print("DIO CANEEEEEEEEE " + darkThemeEnabled)
 
     Column(
         modifier = Modifier
