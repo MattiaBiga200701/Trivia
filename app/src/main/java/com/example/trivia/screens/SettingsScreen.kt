@@ -7,6 +7,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,20 +15,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.trivia.viewmodel.SettingsViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun OptionsScreen(navController: NavController) {
+fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel = viewModel() ) {
 
     val context = LocalContext.current
 
 
-    var darkThemeEnabled by remember { mutableStateOf(false) }
+    val darkThemeEnabled by viewModel.themeState.observeAsState(initial = false)
 
 
-    var soundEnabled by remember { mutableStateOf(false) }
+    val soundEnabled by viewModel.soundState.observeAsState(initial = false)
 
 
-    var notificationsEnabled by remember { mutableStateOf(false) }
+    val notificationsEnabled by viewModel.notificationsState.observeAsState(initial = false)
 
     Column(
         modifier = Modifier
@@ -52,7 +55,7 @@ fun OptionsScreen(navController: NavController) {
             Switch(
                 checked = darkThemeEnabled,
                 onCheckedChange = { isChecked ->
-                    darkThemeEnabled = isChecked
+                    viewModel.setThemeState(isChecked)
                     toastMessage(message = "Dark Theme", context = context , check = isChecked )
                 }
             )
@@ -70,7 +73,7 @@ fun OptionsScreen(navController: NavController) {
             Switch(
                 checked = soundEnabled,
                 onCheckedChange = { isChecked ->
-                    soundEnabled = isChecked
+                    viewModel.setSoundState(isChecked)
                     toastMessage(message = "Sound", context = context , check = isChecked )
                 }
             )
@@ -88,7 +91,7 @@ fun OptionsScreen(navController: NavController) {
             Switch(
                 checked = notificationsEnabled,
                 onCheckedChange = { isChecked ->
-                    notificationsEnabled = isChecked
+                    viewModel.setNotificationsState(isChecked)
                     toastMessage(message = "Notifications", context = context , check = isChecked )
                 }
             )
