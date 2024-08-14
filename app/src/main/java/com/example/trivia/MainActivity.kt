@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.trivia.screens.EndScreen
 import com.example.trivia.screens.Homepage
+import com.example.trivia.screens.OptionsScreen
 import com.example.trivia.screens.PlayScreen
 import com.example.trivia.screens.QuizScreen
 import com.example.trivia.ui.theme.TriviaTheme
@@ -42,7 +43,7 @@ fun TriviaApp() {
     NavHost(navController = navController, startDestination = "homepage") {
         composable("homepage") { Homepage(navController) }
         composable("play") { PlayScreen(navController) }
-        //composable("options"){OptionsScreen()}
+        composable("options"){OptionsScreen(navController)}
         composable("quiz/{category}/{difficulty}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")
             val difficulty = backStackEntry.arguments?.getString("difficulty")

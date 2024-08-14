@@ -51,7 +51,7 @@ fun Homepage(navController: NavController){
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .clickable {
-                    //navController.navigate("options")
+                    navController.navigate("options")
 
                 }
         )
