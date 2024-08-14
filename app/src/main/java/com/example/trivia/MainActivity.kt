@@ -41,8 +41,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TriviaApp() {
+
     val navController = rememberNavController()
     val settingsViewModel: SettingsViewModel = viewModel()
+
     NavHost(navController = navController, startDestination = "homepage") {
         composable("homepage") { Homepage(navController) }
         composable("play") { PlayScreen(navController) }
