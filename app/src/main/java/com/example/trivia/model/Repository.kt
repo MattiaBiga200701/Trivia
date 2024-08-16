@@ -33,6 +33,7 @@ class Repository {
 
                     newQuestions.add(Question(difficulty, categoryID, question, options, correctAnswer))
                 }
+                Log.d("GameScreen", "Errore non ancora generato  " + newQuestions[0])
                  this.questions = newQuestions
             } catch (e: Exception) {
                 Log.e("FetchQuestions", "Error fetching questions")

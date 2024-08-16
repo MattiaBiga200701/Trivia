@@ -1,6 +1,7 @@
 package com.example.trivia.viewmodel
 
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,9 +29,6 @@ class GameViewModel: ViewModel() {
     }
 
     fun loadQuestions(category: String, difficulty: String) {
-
-
-
         _isLoading.postValue(true)
         val categoryID = rep.getCategoryID(category)
         rep.fetchQuestions(categoryID, difficulty)
