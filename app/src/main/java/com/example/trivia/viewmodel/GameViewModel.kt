@@ -3,8 +3,8 @@ package com.example.trivia.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.trivia.persistence.Question
-import com.example.trivia.utils.Repository
+import com.example.trivia.model.entities.Question
+import com.example.trivia.model.Repository
 
 
 class GameViewModel: ViewModel() {

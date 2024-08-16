@@ -1,4 +1,4 @@
-package com.example.trivia.persistence
+package com.example.trivia.model.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
