@@ -54,7 +54,7 @@ fun TriviaApp() {
         composable("quiz/{category}/{difficulty}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")
             val difficulty = backStackEntry.arguments?.getString("difficulty")
-            QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "")
+            QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "", gameViewModel)
         }
         composable("end") { EndScreen(navController = navController, gameViewModel) }
     }

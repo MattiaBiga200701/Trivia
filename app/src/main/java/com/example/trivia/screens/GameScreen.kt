@@ -31,14 +31,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 import com.example.trivia.viewmodel.GameViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
+
 
 @Composable
 fun QuizScreen(
     navController: NavController,
     category: String,
     difficulty: String,
-    viewModel: GameViewModel = viewModel()
+    viewModel: GameViewModel
 ) {
     val questions by viewModel.questions.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
