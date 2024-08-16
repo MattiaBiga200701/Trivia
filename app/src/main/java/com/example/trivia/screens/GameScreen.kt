@@ -45,6 +45,7 @@ fun QuizScreen(
     val isLoading by viewModel.isLoading.observeAsState(true)
     val selectedOption = remember { mutableStateMapOf<Int, String?>() }
 
+
     LaunchedEffect(category, difficulty) {
         viewModel.loadQuestions(category, difficulty)
     }
@@ -107,12 +108,14 @@ fun QuizScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-
-                            navController.navigate("end")
+                            viewModel.checkAnswers(selectedOption)
+                            val score = viewModel.score.value ?: 0
+                            navController.navigate("end/$score")
                         }
                         .padding(vertical = 16.dp),
                     textAlign = TextAlign.Center
                 )
+
             }
         }
     }

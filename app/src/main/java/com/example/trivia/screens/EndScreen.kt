@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun EndScreen(navController: NavController) {
+fun EndScreen(navController: NavController, score: Int) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -27,11 +27,13 @@ fun EndScreen(navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
             Text(text = "Congratulations", fontSize = 32.sp, fontWeight = FontWeight.Bold)
 
-            Spacer(modifier = Modifier.height(64.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
+            Text(text = "Your total score is $score!", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+
+            Spacer(modifier = Modifier.height(64.dp))
 
             Text(
                 text = "Main Menu",
@@ -43,7 +45,6 @@ fun EndScreen(navController: NavController) {
                             popUpTo("homepage") { inclusive = true }
                             launchSingleTop = true
                         }
-
                     }
                     .padding(top = 16.dp),
                 fontWeight = FontWeight.Bold
