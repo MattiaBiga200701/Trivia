@@ -1,4 +1,4 @@
-package com.example.trivia.persistence
+package com.example.trivia.model.dao
 
 import androidx.room.Dao
 

@@ -1,8 +1,8 @@
-package com.example.trivia.utils
+package com.example.trivia.model
 
 import android.text.Html
 import android.util.Log
-import com.example.trivia.persistence.Question
+import com.example.trivia.model.entities.Question
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
