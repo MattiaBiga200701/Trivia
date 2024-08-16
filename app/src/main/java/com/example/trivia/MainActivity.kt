@@ -20,6 +20,7 @@ import com.example.trivia.screens.QuizScreen
 import com.example.trivia.ui.theme.TriviaTheme
 import com.example.trivia.viewmodel.SettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.trivia.viewmodel.GameViewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -44,6 +45,7 @@ fun TriviaApp() {
 
     val navController = rememberNavController()
     val settingsViewModel: SettingsViewModel = viewModel()
+    val gameViewModel: GameViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = "homepage") {
         composable("homepage") { Homepage(navController) }
@@ -54,10 +56,7 @@ fun TriviaApp() {
             val difficulty = backStackEntry.arguments?.getString("difficulty")
             QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "")
         }
-        composable("end/{score}") { backStackEntry ->
-            val score = backStackEntry.arguments?.getString("score")?.toInt() ?: 0
-            EndScreen(navController = navController, score = score)
-        }
+        composable("end") { EndScreen(navController = navController, gameViewModel) }
     }
 }
 

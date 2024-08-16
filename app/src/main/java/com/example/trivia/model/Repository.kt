@@ -3,20 +3,20 @@ package com.example.trivia.model
 import android.text.Html
 import android.util.Log
 import com.example.trivia.model.entities.Question
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
 
 class Repository {
 
-    suspend fun fetchQuestions(categoryID: String, difficulty: String): List<Question> {
-        return withContext(Dispatchers.IO) {
+    private var questions: List<Question> = emptyList()
+
+    fun fetchQuestions(categoryID: String, difficulty: String){
+
             try {
                 val url = "https://opentdb.com/api.php?amount=10&category=$categoryID&difficulty=$difficulty&type=multiple"
                 val response = URL(url).readText()
                 val json = JSONObject(response)
-                val questions = mutableListOf<Question>()
+                val newQuestions = mutableListOf<Question>()
                 val results = json.getJSONArray("results")
                 for (i in 0 until results.length()) {
                     val questionObj = results.getJSONObject(i)
@@ -31,14 +31,13 @@ class Repository {
                     options.add(correctAnswer)
                     options.shuffle()
 
-                    questions.add(Question(difficulty, categoryID, question, options, correctAnswer))
+                    newQuestions.add(Question(difficulty, categoryID, question, options, correctAnswer))
                 }
-                questions
+                 this.questions = newQuestions
             } catch (e: Exception) {
                 Log.e("FetchQuestions", "Error fetching questions")
-                emptyList()
+
             }
-        }
     }
 
 
@@ -72,5 +71,9 @@ class Repository {
             "Science: Gadgets" -> "30"
             else -> "9" // Default to "General Knowledge"
         }
+    }
+
+    fun getQuestions(): List<Question>{
+        return this.questions
     }
 }
