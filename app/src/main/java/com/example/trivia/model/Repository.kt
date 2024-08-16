@@ -3,6 +3,8 @@ package com.example.trivia.model
 import android.text.Html
 import android.util.Log
 import com.example.trivia.model.entities.Question
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
 
@@ -10,32 +12,56 @@ class Repository {
 
     private var questions: List<Question> = emptyList()
 
-    fun fetchQuestions(categoryID: String, difficulty: String){
+    suspend fun fetchQuestions(categoryID: String, difficulty: String){
 
             try {
-                val url = "https://opentdb.com/api.php?amount=10&category=$categoryID&difficulty=$difficulty&type=multiple"
-                val response = URL(url).readText()
-                val json = JSONObject(response)
-                val newQuestions = mutableListOf<Question>()
-                val results = json.getJSONArray("results")
-                for (i in 0 until results.length()) {
-                    val questionObj = results.getJSONObject(i)
-                    val question = Html.fromHtml(questionObj.getString("question"), Html.FROM_HTML_MODE_LEGACY).toString()
-                    val correctAnswer = Html.fromHtml(questionObj.getString("correct_answer"), Html.FROM_HTML_MODE_LEGACY).toString()
-                    val incorrectAnswers = questionObj.getJSONArray("incorrect_answers")
+                val newQuestions = withContext(Dispatchers.IO) {
+                    val url =
+                        "https://opentdb.com/api.php?amount=10&category=$categoryID&difficulty=$difficulty&type=multiple"
+                    val response = URL(url).readText()
+                    val json = JSONObject(response)
+                    val fetchedQuestions = mutableListOf<Question>()
+                    val results = json.getJSONArray("results")
+                    for (i in 0 until results.length()) {
+                        val questionObj = results.getJSONObject(i)
+                        val question = Html.fromHtml(
+                            questionObj.getString("question"),
+                            Html.FROM_HTML_MODE_LEGACY
+                        ).toString()
+                        val correctAnswer = Html.fromHtml(
+                            questionObj.getString("correct_answer"),
+                            Html.FROM_HTML_MODE_LEGACY
+                        ).toString()
+                        val incorrectAnswers = questionObj.getJSONArray("incorrect_answers")
 
-                    val options = mutableListOf<String>()
-                    for (j in 0 until incorrectAnswers.length()) {
-                        options.add(Html.fromHtml(incorrectAnswers.getString(j), Html.FROM_HTML_MODE_LEGACY).toString())
+                        val options = mutableListOf<String>()
+                        for (j in 0 until incorrectAnswers.length()) {
+                            options.add(
+                                Html.fromHtml(
+                                    incorrectAnswers.getString(j),
+                                    Html.FROM_HTML_MODE_LEGACY
+                                ).toString()
+                            )
+                        }
+                        options.add(correctAnswer)
+                        options.shuffle()
+
+                        fetchedQuestions.add(
+                            Question(
+                                difficulty,
+                                categoryID,
+                                question,
+                                options,
+                                correctAnswer
+                            )
+                        )
                     }
-                    options.add(correctAnswer)
-                    options.shuffle()
-
-                    newQuestions.add(Question(difficulty, categoryID, question, options, correctAnswer))
+                    fetchedQuestions
                 }
                 Log.d("GameScreen", "Errore non ancora generato  " + newQuestions[0])
-                 this.questions = newQuestions
+                this.questions = newQuestions
             } catch (e: Exception) {
+                e.printStackTrace()
                 Log.e("FetchQuestions", "Error fetching questions")
 
             }

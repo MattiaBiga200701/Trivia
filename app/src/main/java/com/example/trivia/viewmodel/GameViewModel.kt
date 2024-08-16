@@ -28,7 +28,7 @@ class GameViewModel: ViewModel() {
         _score.value = 0
     }
 
-    fun loadQuestions(category: String, difficulty: String) {
+    suspend fun loadQuestions(category: String, difficulty: String) {
         _isLoading.postValue(true)
         val categoryID = rep.getCategoryID(category)
         rep.fetchQuestions(categoryID, difficulty)
