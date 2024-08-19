@@ -58,7 +58,6 @@ class Repository {
                     }
                     fetchedQuestions
                 }
-                Log.d("GameScreen", "Errore non ancora generato  " + newQuestions[0])
                 this.questions = newQuestions
             } catch (e: Exception) {
                 e.printStackTrace()

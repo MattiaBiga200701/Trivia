@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import com.example.trivia.R
 
 val MyCustomFont = FontFamily(
-    Font(R.font.corsivo, FontWeight.Normal)
+    Font(R.font.montserrat, FontWeight.Normal)
 )
 
 val MyTypography = Typography(

@@ -53,17 +53,18 @@ fun Homepage(navController: NavController) {
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(200.dp)
-                    .padding(bottom = 8.dp)
+                    .size(210.dp)
+
             )
 
             Text(
-                text = "train your brain",
-                fontSize = 36.sp,
+                text = "Train your brain",
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFFF231AA),
                 fontFamily = MyCustomFont,
                 modifier = Modifier.padding(bottom = 24.dp)
+
             )
 
             Button(
