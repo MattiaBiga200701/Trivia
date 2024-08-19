@@ -24,12 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.R
-import com.example.trivia.ui.theme.MyCustomFont
+
 
 @Composable
 fun Homepage(navController: NavController) {
@@ -54,16 +54,6 @@ fun Homepage(navController: NavController) {
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .size(210.dp)
-
-            )
-
-            Text(
-                text = "Train your brain",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFF231AA),
-                fontFamily = MyCustomFont,
-                modifier = Modifier.padding(bottom = 24.dp)
 
             )
 
