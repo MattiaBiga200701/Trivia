@@ -149,6 +149,7 @@ fun QuizScreen(
                                     Text(
                                         text = option,
                                         fontSize = 16.sp,
+                                        fontWeight = FontWeight.SemiBold,
                                         color = Color.Black
                                     )
                                 }
