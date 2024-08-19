@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -42,26 +43,32 @@ fun Homepage(navController: NavController) {
                 )
             )
             .padding(16.dp),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
 
+            Spacer(modifier = Modifier.height(120.dp))
+
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .size(210.dp)
-
+                    .padding(bottom = 32.dp)
             )
+
+
+            Spacer(modifier = Modifier.height(24.dp))
 
             Button(
                 onClick = { navController.navigate("play") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF23FFCD)),
-                modifier = Modifier.padding(vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp)
+                modifier = Modifier
+                    .padding(vertical = 8.dp),
+                    shape = RoundedCornerShape(16.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
@@ -72,12 +79,12 @@ fun Homepage(navController: NavController) {
                 Text(text = "Play", color = Color.White, fontSize = 24.sp)
             }
 
-
             Button(
                 onClick = { navController.navigate("options") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
-                modifier = Modifier.padding(vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp)
+                modifier = Modifier
+                    .padding(vertical = 8.dp),
+                    shape = RoundedCornerShape(16.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
