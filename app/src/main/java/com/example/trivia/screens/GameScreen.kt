@@ -103,6 +103,7 @@ fun QuizScreen(
                         text = "Difficulty: $difficulty",
                         fontSize = 20.sp,
                         color = Color.White,
+                        fontWeight = FontWeight.SemiBold,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
                 }
