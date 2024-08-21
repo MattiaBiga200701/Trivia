@@ -1,5 +1,6 @@
 package com.example.trivia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -34,10 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.viewmodel.GameViewModel
 
 
@@ -51,6 +54,7 @@ fun QuizScreen(
     val questions by viewModel.questions.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
     val selectedOption = remember { mutableStateMapOf<Int, String?>() }
+    val context = LocalContext.current
 
     LaunchedEffect(category, difficulty) {
         viewModel.loadQuestions(category, difficulty)
@@ -163,8 +167,15 @@ fun QuizScreen(
                     Spacer(modifier = Modifier.height(32.dp))
                     Button(
                         onClick = {
-                            viewModel.setScore(selectedOption)
-                            navController.navigate("end")
+                            try {
+                                if (questions.size != selectedOption.size) {
+                                    throw EmptyInputException("You must answer all questions")
+                                }
+                                viewModel.setScore(selectedOption)
+                                navController.navigate("end")
+                            }catch(e: EmptyInputException){
+                                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
                         modifier = Modifier
