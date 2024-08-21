@@ -54,6 +54,7 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
         in 7..8 -> "Great job! You've scored really well!"
         in 5..6 -> "Well done! Keep improving!"
         else -> "You can do better!"
+
     }
 
 
