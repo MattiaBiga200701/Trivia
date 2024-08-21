@@ -53,7 +53,7 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
         in 9..10 -> "Incredible! You're a true champion!"
         in 7..8 -> "Great job! You've scored really well!"
         in 5..6 -> "Well done! Keep improving!"
-        else -> "Don't get discouraged, you can do better!"
+        else -> "You can do better!"
     }
 
 

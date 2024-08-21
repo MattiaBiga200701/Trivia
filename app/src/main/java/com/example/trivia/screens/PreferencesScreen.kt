@@ -1,5 +1,8 @@
+
+
 package com.example.trivia.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,10 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.ui.theme.MyCustomFont
 
 
@@ -54,6 +59,8 @@ fun PlayScreen(navController: NavController) {
         "Entertainment: Japanese Anime & Manga", "Science: Gadgets"
     )
     val difficulties = listOf("easy", "medium", "hard")
+    val context = LocalContext.current
+
 
     Box(
         modifier = Modifier
@@ -125,7 +132,22 @@ fun PlayScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
-                onClick = { navController.navigate("quiz/${selectedCategory}/${selectedDifficulty}") },
+
+                onClick = {
+
+                    try {
+
+                        if (selectedCategory.isEmpty()) {
+                            throw EmptyInputException("Select a Category First")
+                        } else if (selectedDifficulty.isEmpty()) {
+                            throw EmptyInputException("Select a Difficulty First")
+                        }
+                        navController.navigate("quiz/${selectedCategory}/${selectedDifficulty}")
+
+                    }catch(e: EmptyInputException){
+                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                    }
+                          },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
