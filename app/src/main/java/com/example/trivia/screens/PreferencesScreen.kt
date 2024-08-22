@@ -42,6 +42,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.ui.theme.MyCustomFont
+import com.example.trivia.ui.theme.bigSpace
+import com.example.trivia.ui.theme.cornerRounding
+import com.example.trivia.ui.theme.fontSize
+import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.mediumSpace
+import com.example.trivia.ui.theme.smallPadding
+import com.example.trivia.ui.theme.smallSpace
 
 
 @Composable
@@ -70,31 +77,31 @@ fun PlayScreen(navController: NavController) {
                     colors = listOf(Color(0xFF000000), Color(0xFF23FFCD))
                 )
             )
-            .padding(16.dp),
+            .padding(mediumPadding),
         contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(mediumPadding),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
             Text(
                 text = "Select Category",
-                fontSize = 28.sp,
+                fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 fontFamily = MyCustomFont,
                 color = Color.White,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = mediumPadding)
             )
 
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .padding(vertical = smallPadding),
+                shape = RoundedCornerShape(cornerRounding),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 MenuATendina(
@@ -104,22 +111,22 @@ fun PlayScreen(navController: NavController) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(mediumSpace))
 
             Text(
                 text = "Select Difficulty",
-                fontSize = 28.sp,
+                fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 fontFamily = MyCustomFont,
                 color = Color.White,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = mediumPadding)
             )
 
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .padding(vertical = smallPadding),
+                shape = RoundedCornerShape(cornerRounding),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 MenuATendina(
@@ -129,7 +136,7 @@ fun PlayScreen(navController: NavController) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(bigSpace))
 
             Button(
 
@@ -149,10 +156,10 @@ fun PlayScreen(navController: NavController) {
                     }
                           },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(mediumPadding)
                     .height(56.dp)
             ) {
                 Icon(
@@ -160,8 +167,8 @@ fun PlayScreen(navController: NavController) {
                     contentDescription = "Start Quiz",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Start Quiz", color = Color.White, fontSize = 24.sp)
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(text = "Start Quiz", color = Color.White, fontSize = fontSize)
             }
         }
     }
@@ -176,14 +183,14 @@ fun MenuATendina(
     var expanded by remember { mutableStateOf(false) }
     var opzioneSelezionata by remember { mutableStateOf(selectedOption) }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(mediumPadding)) {
 
         Text(
             text = opzioneSelezionata.ifEmpty { "Select an option" },
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = true }
-                .padding(16.dp),
+                .padding(mediumPadding),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.primary

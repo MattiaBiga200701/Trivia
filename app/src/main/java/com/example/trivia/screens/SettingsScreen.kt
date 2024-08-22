@@ -15,6 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.trivia.ui.theme.bigFontSize
+import com.example.trivia.ui.theme.bigSpace
+import com.example.trivia.ui.theme.fontSize
+import com.example.trivia.ui.theme.mediumFontSize
+import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.viewmodel.SettingsViewModel
 
 
@@ -38,15 +43,15 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(mediumPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(bigSpace))
 
-        Text(text = "Settings", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        Text(text = "Settings", fontSize = mediumFontSize, fontWeight = FontWeight.Bold)
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(bigSpace))
 
 
         Row(
@@ -54,7 +59,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Dark Theme", fontSize = 18.sp)
+            Text(text = "Dark Theme", fontSize = fontSize)
             Switch(
                 checked = darkThemeEnabled,
                 onCheckedChange = { isChecked ->
@@ -72,7 +77,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Enable Sound", fontSize = 18.sp)
+            Text(text = "Enable Sound", fontSize = fontSize)
             Switch(
                 checked = soundEnabled,
                 onCheckedChange = { isChecked ->
@@ -90,7 +95,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "Enable Notifications", fontSize = 18.sp)
+            Text(text = "Enable Notifications", fontSize = fontSize)
             Switch(
                 checked = notificationsEnabled,
                 onCheckedChange = { isChecked ->
@@ -100,7 +105,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             )
         }
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(bigSpace))
 
 
         Button(

@@ -42,6 +42,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.R
+import com.example.trivia.ui.theme.bigFontSize
+import com.example.trivia.ui.theme.bigSpace
+import com.example.trivia.ui.theme.cornerRounding
+import com.example.trivia.ui.theme.fontSize
+import com.example.trivia.ui.theme.medalSize
+import com.example.trivia.ui.theme.mediumFontSize
+import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.viewmodel.GameViewModel
 
 @Composable
@@ -94,29 +102,29 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
 
             Text(
                 text = message,
-                fontSize = 32.sp,
+                fontSize = mediumFontSize,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 color = Color.White
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(bigSpace))
 
             Image(
                 painter = painterResource(id = medalResource),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(medalSize)
                     .graphicsLayer(rotationY = rotationY.value)
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(bigSpace))
 
-            Text(text = "Your score:", fontSize = 32.sp, fontWeight = FontWeight.Bold,  color = Color.White)
+            Text(text = "Your score:", fontSize = mediumFontSize, fontWeight = FontWeight.Bold,  color = Color.White)
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(smallSpace))
 
-            Text(text = "$score/10", fontSize = 32.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(text = "$score/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
 
             Spacer(modifier = Modifier.height(64.dp))
 
@@ -128,10 +136,10 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
                     }
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(mediumPadding)
                     .height(56.dp)
             ) {
                 Icon(
@@ -139,11 +147,11 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
                     contentDescription = "Main Menu",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(smallSpace))
                 Text(
                     text = "Main Menu",
                     color = Color.White,
-                    fontSize = 24.sp
+                    fontSize = fontSize
                 )
             }
         }

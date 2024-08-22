@@ -30,6 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.R
+import com.example.trivia.ui.theme.bigPadding
+import com.example.trivia.ui.theme.cornerRounding
+import com.example.trivia.ui.theme.fontSize
+import com.example.trivia.ui.theme.logoSize
+import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.mediumSpace
+import com.example.trivia.ui.theme.smallPadding
+import com.example.trivia.ui.theme.smallSpace
 
 
 @Composable
@@ -42,7 +50,7 @@ fun Homepage(navController: NavController) {
                     colors = listOf(Color(0xFF000000), Color(0xFF23FFCD))
                 )
             )
-            .padding(16.dp),
+            .padding(mediumPadding),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -56,43 +64,43 @@ fun Homepage(navController: NavController) {
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
                 modifier = Modifier
-                    .size(210.dp)
-                    .padding(bottom = 32.dp)
+                    .size(logoSize)
+                    .padding(bottom = bigPadding)
             )
 
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(mediumSpace))
 
             Button(
                 onClick = { navController.navigate("play") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF23FFCD)),
                 modifier = Modifier
-                    .padding(vertical = 8.dp),
-                    shape = RoundedCornerShape(16.dp)
+                    .padding(vertical = smallPadding),
+                    shape = RoundedCornerShape(cornerRounding)
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
                     contentDescription = "Play",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Play", color = Color.White, fontSize = 24.sp)
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(text = "Play", color = Color.White, fontSize = fontSize)
             }
 
             Button(
                 onClick = { navController.navigate("options") },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
                 modifier = Modifier
-                    .padding(vertical = 8.dp),
-                    shape = RoundedCornerShape(16.dp)
+                    .padding(vertical = smallPadding),
+                    shape = RoundedCornerShape(cornerRounding)
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = "Options",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Options", color = Color.White, fontSize = 24.sp)
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(text = "Options", color = Color.White, fontSize = fontSize)
             }
         }
     }

@@ -41,6 +41,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.exceptions.EmptyInputException
+import com.example.trivia.ui.theme.bigSpace
+import com.example.trivia.ui.theme.cornerRounding
+import com.example.trivia.ui.theme.fontSize
+import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.smallFontSize
+import com.example.trivia.ui.theme.smallPadding
+import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.viewmodel.GameViewModel
 
 
@@ -68,7 +75,7 @@ fun QuizScreen(
                     colors = listOf(Color(0xFF000000), Color(0xFF23FFCD))
                 )
             )
-            .padding(16.dp)
+            .padding(mediumPadding)
     ) {
         if (isLoading) {
             Box(
@@ -84,7 +91,7 @@ fun QuizScreen(
             ) {
                 Text(
                     text = "No questions available",
-                    fontSize = 20.sp,
+                    fontSize = fontSize,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
@@ -93,22 +100,22 @@ fun QuizScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(mediumPadding)
             ) {
                 item {
                     Text(
                         text = "Category: $category",
-                        fontSize = 24.sp,
+                        fontSize = fontSize,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = smallPadding)
                     )
                     Text(
                         text = "Difficulty: $difficulty",
-                        fontSize = 20.sp,
+                        fontSize = fontSize,
                         color = Color.White,
                         fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(bottom = 16.dp)
+                        modifier = Modifier.padding(bottom = mediumPadding)
                     )
                 }
 
@@ -117,26 +124,26 @@ fun QuizScreen(
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        shape = RoundedCornerShape(16.dp),
+                            .padding(vertical = smallPadding),
+                        shape = RoundedCornerShape(cornerRounding),
                         colors = CardDefaults.cardColors(containerColor = Color.White),
                         elevation = CardDefaults.cardElevation(4.dp)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
+                        Column(modifier = Modifier.padding(mediumPadding)) {
                             Text(
                                 text = question.question,
-                                fontSize = 18.sp,
+                                fontSize = fontSize,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black
                             )
 
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(smallSpace))
 
                             question.options.forEach { option ->
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(vertical = 4.dp)
+                                        .padding(vertical = smallPadding)
                                         .clickable {
                                             selectedOption[index] = option
                                         },
@@ -153,7 +160,7 @@ fun QuizScreen(
                                     )
                                     Text(
                                         text = option,
-                                        fontSize = 16.sp,
+                                        fontSize = smallFontSize,
                                         fontWeight = FontWeight.SemiBold,
                                         color = Color.Black
                                     )
@@ -164,7 +171,7 @@ fun QuizScreen(
                 }
 
                 item {
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Spacer(modifier = Modifier.height(bigSpace))
                     Button(
                         onClick = {
                             try {
@@ -180,16 +187,16 @@ fun QuizScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        shape = RoundedCornerShape(16.dp)
+                            .padding(vertical = smallPadding),
+                        shape = RoundedCornerShape(cornerRounding)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "End Quiz",
                             tint = Color.White
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "End Quiz", color = Color.White, fontSize = 20.sp)
+                        Spacer(modifier = Modifier.width(smallSpace))
+                        Text(text = "End Quiz", color = Color.White, fontSize = fontSize)
                     }
                 }
             }
