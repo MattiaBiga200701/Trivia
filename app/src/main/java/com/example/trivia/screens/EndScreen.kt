@@ -1,8 +1,6 @@
 package com.example.trivia.screens
 
 
-import android.content.Context
-import android.media.MediaPlayer
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -28,6 +26,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -54,11 +53,14 @@ import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.viewmodel.GameViewModel
+import com.example.trivia.viewmodel.SettingsViewModel
 
 @Composable
-fun EndScreen(navController: NavController, viewModel: GameViewModel) {
+fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settingsViewModel: SettingsViewModel) {
+
     val context = LocalContext.current
-    val score by viewModel.score.observeAsState(initial = 0)
+    val score by gameViewModel.score.observeAsState(initial = 0)
+    val isSoundEnable by settingsViewModel.soundState.observeAsState(initial = false)
 
     val message = when (score) {
         in 9..10 -> "Incredible! You're a true champion!"
@@ -76,6 +78,13 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
         else -> R.drawable.poop
     }
 
+    val soundResId = when (score) {
+        in 9..10 -> R.raw.victory_sound
+        in 7..8 -> R.raw.cheer_sound
+        in 5..6 -> R.raw.clap_sound
+        else -> R.raw.fail_sound
+    }
+
     val rotationY = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
@@ -88,13 +97,18 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
         )
     }
 
-    val soundResId = when (score) {
-        in 9..10 -> R.raw.victory_sound
-        in 7..8 -> R.raw.cheer_sound
-        in 5..6 -> R.raw.clap_sound
-        else -> R.raw.fail_sound
+    if(isSoundEnable) {
+        LaunchedEffect(Unit) {
+            gameViewModel.playSound(context, soundResId)
+        }
+
+        DisposableEffect(Unit) {
+            onDispose {
+                gameViewModel.stopSound()  // Ferma e rilascia il MediaPlayer quando si esce dalla schermata
+            }
+        }
     }
-    playSound(context, soundResId)
+
 
     Box(
         modifier = Modifier
@@ -167,13 +181,6 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
             }
         }
     }
+
 }
 
-
-fun playSound(context: Context, soundResId: Int) {
-    val mediaPlayer = MediaPlayer.create(context, soundResId)
-    mediaPlayer.setOnCompletionListener {
-        it.release()
-    }
-    mediaPlayer.start()
-}

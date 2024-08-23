@@ -2,6 +2,8 @@ package com.example.trivia.viewmodel
 
 
 
+import android.content.Context
+import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +26,8 @@ class GameViewModel: ViewModel() {
 
     private val rep = Repository()
 
+    private var mediaPlayer: MediaPlayer? = null
+
     init {
         _score.value = 0
     }
@@ -41,6 +45,28 @@ class GameViewModel: ViewModel() {
         val controller = GameLogic()
         controller.checkAnswers(selectedAnswers, rep.getQuestions())
         _score.postValue(controller.getScore())
+    }
+
+    fun playSound(context: Context, soundResId: Int) {
+        mediaPlayer?.release()
+        mediaPlayer = MediaPlayer.create(context, soundResId)
+        mediaPlayer?.setOnCompletionListener {
+            it.release()
+            mediaPlayer = null
+        }
+        mediaPlayer?.start()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    fun stopSound() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 }
 
