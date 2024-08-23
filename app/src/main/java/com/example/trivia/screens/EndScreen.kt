@@ -1,6 +1,8 @@
 package com.example.trivia.screens
 
 
+import android.content.Context
+import android.media.MediaPlayer
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -35,14 +37,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+
 import androidx.navigation.NavController
 import com.example.trivia.R
-import com.example.trivia.ui.theme.bigFontSize
+
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -54,7 +57,7 @@ import com.example.trivia.viewmodel.GameViewModel
 
 @Composable
 fun EndScreen(navController: NavController, viewModel: GameViewModel) {
-
+    val context = LocalContext.current
     val score by viewModel.score.observeAsState(initial = 0)
 
     val message = when (score) {
@@ -84,6 +87,14 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
             )
         )
     }
+
+    val soundResId = when (score) {
+        in 9..10 -> R.raw.victory_sound
+        in 7..8 -> R.raw.cheer_sound
+        in 5..6 -> R.raw.clap_sound
+        else -> R.raw.fail_sound
+    }
+    playSound(context, soundResId)
 
     Box(
         modifier = Modifier
@@ -156,4 +167,13 @@ fun EndScreen(navController: NavController, viewModel: GameViewModel) {
             }
         }
     }
+}
+
+
+fun playSound(context: Context, soundResId: Int) {
+    val mediaPlayer = MediaPlayer.create(context, soundResId)
+    mediaPlayer.setOnCompletionListener {
+        it.release()
+    }
+    mediaPlayer.start()
 }
