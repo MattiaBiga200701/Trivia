@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,7 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.ui.theme.bigSpace
@@ -49,6 +49,7 @@ import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.viewmodel.GameViewModel
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -63,8 +64,24 @@ fun QuizScreen(
     val selectedOption = remember { mutableStateMapOf<Int, String?>() }
     val context = LocalContext.current
 
+
+    val timerDuration = 60
+    val timeRemaining = remember { mutableIntStateOf(timerDuration) }
+
+
     LaunchedEffect(category, difficulty) {
         viewModel.loadQuestions(category, difficulty)
+    }
+
+
+    LaunchedEffect(Unit) {
+        while (timeRemaining.intValue > 0) {
+            delay(1000L)
+            timeRemaining.intValue -= 1
+        }
+
+        viewModel.setScore(selectedOption)
+        navController.navigate("end")
     }
 
     Box(
@@ -97,106 +114,123 @@ fun QuizScreen(
                 )
             }
         } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(mediumPadding)
+            Column(
+                modifier = Modifier.fillMaxSize()
             ) {
-                item {
-                    Text(
-                        text = "Category: $category",
-                        fontSize = fontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        modifier = Modifier.padding(bottom = smallPadding)
-                    )
-                    Text(
-                        text = "Difficulty: $difficulty",
-                        fontSize = fontSize,
-                        color = Color.White,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.padding(bottom = mediumPadding)
-                    )
-                }
 
-                items(questions.size) { index ->
-                    val question = questions[index]
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = smallPadding),
-                        shape = RoundedCornerShape(cornerRounding),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
-                        elevation = CardDefaults.cardElevation(4.dp)
-                    ) {
-                        Column(modifier = Modifier.padding(mediumPadding)) {
-                            Text(
-                                text = question.question,
-                                fontSize = fontSize,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black
-                            )
+                Text(
+                    text = "Time remaining: ${timeRemaining.intValue} seconds",
+                    fontSize = fontSize,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = smallPadding)
+                        .background(Color(0xFFF231AA))
+                        .padding(mediumPadding)
+                )
 
-                            Spacer(modifier = Modifier.height(smallSpace))
 
-                            question.options.forEach { option ->
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = smallPadding)
-                                        .clickable {
-                                            selectedOption[index] = option
-                                        },
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    RadioButton(
-                                        selected = selectedOption[index] == option,
-                                        onClick = { selectedOption[index] = option },
-                                        colors = RadioButtonDefaults.colors(
-                                            selectedColor = Color(
-                                                0xFF2196F3
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f)
+                        .padding(mediumPadding)
+                ) {
+                    item {
+                        Text(
+                            text = "Category: $category",
+                            fontSize = fontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White,
+                            modifier = Modifier.padding(bottom = smallPadding)
+                        )
+                        Text(
+                            text = "Difficulty: $difficulty",
+                            fontSize = fontSize,
+                            color = Color.White,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(bottom = mediumPadding)
+                        )
+                    }
+
+                    items(questions.size) { index ->
+                        val question = questions[index]
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = smallPadding),
+                            shape = RoundedCornerShape(cornerRounding),
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            elevation = CardDefaults.cardElevation(4.dp)
+                        ) {
+                            Column(modifier = Modifier.padding(mediumPadding)) {
+                                Text(
+                                    text = question.question,
+                                    fontSize = fontSize,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black
+                                )
+
+                                Spacer(modifier = Modifier.height(smallSpace))
+
+                                question.options.forEach { option ->
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = smallPadding)
+                                            .clickable {
+                                                selectedOption[index] = option
+                                            },
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        RadioButton(
+                                            selected = selectedOption[index] == option,
+                                            onClick = { selectedOption[index] = option },
+                                            colors = RadioButtonDefaults.colors(
+                                                selectedColor = Color(0xFF2196F3)
                                             )
                                         )
-                                    )
-                                    Text(
-                                        text = option,
-                                        fontSize = smallFontSize,
-                                        fontWeight = FontWeight.SemiBold,
-                                        color = Color.Black
-                                    )
+                                        Text(
+                                            text = option,
+                                            fontSize = smallFontSize,
+                                            fontWeight = FontWeight.SemiBold,
+                                            color = Color.Black
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
-                }
 
-                item {
-                    Spacer(modifier = Modifier.height(bigSpace))
-                    Button(
-                        onClick = {
-                            try {
-                                if (questions.size != selectedOption.size) {
-                                    throw EmptyInputException("You must answer all questions")
+                    item {
+                        Spacer(modifier = Modifier.height(bigSpace))
+                        Button(
+                            onClick = {
+                                try {
+                                    if (questions.size != selectedOption.size) {
+                                        throw EmptyInputException("You must answer all questions")
+                                    }
+                                    viewModel.setScore(selectedOption)
+                                    navController.navigate("end")
+                                } catch (e: EmptyInputException) {
+                                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                                 }
-                                viewModel.setScore(selectedOption)
-                                navController.navigate("end")
-                            }catch(e: EmptyInputException){
-                                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = smallPadding),
-                        shape = RoundedCornerShape(cornerRounding)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "End Quiz",
-                            tint = Color.White
-                        )
-                        Spacer(modifier = Modifier.width(smallSpace))
-                        Text(text = "End Quiz", color = Color.White, fontSize = fontSize)
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = smallPadding),
+                            shape = RoundedCornerShape(cornerRounding)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = "End Quiz",
+                                tint = Color.White
+                            )
+                            Spacer(modifier = Modifier.width(smallSpace))
+                            Text(text = "End Quiz", color = Color.White, fontSize = fontSize)
+                        }
                     }
                 }
             }

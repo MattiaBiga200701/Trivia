@@ -1,6 +1,7 @@
 package com.example.trivia.screens
 
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -104,11 +105,17 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
 
         DisposableEffect(Unit) {
             onDispose {
-                gameViewModel.stopSound()  // Ferma e rilascia il MediaPlayer quando si esce dalla schermata
+                gameViewModel.stopSound()
             }
         }
     }
 
+    BackHandler {
+        navController.navigate("homepage") {
+            popUpTo("homepage") { inclusive = true }
+            launchSingleTop = true
+        }
+    }
 
     Box(
         modifier = Modifier
