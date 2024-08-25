@@ -2,6 +2,7 @@ package com.example.trivia.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,8 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +53,7 @@ import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
+import java.util.Locale
 
 
 @Composable
@@ -65,7 +69,7 @@ fun QuizScreen(
     val context = LocalContext.current
 
 
-    val timerDuration = 60
+    val timerDuration = 300
     val timeRemaining = remember { mutableIntStateOf(timerDuration) }
 
 
@@ -83,6 +87,11 @@ fun QuizScreen(
         viewModel.setScore(selectedOption)
         navController.navigate("end")
     }
+
+    val minutes = timeRemaining.intValue / 60
+    val seconds = timeRemaining.intValue % 60
+    val formattedTime = String.format(Locale.US,"%02d:%02d", minutes, seconds)
+
 
     Box(
         modifier = Modifier
@@ -118,18 +127,23 @@ fun QuizScreen(
                 modifier = Modifier.fillMaxSize()
             ) {
 
-                Text(
-                    text = "Time remaining: ${timeRemaining.intValue} seconds",
-                    fontSize = fontSize,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = smallPadding)
-                        .background(Color(0xFFF231AA))
-                        .padding(mediumPadding)
-                )
-
+                        .background(Color(0x80000000))
+                        .border(1.dp, Color.White, RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(8.dp))
+                        .padding(horizontal = mediumPadding, vertical = smallPadding)
+                ) {
+                    Text(
+                        text = "Time remaining: $formattedTime",
+                        fontSize = fontSize,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
 
                 LazyColumn(
                     modifier = Modifier
