@@ -44,6 +44,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.exceptions.EmptyInputException
+import com.example.trivia.ui.theme.MyBlack
+import com.example.trivia.ui.theme.MyGreen
+import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -98,7 +101,7 @@ fun QuizScreen(
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color(0xFF000000), Color(0xFF23FFCD))
+                    colors = listOf(MyBlack, MyGreen)
                 )
             )
             .padding(mediumPadding)
@@ -231,7 +234,7 @@ fun QuizScreen(
                                     Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
+                            colors = ButtonDefaults.buttonColors(containerColor = MyPink),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = smallPadding),

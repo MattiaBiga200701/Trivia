@@ -45,6 +45,9 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavController
 import com.example.trivia.R
+import com.example.trivia.ui.theme.MyBlack
+import com.example.trivia.ui.theme.MyGreen
+import com.example.trivia.ui.theme.MyPink
 
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
@@ -122,7 +125,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color(0xFF000000), Color(0xFF23FFCD))
+                    colors = listOf(MyBlack, MyGreen)
                 )
             ),
         contentAlignment = Alignment.Center
@@ -167,7 +170,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
                         launchSingleTop = true
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
+                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()

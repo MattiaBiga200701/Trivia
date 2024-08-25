@@ -29,6 +29,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
+import com.example.trivia.ui.theme.MyBlack
+import com.example.trivia.ui.theme.MyGreen
+import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.bigPadding
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -46,7 +49,7 @@ fun Homepage(navController: NavController) {
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(Color(0xFF000000), Color(0xFF23FFCD))
+                    colors = listOf(MyBlack, MyGreen)
                 )
             )
             .padding(mediumPadding),
@@ -72,7 +75,7 @@ fun Homepage(navController: NavController) {
 
             Button(
                 onClick = { navController.navigate("play") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF23FFCD)),
+                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
                 modifier = Modifier
                     .padding(vertical = smallPadding),
                     shape = RoundedCornerShape(cornerRounding)
@@ -88,7 +91,7 @@ fun Homepage(navController: NavController) {
 
             Button(
                 onClick = { navController.navigate("options") },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFF231AA)),
+                colors = ButtonDefaults.buttonColors(containerColor= MyPink),
                 modifier = Modifier
                     .padding(vertical = smallPadding),
                     shape = RoundedCornerShape(cornerRounding)
