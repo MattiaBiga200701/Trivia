@@ -51,6 +51,7 @@ import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.mediumSpace
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.standardButton
 
 
 @Composable
@@ -161,8 +162,7 @@ fun PlayScreen(navController: NavController) {
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(mediumPadding)
-                    .height(56.dp)
+                    .height(standardButton)
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored. Filled. ArrowForward,

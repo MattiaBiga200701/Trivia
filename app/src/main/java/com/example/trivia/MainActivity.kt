@@ -20,6 +20,7 @@ import com.example.trivia.screens.QuizScreen
 import com.example.trivia.ui.theme.TriviaTheme
 import com.example.trivia.viewmodel.SettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.trivia.screens.TimeUpScreen
 import com.example.trivia.viewmodel.GameViewModel
 
 
@@ -48,14 +49,24 @@ fun TriviaApp() {
     val gameViewModel: GameViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = "homepage") {
+
         composable("homepage") { Homepage(navController) }
+
         composable("play") { PlayScreen(navController) }
+
         composable("options"){OptionsScreen(navController, settingsViewModel)}
+
         composable("quiz/{category}/{difficulty}") { backStackEntry ->
             val category = backStackEntry.arguments?.getString("category")
             val difficulty = backStackEntry.arguments?.getString("difficulty")
             QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "", gameViewModel)
         }
+
+        composable("timeOver/{category}/{difficulty}") { backStackEntry ->
+            val category = backStackEntry.arguments?.getString("category")
+            val difficulty = backStackEntry.arguments?.getString("difficulty")
+            TimeUpScreen(navController = navController, category = category ?: "", difficulty = difficulty ?: "")}
+
         composable("end") { EndScreen(navController = navController, gameViewModel, settingsViewModel) }
     }
 }

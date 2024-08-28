@@ -1,7 +1,5 @@
 package com.example.trivia.screens
 
-
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -22,34 +20,27 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
-
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -59,38 +50,13 @@ import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.ui.theme.standardButton
-import com.example.trivia.viewmodel.GameViewModel
-import com.example.trivia.viewmodel.SettingsViewModel
+
 
 @Composable
-fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settingsViewModel: SettingsViewModel) {
+fun TimeUpScreen(navController: NavController, category: String,
+                 difficulty: String,){
 
-    val context = LocalContext.current
-    val score by gameViewModel.score.observeAsState(initial = 0)
-    val isSoundEnable by settingsViewModel.soundState.observeAsState(initial = false)
-
-    val message = when (score) {
-        in 9..10 -> "Incredible! You're a true champion!"
-        in 7..8 -> "Great job! You've scored really well!"
-        in 5..6 -> "Well done! Keep improving!"
-        else -> "You can do better!"
-
-    }
-
-
-    val medalResource = when (score) {
-        in 9..10 -> R.drawable.gold_medal
-        in 7..8 -> R.drawable.silver_medal
-        in 5..6 -> R.drawable.bronze_medal
-        else -> R.drawable.poop
-    }
-
-    val soundResId = when (score) {
-        in 9..10 -> R.raw.victory_sound
-        in 7..8 -> R.raw.cheer_sound
-        in 5..6 -> R.raw.clap_sound
-        else -> R.raw.fail_sound
-    }
+    val message = "Time's Up"
 
     val rotationY = remember { Animatable(0f) }
 
@@ -104,25 +70,6 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
         )
     }
 
-    if(isSoundEnable) {
-        LaunchedEffect(Unit) {
-            gameViewModel.playSound(context, soundResId)
-        }
-
-        DisposableEffect(Unit) {
-            onDispose {
-                gameViewModel.stopSound()
-            }
-        }
-    }
-
-    BackHandler {
-        navController.navigate("homepage") {
-            popUpTo("homepage") { inclusive = true }
-            launchSingleTop = true
-        }
-    }
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -133,6 +80,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
             ),
         contentAlignment = Alignment.Center
     ) {
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -149,7 +97,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
             Spacer(modifier = Modifier.height(bigSpace))
 
             Image(
-                painter = painterResource(id = medalResource),
+                painter = painterResource(id = R.drawable.alarm_clock),
                 contentDescription = null,
                 modifier = Modifier
                     .size(medalSize)
@@ -162,9 +110,28 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
 
             Spacer(modifier = Modifier.height(smallSpace))
 
-            Text(text = "$score/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(text = "0/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
 
-            Spacer(modifier = Modifier.height(64.dp))
+            Button(
+                onClick = { navController.navigate("quiz/${category}/${difficulty}") },
+                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
+                shape = RoundedCornerShape(cornerRounding),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = smallPadding, horizontal = mediumPadding)
+                    .height(standardButton)
+
+            ) {
+
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Retry",
+                    tint = Color.White
+                )
+
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(text = "Retry Quiz", color = Color.White, fontSize = fontSize)
+            }
 
             Button(
                 onClick = {
@@ -179,7 +146,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
                     .fillMaxWidth()
                     .padding(mediumPadding)
                     .height(standardButton)
-            ) {
+            ){
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = "Main Menu",
@@ -193,23 +160,6 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
                 )
             }
 
-            Button(
-                onClick = { navController.navigate("play") },
-                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
-                modifier = Modifier
-                    .padding(vertical = smallPadding),
-                shape = RoundedCornerShape(cornerRounding)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play",
-                    tint = Color.White
-                )
-                Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "Play", color = Color.White, fontSize = fontSize)
-            }
         }
     }
-
 }
-

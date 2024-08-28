@@ -47,13 +47,14 @@ import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
-import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.mediumSpace
 import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.GameViewModel
 import kotlinx.coroutines.delay
 import java.util.Locale
@@ -87,8 +88,8 @@ fun QuizScreen(
             timeRemaining.intValue -= 1
         }
 
-        viewModel.setScore(selectedOption)
-        navController.navigate("end")
+        //viewModel.setScore(selectedOption)
+        navController.navigate("timeOver/${category}/${difficulty}")
     }
 
     val minutes = timeRemaining.intValue / 60
@@ -221,7 +222,7 @@ fun QuizScreen(
                     }
 
                     item {
-                        Spacer(modifier = Modifier.height(bigSpace))
+                        Spacer(modifier = Modifier.height(mediumSpace))
                         Button(
                             onClick = {
                                 try {
@@ -235,10 +236,12 @@ fun QuizScreen(
                                 }
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                            shape = RoundedCornerShape(cornerRounding),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = smallPadding),
-                            shape = RoundedCornerShape(cornerRounding)
+                                .padding(vertical = smallPadding)
+                                .height(standardButton)
+
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Check,

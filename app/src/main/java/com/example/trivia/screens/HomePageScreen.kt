@@ -1,5 +1,7 @@
 package com.example.trivia.screens
 
+import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 
 import androidx.compose.ui.unit.dp
@@ -42,8 +45,17 @@ import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
 
 
+
 @Composable
 fun Homepage(navController: NavController) {
+
+    val context = LocalContext.current
+
+    BackHandler {
+
+        (context as? Activity)?.finish()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
