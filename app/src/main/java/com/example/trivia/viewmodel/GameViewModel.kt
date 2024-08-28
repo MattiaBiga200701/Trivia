@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.trivia.logic.GameLogic
-import com.example.trivia.model.entities.Question
-import com.example.trivia.model.Repository
+import com.example.trivia.db.Question
+import com.example.trivia.db.Repository
 
 
 class GameViewModel: ViewModel() {

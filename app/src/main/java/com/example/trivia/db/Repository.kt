@@ -1,8 +1,7 @@
-package com.example.trivia.model
+package com.example.trivia.db
 
 import android.text.Html
 import android.util.Log
-import com.example.trivia.model.entities.Question
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject

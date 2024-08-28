@@ -1,4 +1,4 @@
-package com.example.trivia.model.entities
+package com.example.trivia.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

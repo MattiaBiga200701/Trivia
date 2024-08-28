@@ -1,6 +1,6 @@
 package com.example.trivia.logic
 
-import com.example.trivia.model.entities.Question
+import com.example.trivia.db.Question
 
 class GameLogic {
 
