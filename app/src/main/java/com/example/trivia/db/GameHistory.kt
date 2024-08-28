@@ -10,5 +10,5 @@ data class GameHistory(
     val time: Long,
     val category: String,
     val difficulty: String,
-    val date: Long = System.currentTimeMillis()
+    val date: String
 )
