@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.PlayArrow
+
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -56,7 +56,7 @@ import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.medalSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
-import com.example.trivia.ui.theme.smallPadding
+
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.GameViewModel
@@ -193,21 +193,6 @@ fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settin
                 )
             }
 
-            Button(
-                onClick = { navController.navigate("play") },
-                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
-                modifier = Modifier
-                    .padding(vertical = smallPadding),
-                shape = RoundedCornerShape(cornerRounding)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play",
-                    tint = Color.White
-                )
-                Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "Play", color = Color.White, fontSize = fontSize)
-            }
         }
     }
 

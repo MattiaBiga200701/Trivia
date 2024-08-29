@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -35,7 +36,7 @@ import com.example.trivia.R
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
-import com.example.trivia.ui.theme.bigPadding
+
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.logoSize
@@ -43,7 +44,7 @@ import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.mediumSpace
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
-
+import com.example.trivia.ui.theme.standardButton
 
 
 @Composable
@@ -79,7 +80,7 @@ fun Homepage(navController: NavController) {
                 contentDescription = "App Logo",
                 modifier = Modifier
                     .size(logoSize)
-                    .padding(bottom = bigPadding)
+
             )
 
 
@@ -88,9 +89,12 @@ fun Homepage(navController: NavController) {
             Button(
                 onClick = { navController.navigate("play") },
                 colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
+                shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
-                    .padding(vertical = smallPadding),
-                    shape = RoundedCornerShape(cornerRounding)
+                    .fillMaxWidth()
+                    .padding(vertical = smallPadding, horizontal = mediumPadding)
+                    .height(standardButton)
+
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
@@ -104,9 +108,11 @@ fun Homepage(navController: NavController) {
             Button(
                 onClick = { navController.navigate("options") },
                 colors = ButtonDefaults.buttonColors(containerColor= MyPink),
+                shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
-                    .padding(vertical = smallPadding),
-                    shape = RoundedCornerShape(cornerRounding)
+                    .fillMaxWidth()
+                    .padding(vertical = smallPadding, horizontal = mediumPadding)
+                    .height(standardButton)
             ) {
                 Icon(
                     imageVector = Icons.Default.Settings,
