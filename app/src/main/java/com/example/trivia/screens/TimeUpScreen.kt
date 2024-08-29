@@ -1,5 +1,6 @@
 package com.example.trivia.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -68,6 +69,13 @@ fun TimeUpScreen(navController: NavController, category: String,
                 repeatMode = RepeatMode.Restart
             )
         )
+    }
+
+    BackHandler {
+        navController.navigate("homepage") {
+            popUpTo("homepage") { inclusive = true }
+            launchSingleTop = true
+        }
     }
 
     Box(
