@@ -21,7 +21,8 @@ import com.example.trivia.ui.theme.TriviaTheme
 import com.example.trivia.viewmodel.SettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.trivia.screens.TimeUpScreen
-import com.example.trivia.viewmodel.GameViewModel
+import com.example.trivia.viewmodel.GameSessionViewModel
+import com.example.trivia.viewmodel.GameViewModelFactory
 
 
 class MainActivity : ComponentActivity() {
@@ -39,35 +40,31 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-fun TriviaApp() {
+    @Composable
+    fun TriviaApp() {
+        val navController = rememberNavController()
+        val settingsViewModel: SettingsViewModel = viewModel()
+        val gameViewModel: GameSessionViewModel = viewModel(
+            factory = GameViewModelFactory(this@MainActivity)
+        )
 
-    val navController = rememberNavController()
-    val settingsViewModel: SettingsViewModel = viewModel()
-    val gameViewModel: GameViewModel = viewModel()
-
-    NavHost(navController = navController, startDestination = "homepage") {
-
-        composable("homepage") { Homepage(navController) }
-
-        composable("play") { PlayScreen(navController) }
-
-        composable("options"){OptionsScreen(navController, settingsViewModel)}
-
-        composable("quiz/{category}/{difficulty}") { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category")
-            val difficulty = backStackEntry.arguments?.getString("difficulty")
-            QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "", gameViewModel)
+        NavHost(navController = navController, startDestination = "homepage") {
+            composable("homepage") { Homepage(navController) }
+            composable("play") { PlayScreen(navController) }
+            composable("options") { OptionsScreen(navController, settingsViewModel) }
+            composable("quiz/{category}/{difficulty}") { backStackEntry ->
+                val category = backStackEntry.arguments?.getString("category")
+                val difficulty = backStackEntry.arguments?.getString("difficulty")
+                QuizScreen(navController, category = category ?: "", difficulty = difficulty ?: "", gameViewModel)
+            }
+            composable("timeOver/{category}/{difficulty}") { backStackEntry ->
+                val category = backStackEntry.arguments?.getString("category")
+                val difficulty = backStackEntry.arguments?.getString("difficulty")
+                TimeUpScreen(navController = navController, category = category ?: "", difficulty = difficulty ?: "")
+            }
+            composable("end") { EndScreen(navController = navController, gameViewModel, settingsViewModel) }
         }
-
-        composable("timeOver/{category}/{difficulty}") { backStackEntry ->
-            val category = backStackEntry.arguments?.getString("category")
-            val difficulty = backStackEntry.arguments?.getString("difficulty")
-            TimeUpScreen(navController = navController, category = category ?: "", difficulty = difficulty ?: "")}
-
-        composable("end") { EndScreen(navController = navController, gameViewModel, settingsViewModel) }
     }
 }
 

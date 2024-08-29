@@ -7,7 +7,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.URL
 
-class Repository {
+class Repository(private val gameHistoryDao: GameHistoryDao) {
 
     private var questions: List<Question> = emptyList()
 
@@ -101,4 +101,17 @@ class Repository {
     fun getQuestions(): List<Question>{
         return this.questions
     }
+
+    suspend fun insertGameHistory(gameHistory: GameHistory) {
+        gameHistoryDao.insert(gameHistory)
+    }
+
+
+    suspend fun getAllGameHistory(): List<GameHistory> {
+        return gameHistoryDao.getAllHistory()
+    }
+
+
+
 }
+

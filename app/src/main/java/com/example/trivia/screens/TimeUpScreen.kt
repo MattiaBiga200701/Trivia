@@ -120,6 +120,8 @@ fun TimeUpScreen(navController: NavController, category: String,
 
             Text(text = "0/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
 
+            Spacer(modifier = Modifier.height(bigSpace))
+
             Button(
                 onClick = { navController.navigate("quiz/${category}/${difficulty}") },
                 colors = ButtonDefaults.buttonColors(containerColor = MyGreen),

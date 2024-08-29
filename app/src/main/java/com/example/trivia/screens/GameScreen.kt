@@ -55,7 +55,7 @@ import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.ui.theme.standardButton
-import com.example.trivia.viewmodel.GameViewModel
+import com.example.trivia.viewmodel.GameSessionViewModel
 import kotlinx.coroutines.delay
 import java.util.Locale
 
@@ -65,7 +65,7 @@ fun QuizScreen(
     navController: NavController,
     category: String,
     difficulty: String,
-    viewModel: GameViewModel
+    viewModel: GameSessionViewModel
 ) {
     val questions by viewModel.questions.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
@@ -73,7 +73,7 @@ fun QuizScreen(
     val context = LocalContext.current
 
 
-    val timerDuration = 300
+    val timerDuration = 30
     val timeRemaining = remember { mutableIntStateOf(timerDuration) }
 
 

@@ -10,9 +10,10 @@ import androidx.lifecycle.ViewModel
 import com.example.trivia.logic.GameLogic
 import com.example.trivia.db.Question
 import com.example.trivia.db.Repository
+import com.example.trivia.db.TriviaDB
 
 
-class GameViewModel: ViewModel() {
+class GameSessionViewModel(context: Context): ViewModel() {
 
 
     private val _questions = MutableLiveData<List<Question>>()
@@ -24,12 +25,16 @@ class GameViewModel: ViewModel() {
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int> get() = _score
 
-    private val rep = Repository()
+    private val rep : Repository
 
     private var mediaPlayer: MediaPlayer? = null
 
     init {
         _score.value = 0
+
+        val gameHistoryDao = TriviaDB.getInstance(context).gameHistoryDao()
+
+        rep = Repository(gameHistoryDao)
     }
 
     suspend fun loadQuestions(category: String, difficulty: String) {

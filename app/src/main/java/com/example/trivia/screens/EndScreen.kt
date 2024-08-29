@@ -59,11 +59,12 @@ import com.example.trivia.ui.theme.mediumPadding
 
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.ui.theme.standardButton
-import com.example.trivia.viewmodel.GameViewModel
+import com.example.trivia.viewmodel.GameSessionViewModel
+
 import com.example.trivia.viewmodel.SettingsViewModel
 
 @Composable
-fun EndScreen(navController: NavController, gameViewModel: GameViewModel, settingsViewModel: SettingsViewModel) {
+fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel, settingsViewModel: SettingsViewModel) {
 
     val context = LocalContext.current
     val score by gameViewModel.score.observeAsState(initial = 0)
