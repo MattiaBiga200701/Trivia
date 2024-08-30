@@ -1,69 +1,71 @@
 package com.example.trivia.db
 
-import android.text.Html
-import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import android.content.Context
+
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import com.example.trivia.viewmodel.GameSessionViewModel
+
 import org.json.JSONObject
-import java.net.URL
+import org.jsoup.Jsoup
+
 
 class Repository(private val gameHistoryDao: GameHistoryDao) {
 
     private var questions: List<Question> = emptyList()
 
-    suspend fun fetchQuestions(categoryID: String, difficulty: String){
+     fun fetchQuestions(context: Context, categoryID: String, difficulty: String, viewModel: GameSessionViewModel): List<Question>{
 
-            try {
-                val newQuestions = withContext(Dispatchers.IO) {
-                    val url =
-                        "https://opentdb.com/api.php?amount=10&category=$categoryID&difficulty=$difficulty&type=multiple"
-                    val response = URL(url).readText()
-                    val json = JSONObject(response)
-                    val fetchedQuestions = mutableListOf<Question>()
-                    val results = json.getJSONArray("results")
-                    for (i in 0 until results.length()) {
-                        val questionObj = results.getJSONObject(i)
-                        val question = Html.fromHtml(
-                            questionObj.getString("question"),
-                            Html.FROM_HTML_MODE_LEGACY
-                        ).toString()
-                        val correctAnswer = Html.fromHtml(
-                            questionObj.getString("correct_answer"),
-                            Html.FROM_HTML_MODE_LEGACY
-                        ).toString()
-                        val incorrectAnswers = questionObj.getJSONArray("incorrect_answers")
+            val url = "https://opentdb.com/api.php?amount=10&category=$categoryID&difficulty=$difficulty&type=multiple"
+            val requestQueue: RequestQueue = Volley.newRequestQueue(context)
 
+
+            val jsonObjectRequest = JsonObjectRequest(
+                Request.Method.GET, url, null,
+                { response: JSONObject ->
+                    val resultsArray = response.getJSONArray("results")
+                    val questionList = mutableListOf<Question>()
+
+                    for (i in 0 until resultsArray.length()) {
+
+                        val questionObject = resultsArray.getJSONObject(i)
                         val options = mutableListOf<String>()
-                        for (j in 0 until incorrectAnswers.length()) {
-                            options.add(
-                                Html.fromHtml(
-                                    incorrectAnswers.getString(j),
-                                    Html.FROM_HTML_MODE_LEGACY
-                                ).toString()
-                            )
-                        }
-                        options.add(correctAnswer)
-                        options.shuffle()
+                        val correctAnswer = Jsoup.parse(questionObject.getString("correct_answer")).text()
+                        val incorrectAnswers = questionObject.getJSONArray("incorrect_answers")
 
-                        fetchedQuestions.add(
-                            Question(
-                                difficulty,
-                                categoryID,
-                                question,
-                                options,
-                                correctAnswer
-                            )
+                            for (j in 0 until incorrectAnswers.length()) {
+                                options.add(Jsoup.parse(incorrectAnswers.getString(j)).text())
+                            }
+                            options.add(correctAnswer)
+                            options.shuffle()
+
+                        val question = Question(
+                            category = Jsoup.parse(questionObject.getString("category")).text(),
+                            difficulty = Jsoup.parse(questionObject.getString("difficulty")).text(),
+                            question = Jsoup.parse(questionObject.getString("question")).text(),
+                            options = options,
+                            correctAnswer = correctAnswer
                         )
+                        questionList.add(question)
                     }
-                    fetchedQuestions
-                }
-                this.questions = newQuestions
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Log.e("FetchQuestions", "Error fetching questions")
 
-            }
+
+                    this.questions = questionList
+                    viewModel.onQuestionFetched(this.questions)
+                },
+                { error ->
+                    error.printStackTrace()
+                }
+            )
+
+            requestQueue.add(jsonObjectRequest)
+
+            return this.questions
     }
+
 
 
 
@@ -102,12 +104,12 @@ class Repository(private val gameHistoryDao: GameHistoryDao) {
         return this.questions
     }
 
-    suspend fun insertGameHistory(gameHistory: GameHistory) {
+    fun insertGameHistory(gameHistory: GameHistory) {
         gameHistoryDao.insert(gameHistory)
     }
 
 
-    suspend fun getAllGameHistory(): List<GameHistory> {
+    fun getAllGameHistory(): List<GameHistory> {
         return gameHistoryDao.getAllHistory()
     }
 

@@ -13,7 +13,7 @@ import com.example.trivia.db.Repository
 import com.example.trivia.db.TriviaDB
 
 
-class GameSessionViewModel(context: Context): ViewModel() {
+class GameSessionViewModel(context: Context): ViewModel(){
 
 
     private val _questions = MutableLiveData<List<Question>>()
@@ -30,6 +30,7 @@ class GameSessionViewModel(context: Context): ViewModel() {
     private var mediaPlayer: MediaPlayer? = null
 
     init {
+
         _score.value = 0
 
         val gameHistoryDao = TriviaDB.getInstance(context).gameHistoryDao()
@@ -37,12 +38,16 @@ class GameSessionViewModel(context: Context): ViewModel() {
         rep = Repository(gameHistoryDao)
     }
 
-    suspend fun loadQuestions(category: String, difficulty: String) {
+     fun loadQuestions(context: Context, category: String, difficulty: String) {
         _isLoading.postValue(true)
         val categoryID = rep.getCategoryID(category)
-        rep.fetchQuestions(categoryID, difficulty)
-        val result = rep.getQuestions()
-        _questions.postValue(result)
+        rep.fetchQuestions(context, categoryID, difficulty, this)
+
+
+    }
+
+    fun onQuestionFetched(questions: List<Question>){
+        _questions.postValue(questions)
         _isLoading.postValue(false)
     }
 

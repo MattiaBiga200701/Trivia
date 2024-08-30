@@ -54,12 +54,15 @@ dependencies {
 
 
 
-
+    implementation(libs.jsoup)
 
     implementation(libs.ui)
     implementation(libs.material3)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+
+    //VOLLEY
+    implementation(libs.volley)
 
     //ROOM
     implementation(libs.androidx.room.runtime)

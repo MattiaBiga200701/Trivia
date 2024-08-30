@@ -73,14 +73,12 @@ fun QuizScreen(
     val context = LocalContext.current
 
 
-    val timerDuration = 30
+    val timerDuration = 300
     val timeRemaining = remember { mutableIntStateOf(timerDuration) }
 
-
-    LaunchedEffect(category, difficulty) {
-        viewModel.loadQuestions(category, difficulty)
+    LaunchedEffect(Unit){
+        viewModel.loadQuestions(context, category, difficulty)
     }
-
 
     LaunchedEffect(Unit) {
         while (timeRemaining.intValue > 0) {

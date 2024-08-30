@@ -43,8 +43,11 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun TriviaApp() {
+
         val navController = rememberNavController()
+
         val settingsViewModel: SettingsViewModel = viewModel()
+
         val gameViewModel: GameSessionViewModel = viewModel(
             factory = GameViewModelFactory(this@MainActivity)
         )
