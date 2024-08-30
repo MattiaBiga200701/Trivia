@@ -47,6 +47,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
     val notificationsEnabled by viewModel.notificationsState.observeAsState(initial = false)
 
     Box(
+
         modifier = Modifier
             .fillMaxSize()
             .background(
