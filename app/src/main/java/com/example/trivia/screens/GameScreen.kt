@@ -86,7 +86,7 @@ fun QuizScreen(
             timeRemaining.intValue -= 1
         }
 
-        //viewModel.setScore(selectedOption)
+
         navController.navigate("timeOver/${category}/${difficulty}")
     }
 
