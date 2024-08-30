@@ -32,6 +32,7 @@ import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallPadding
+import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.SettingsViewModel
 
 
@@ -113,7 +114,9 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(vertical = smallPadding)
+                    .fillMaxWidth()
+                    .padding(vertical = smallPadding, horizontal = mediumPadding)
+                    .height(standardButton)
             ) {
                 Icon(
                     imageVector = Icons.Default.Home,
