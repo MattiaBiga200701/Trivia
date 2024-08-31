@@ -25,6 +25,9 @@ class GameSessionViewModel(context: Context): ViewModel(){
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int> get() = _score
 
+    private val selectedAnswers = mutableMapOf<Int, String?>()
+
+
     private val rep : Repository
 
     private var mediaPlayer: MediaPlayer? = null
@@ -51,11 +54,13 @@ class GameSessionViewModel(context: Context): ViewModel(){
         _isLoading.postValue(false)
     }
 
-    fun setScore(selectedAnswers: Map<Int, String?>) {
+    fun setScore() {
         val controller = GameLogic()
         controller.checkAnswers(selectedAnswers, rep.getQuestions())
         _score.postValue(controller.getScore())
     }
+
+
 
     fun playSound(context: Context, soundResId: Int) {
         mediaPlayer?.release()
@@ -78,5 +83,10 @@ class GameSessionViewModel(context: Context): ViewModel(){
         mediaPlayer?.release()
         mediaPlayer = null
     }
+
+    fun updateAnswer(questionIndex: Int, answer: String?) {
+        selectedAnswers[questionIndex] = answer
+    }
+
 }
 
