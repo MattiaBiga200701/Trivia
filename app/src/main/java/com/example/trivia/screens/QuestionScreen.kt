@@ -140,6 +140,8 @@ fun QuestionScreen(
         }
     } else {
 
+        viewModel.startTimer()
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -263,6 +265,7 @@ fun QuestionScreen(
                             if (questionIndex + 1 < questions.size) {
                                 navController.navigate("question/${category}/${difficulty}/${questionIndex + 1}")
                             } else {
+                                viewModel.stopTimer()
                                 viewModel.setScore()
                                 navController.navigate("end")
                             }

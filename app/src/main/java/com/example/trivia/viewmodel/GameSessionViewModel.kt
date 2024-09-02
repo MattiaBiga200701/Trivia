@@ -7,10 +7,15 @@ import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.trivia.db.GameHistory
 import com.example.trivia.logic.GameLogic
 import com.example.trivia.db.Question
 import com.example.trivia.db.Repository
 import com.example.trivia.db.TriviaDB
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 
 class GameSessionViewModel(context: Context): ViewModel(){
@@ -32,6 +37,10 @@ class GameSessionViewModel(context: Context): ViewModel(){
 
     private var mediaPlayer: MediaPlayer? = null
 
+    private var startTime: Long = 0
+    private var totalTime: Long = 0
+    private var isTimerRunning: Boolean = false
+
     init {
 
         _score.value = 0
@@ -39,6 +48,51 @@ class GameSessionViewModel(context: Context): ViewModel(){
         val gameHistoryDao = TriviaDB.getInstance(context).gameHistoryDao()
 
         rep = Repository(gameHistoryDao)
+    }
+
+    fun startTimer() {
+        if (!isTimerRunning) {
+            startTime = System.currentTimeMillis()
+            isTimerRunning = true
+        }
+    }
+
+    fun stopTimer() {
+        if (isTimerRunning) {
+            totalTime += System.currentTimeMillis() - startTime
+            isTimerRunning = false
+        }
+    }
+
+    fun resetTimer(){
+        totalTime = 0
+        startTime = 0
+        isTimerRunning = false
+    }
+
+
+
+    private fun getTotalTime(): String {
+        val totalMillis = totalTime + if (isTimerRunning) System.currentTimeMillis() - startTime else 0
+
+        val hours = TimeUnit.MILLISECONDS.toHours(totalMillis)
+        val minutes = TimeUnit.MILLISECONDS.toMinutes(totalMillis) % 60
+        val seconds = TimeUnit.MILLISECONDS.toSeconds(totalMillis) % 60
+
+        return String.format(
+            Locale.US,
+            "%02d:%02d:%02d",
+            hours,
+            minutes,
+            seconds
+
+        )
+    }
+
+    private fun getCurrentDateAsString(): String {
+        val currentDate = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return currentDate.format(formatter)
     }
 
      fun loadQuestions(context: Context, category: String, difficulty: String) {
@@ -86,6 +140,15 @@ class GameSessionViewModel(context: Context): ViewModel(){
 
     fun updateAnswer(questionIndex: Int, answer: String?) {
         selectedAnswers[questionIndex] = answer
+    }
+
+
+    fun setGameHistory(){
+        val gameHistoryViewModel = GameHistoryViewModel(this.rep)
+        val category = _questions.value?.get(0)?.category
+        val difficulty =_questions.value?.get(0)?.difficulty
+        val newGameHistory = GameHistory(_score.value ?: 0, this.getTotalTime(), category, difficulty, this.getCurrentDateAsString() )
+        gameHistoryViewModel.insertGameHistory(newGameHistory)
     }
 
 }

@@ -59,13 +59,13 @@ fun Homepage(navController: NavController) {
 
     var showExitDialog by remember {mutableStateOf(false)}
 
-    // Gestisce il back press
+
     BackHandler {
         showExitDialog = true
     }
 
     if (showExitDialog) {
-        // Mostra il pop-up di conferma
+
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
             title = { Text("Esci dall'app") },
@@ -74,7 +74,7 @@ fun Homepage(navController: NavController) {
                 Button(
                     onClick = {
                         showExitDialog = false
-                        // Esce dall'app
+
                         (context as? Activity)?.finish()
                     }
                 ) {

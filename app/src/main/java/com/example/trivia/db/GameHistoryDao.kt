@@ -12,4 +12,7 @@ interface GameHistoryDao {
 
     @Query("SELECT * FROM game_history ORDER BY date DESC")
     fun getAllHistory(): List<GameHistory>
+
+    @Query("SELECT category FROM game_history")
+    fun getScore(): String
 }

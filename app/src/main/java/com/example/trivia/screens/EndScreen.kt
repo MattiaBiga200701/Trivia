@@ -196,6 +196,8 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
 
             Button(
                 onClick = {
+                    gameViewModel.resetTimer()
+                    gameViewModel.setGameHistory()
                     navController.navigate("homepage") {
                         popUpTo("homepage") { inclusive = true }
                         launchSingleTop = true
