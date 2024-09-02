@@ -152,7 +152,7 @@ fun PlayScreen(navController: NavController) {
                         } else if (selectedDifficulty.isEmpty()) {
                             throw EmptyInputException("Select a Difficulty First")
                         }
-                        navController.navigate("quiz/${selectedCategory}/${selectedDifficulty}")
+                        navController.navigate("question/${selectedCategory}/${selectedDifficulty}/${0}")
 
                     }catch(e: EmptyInputException){
                         Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()

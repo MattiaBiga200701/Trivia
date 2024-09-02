@@ -87,7 +87,7 @@ fun Homepage(navController: NavController) {
             Spacer(modifier = Modifier.height(mediumSpace))
 
             Button(
-                onClick = { navController.navigate("play") },
+                onClick = { navController.navigate("Play") },
                 colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
@@ -106,7 +106,7 @@ fun Homepage(navController: NavController) {
             }
 
             Button(
-                onClick = { navController.navigate("options") },
+                onClick = { navController.navigate("Options") },
                 colors = ButtonDefaults.buttonColors(containerColor= MyPink),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier

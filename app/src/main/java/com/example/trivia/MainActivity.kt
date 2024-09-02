@@ -18,7 +18,6 @@ import com.example.trivia.screens.EndScreen
 import com.example.trivia.screens.Homepage
 import com.example.trivia.screens.OptionsScreen
 import com.example.trivia.screens.PlayScreen
-import com.example.trivia.screens.QuizScreen
 import com.example.trivia.ui.theme.TriviaTheme
 import com.example.trivia.viewmodel.SettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -60,7 +59,7 @@ class MainActivity : ComponentActivity() {
             composable("play") { PlayScreen(navController) }
             composable("options") { OptionsScreen(navController, settingsViewModel) }
 
-            composable("quiz/{category}/{difficulty}") { backStackEntry ->
+            /*composable("quiz/{category}/{difficulty}") { backStackEntry ->
                 val category = backStackEntry.arguments?.getString("category")
                 val difficulty = backStackEntry.arguments?.getString("difficulty")
                 QuizScreen(
@@ -70,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     viewModel = gameViewModel
                 )
             }
-
+            */
 
             composable(
                 "question/{category}/{difficulty}/{questionIndex}",

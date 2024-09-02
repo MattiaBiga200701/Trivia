@@ -70,18 +70,14 @@ fun QuestionScreen(
     viewModel: GameSessionViewModel
 ) {
     val questions by viewModel.questions.observeAsState(emptyList())
-    val question = questions.getOrNull(questionIndex)
-
-    if (question == null) {
-        navController.navigate("end")
-        return
-    }
+    val isLoading by viewModel.isLoading.observeAsState(true)
+    val context = LocalContext.current
+    //val question = questions.getOrNull(questionIndex)
 
     val selectedOption = remember { mutableStateOf<String?>(null) }
     //val context = LocalContext.current
 
-
-    val timerDuration = 15
+    val timerDuration = 30
     val timeRemaining = remember { mutableIntStateOf(timerDuration) }
 
     LaunchedEffect(Unit) {
@@ -104,148 +100,193 @@ fun QuestionScreen(
     val seconds = timeRemaining.intValue % 60
     val formattedTime = String.format(Locale.US, "%02d:%02d", minutes, seconds)
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
-                )
-            )
-            .padding(mediumPadding)
-    ) {
-        Column(
+    if(questionIndex == 0) {
+        LaunchedEffect(Unit) {
+
+            viewModel.loadQuestions(context, category, difficulty)
+        }
+    }
+
+    if (isLoading) {
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(MyBlack, MyGreen)
+                    )
+                ),
+            contentAlignment = Alignment.Center
         ) {
-            Box(
-                contentAlignment = Alignment.Center,
+            CircularProgressIndicator(color = Color.White)
+        }
+    } else if (questions.isEmpty()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(MyBlack, MyGreen)
+                    )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "No questions available",
+                fontSize = fontSize,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+        }
+    } else {
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    Brush.verticalGradient(
+                        colors = listOf(MyBlack, MyGreen)
+                    )
+                )
+                .padding(mediumPadding)
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = smallPadding)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
             ) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier.size(100.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = smallPadding)
                 ) {
-                    CircularProgressIndicator(
-                        progress = { timeRemaining.intValue / timerDuration.toFloat() },
-                        modifier = Modifier.size(100.dp),
-                        strokeWidth = smallSpace,
-                        color=Color.White
-                    )
-                    Text(
-                        text = formattedTime,
-                        fontSize = fontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White
-                    )
-                }
-            }
-
-
-
-            Spacer(modifier = Modifier.height(mediumPadding))
-
-            Text(
-                text = "Category: $category",
-                fontSize = fontSize,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                modifier = Modifier.padding(bottom = smallPadding)
-            )
-
-            Text(
-                text = "Difficulty: $difficulty",
-                fontSize = fontSize,
-                color = Color.White,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(bottom = mediumPadding)
-            )
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = smallPadding),
-                shape = RoundedCornerShape(cornerRounding),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                Column(modifier = Modifier.padding(mediumPadding)) {
-
-                    Text(
-                        text = "Question ${questionIndex + 1} of ${questions.size}",
-                        fontSize = fontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Gray
-                    )
-
-                    Spacer(modifier = Modifier.height(smallSpace))
-
-                    Text(
-                        text = question.question,
-                        fontSize = fontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-
-                    Spacer(modifier = Modifier.height(smallSpace))
-
-                    question.options.forEach { option ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = smallPadding)
-                                .clickable { selectedOption.value = option },
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = selectedOption.value == option,
-                                onClick = { selectedOption.value = option },
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = Color(0xFF2196F3)
-                                )
-                            )
-                            Text(
-                                text = option,
-                                fontSize = smallFontSize,
-                                fontWeight = FontWeight.SemiBold,
-                                color = Color.Black
-                            )
-                        }
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.size(100.dp)
+                    ) {
+                        CircularProgressIndicator(
+                            progress = { timeRemaining.intValue / timerDuration.toFloat() },
+                            modifier = Modifier.size(100.dp),
+                            strokeWidth = smallSpace,
+                            color = Color.White
+                        )
+                        Text(
+                            text = formattedTime,
+                            fontSize = fontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(mediumSpace))
 
-            Button(
-                onClick = {
-                    if (selectedOption.value != null) {
-                        viewModel.updateAnswer(questionIndex, selectedOption.value)
-                        if (questionIndex + 1 < questions.size) {
-                            navController.navigate("question/$category/$difficulty/${questionIndex + 1}")
-                        } else {
-                            viewModel.setScore()
-                            navController.navigate("end")
-                        }
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
-                shape = RoundedCornerShape(cornerRounding),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = smallPadding)
-                    .height(standardButton)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = "End Quiz",
-                    tint = Color.White
+
+                Spacer(modifier = Modifier.height(mediumPadding))
+
+                Text(
+                    text = "Category: $category",
+                    fontSize = fontSize,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(bottom = smallPadding)
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = if (questionIndex + 1 < questions.size) "Next" else "End Quiz", color = Color.White, fontSize = fontSize)
+
+                Text(
+                    text = "Difficulty: $difficulty",
+                    fontSize = fontSize,
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(bottom = mediumPadding)
+                )
+
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = smallPadding),
+                    shape = RoundedCornerShape(cornerRounding),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    Column(modifier = Modifier.padding(mediumPadding)) {
+
+                        Text(
+                            text = "Question ${questionIndex + 1} of ${questions.size}",
+                            fontSize = fontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Gray
+                        )
+
+                        Spacer(modifier = Modifier.height(smallSpace))
+
+                        Text(
+                            text = questions[questionIndex].question,
+                            fontSize = fontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Black
+                        )
+
+                        Spacer(modifier = Modifier.height(smallSpace))
+
+                        questions[questionIndex].options.forEach { option ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = smallPadding)
+                                    .clickable { selectedOption.value = option },
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = selectedOption.value == option,
+                                    onClick = { selectedOption.value = option },
+                                    colors = RadioButtonDefaults.colors(
+                                        selectedColor = Color(0xFF2196F3)
+                                    )
+                                )
+                                Text(
+                                    text = option,
+                                    fontSize = smallFontSize,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = Color.Black
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(mediumSpace))
+
+                Button(
+                    onClick = {
+                        if (selectedOption.value != null) {
+                            viewModel.updateAnswer(questionIndex, selectedOption.value)
+                            if (questionIndex + 1 < questions.size) {
+                                navController.navigate("question/${category}/${difficulty}/${questionIndex + 1}")
+                            } else {
+                                viewModel.setScore()
+                                navController.navigate("end")
+                            }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                    shape = RoundedCornerShape(cornerRounding),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = smallPadding)
+                        .height(standardButton)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "End Quiz",
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(smallSpace))
+                    Text(
+                        text = if (questionIndex + 1 < questions.size) "Next" else "End Quiz",
+                        color = Color.White,
+                        fontSize = fontSize
+                    )
+                }
             }
         }
     }
