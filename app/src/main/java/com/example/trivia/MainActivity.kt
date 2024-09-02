@@ -58,19 +58,6 @@ class MainActivity : ComponentActivity() {
             composable("homepage") { Homepage(navController) }
             composable("play") { PlayScreen(navController) }
             composable("options") { OptionsScreen(navController, settingsViewModel) }
-
-            /*composable("quiz/{category}/{difficulty}") { backStackEntry ->
-                val category = backStackEntry.arguments?.getString("category")
-                val difficulty = backStackEntry.arguments?.getString("difficulty")
-                QuizScreen(
-                    navController = navController,
-                    category = category ?: "",
-                    difficulty = difficulty ?: "",
-                    viewModel = gameViewModel
-                )
-            }
-            */
-
             composable(
                 "question/{category}/{difficulty}/{questionIndex}",
                 arguments = listOf(

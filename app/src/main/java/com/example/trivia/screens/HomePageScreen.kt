@@ -18,11 +18,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -52,10 +57,40 @@ fun Homepage(navController: NavController) {
 
     val context = LocalContext.current
 
-    BackHandler {
+    var showExitDialog by remember {mutableStateOf(false)}
 
-        (context as? Activity)?.finish()
+    // Gestisce il back press
+    BackHandler {
+        showExitDialog = true
     }
+
+    if (showExitDialog) {
+        // Mostra il pop-up di conferma
+        AlertDialog(
+            onDismissRequest = { showExitDialog = false },
+            title = { Text("Esci dall'app") },
+            text = { Text("Sei sicuro di voler uscire dall'applicazione?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showExitDialog = false
+                        // Esce dall'app
+                        (context as? Activity)?.finish()
+                    }
+                ) {
+                    Text("Sì")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showExitDialog = false }
+                ) {
+                    Text("No")
+                }
+            }
+        )
+    }
+
 
     Box(
         modifier = Modifier

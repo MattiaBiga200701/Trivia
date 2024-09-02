@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Refresh
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -56,6 +57,7 @@ import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.medalSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.smallPadding
 
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.ui.theme.standardButton
@@ -69,6 +71,9 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
     val context = LocalContext.current
     val score by gameViewModel.score.observeAsState(initial = 0)
     val isSoundEnable by settingsViewModel.soundState.observeAsState(initial = false)
+    val questions by gameViewModel.questions.observeAsState(initial = emptyList())
+    val category = questions[0].category
+    val difficulty = questions[0].difficulty
 
     val message = when (score) {
         in 9..10 -> "Incredible! You're a true champion!"
@@ -94,6 +99,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
     }
 
     val rotationY = remember { Animatable(0f) }
+
 
     LaunchedEffect(Unit) {
         rotationY.animateTo(
@@ -166,6 +172,27 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
             Text(text = "$score/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
 
             Spacer(modifier = Modifier.height(64.dp))
+
+            Button(
+                onClick = { navController.navigate("question/${category}/${difficulty}/${0}") },
+                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
+                shape = RoundedCornerShape(cornerRounding),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = smallPadding, horizontal = mediumPadding)
+                    .height(standardButton)
+
+            ) {
+
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Retry",
+                    tint = Color.White
+                )
+
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(text = "Retry Quiz", color = Color.White, fontSize = fontSize)
+            }
 
             Button(
                 onClick = {
