@@ -24,7 +24,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.trivia.screens.QuestionScreen
-import com.example.trivia.screens.TimeUpScreen
 import com.example.trivia.viewmodel.GameSessionViewModel
 import com.example.trivia.viewmodel.GameViewModelFactory
 
@@ -77,12 +76,6 @@ class MainActivity : ComponentActivity() {
                     questionIndex = questionIndex,
                     viewModel = gameViewModel
                 )
-            }
-
-            composable("timeOver/{category}/{difficulty}") { backStackEntry ->
-                val category = backStackEntry.arguments?.getString("category")
-                val difficulty = backStackEntry.arguments?.getString("difficulty")
-                TimeUpScreen(navController, category ?: "", difficulty ?: "")
             }
             composable("end") { EndScreen(navController, gameViewModel, settingsViewModel) }
         }
