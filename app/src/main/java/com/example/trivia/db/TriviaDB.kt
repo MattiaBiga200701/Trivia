@@ -3,7 +3,8 @@ package com.example.trivia.db
 import android.content.Context
 import androidx.room.Database
 
-import androidx.room.Room
+
+import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
 
@@ -12,22 +13,20 @@ abstract class TriviaDB : RoomDatabase() {
     abstract fun gameHistoryDao(): GameHistoryDao
 
     companion object {
-        @Volatile
-        private var INSTANCE: TriviaDB? = null
+        private var db: TriviaDB? = null
 
         fun getInstance(context: Context): TriviaDB {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
+            if (db == null) {
+                db = databaseBuilder(
+                    context,
                     TriviaDB::class.java,
                     "TriviaData.db"
                 )
-                    .fallbackToDestructiveMigration()
                     .createFromAsset("TriviaData.db")
                     .build()
-                INSTANCE = instance
-                instance
             }
+            return db as TriviaDB
+
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.trivia
 
-import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,9 +22,11 @@ import com.example.trivia.viewmodel.SettingsViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.trivia.db.Repository
+import com.example.trivia.db.TriviaDB
 import com.example.trivia.screens.QuestionScreen
 import com.example.trivia.viewmodel.GameSessionViewModel
-import com.example.trivia.viewmodel.GameViewModelFactory
+import com.example.trivia.viewmodel.GameSessionModelFactory
 
 
 class MainActivity : ComponentActivity() {
@@ -49,8 +50,13 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
 
         val settingsViewModel: SettingsViewModel = viewModel()
+
+
+        val context = LocalContext.current
+        val db = TriviaDB.getInstance(context)
+        val repository = Repository(db.gameHistoryDao())
         val gameViewModel: GameSessionViewModel = viewModel(
-            factory = GameViewModelFactory(LocalContext.current.applicationContext as Application)
+            factory = GameSessionModelFactory(repository)
         )
 
         NavHost(navController = navController, startDestination = "homepage") {

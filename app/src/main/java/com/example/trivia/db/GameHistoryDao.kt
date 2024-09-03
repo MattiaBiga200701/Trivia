@@ -1,6 +1,7 @@
 package com.example.trivia.db
 
 import androidx.room.Dao
+
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -10,6 +11,14 @@ interface GameHistoryDao {
     @Insert
     fun insert(gameHistory: GameHistory)
 
-    @Query("SELECT * FROM game_history")
+    @Query("""
+        SELECT * FROM game_history
+        """)
     fun getAllHistory(): List<GameHistory>
+
+    /* Query di test
+    @Query("""DELETE FROM game_history""")
+    fun deleteAllHistory()
+    */
+
 }

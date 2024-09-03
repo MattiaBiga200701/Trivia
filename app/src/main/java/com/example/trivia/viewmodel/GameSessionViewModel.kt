@@ -4,6 +4,7 @@ package com.example.trivia.viewmodel
 
 import android.content.Context
 import android.media.MediaPlayer
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,14 +12,13 @@ import com.example.trivia.db.GameHistory
 import com.example.trivia.logic.GameLogic
 import com.example.trivia.db.Question
 import com.example.trivia.db.Repository
-import com.example.trivia.db.TriviaDB
+import com.example.trivia.logic.SimpleTimer
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Locale
-import java.util.concurrent.TimeUnit
 
 
-class GameSessionViewModel(context: Context): ViewModel(){
+
+class GameSessionViewModel(repository: Repository): ViewModel(){
 
 
     private val _questions = MutableLiveData<List<Question>>()
@@ -32,62 +32,24 @@ class GameSessionViewModel(context: Context): ViewModel(){
 
     private val selectedAnswers = mutableMapOf<Int, String?>()
 
-
-    private val rep : Repository
+    private var rep: Repository
 
     private var mediaPlayer: MediaPlayer? = null
 
-    private var startTime: Long = 0
-    private var totalTime: Long = 0
-    private var isTimerRunning: Boolean = false
+    private val timer = SimpleTimer()
+
+
 
     init {
 
         _score.value = 0
-
-        val gameHistoryDao = TriviaDB.getInstance(context).gameHistoryDao()
-
-        rep = Repository(gameHistoryDao)
+        rep = repository
     }
 
-    fun startTimer() {
-        if (!isTimerRunning) {
-            startTime = System.currentTimeMillis()
-            isTimerRunning = true
-        }
+    fun getTimer(): SimpleTimer{
+        return this.timer
     }
 
-    fun stopTimer() {
-        if (isTimerRunning) {
-            totalTime += System.currentTimeMillis() - startTime
-            isTimerRunning = false
-        }
-    }
-
-    fun resetTimer(){
-        totalTime = 0
-        startTime = 0
-        isTimerRunning = false
-    }
-
-
-
-    private fun getTotalTime(): String {
-        val totalMillis = totalTime + if (isTimerRunning) System.currentTimeMillis() - startTime else 0
-
-        val hours = TimeUnit.MILLISECONDS.toHours(totalMillis)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(totalMillis) % 60
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(totalMillis) % 60
-
-        return String.format(
-            Locale.US,
-            "%02d:%02d:%02d",
-            hours,
-            minutes,
-            seconds
-
-        )
-    }
 
     private fun getCurrentDateAsString(): String {
         val currentDate = LocalDate.now()
@@ -147,7 +109,8 @@ class GameSessionViewModel(context: Context): ViewModel(){
         val gameHistoryViewModel = GameHistoryViewModel(this.rep)
         val category = _questions.value?.get(0)?.category
         val difficulty =_questions.value?.get(0)?.difficulty
-        val newGameHistory = GameHistory(_score.value ?: 0, this.getTotalTime(), category, difficulty, this.getCurrentDateAsString() )
+        Log.e("CHECK TIMER", this.timer.getElapsedTimeFormatted())
+        val newGameHistory = GameHistory(_score.value ?: 0, this.timer.getElapsedTimeFormatted(), category, difficulty, this.getCurrentDateAsString() )
         gameHistoryViewModel.insertGameHistory(newGameHistory)
     }
 

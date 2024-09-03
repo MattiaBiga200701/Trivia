@@ -1,5 +1,6 @@
 package com.example.trivia.viewmodel
 
+
 import androidx.lifecycle.*
 import com.example.trivia.db.GameHistory
 import com.example.trivia.db.Repository
@@ -21,9 +22,11 @@ class GameHistoryViewModel(private val rep: Repository) : ViewModel() {
     }
 
 
-    fun loadAllGameHistory(){
+    fun loadAllGameHistory() {
         viewModelScope.launch(Dispatchers.IO){
             _gameHistoryList.postValue(rep.getAllGameHistory())
+
         }
+
     }
 }

@@ -72,10 +72,10 @@ fun QuestionScreen(
     val questions by viewModel.questions.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
     val context = LocalContext.current
-    //val question = questions.getOrNull(questionIndex)
+
 
     val selectedOption = remember { mutableStateOf<String?>(null) }
-    //val context = LocalContext.current
+
 
     val timerDuration = 30
     val timeRemaining = remember { mutableIntStateOf(timerDuration) }
@@ -89,6 +89,7 @@ fun QuestionScreen(
 
         if (questionIndex + 1 < questions.size) {
 
+            viewModel.getTimer().stop()
             navController.navigate("question/$category/$difficulty/${questionIndex + 1}")
         } else {
 
@@ -140,7 +141,7 @@ fun QuestionScreen(
         }
     } else {
 
-        viewModel.startTimer()
+        viewModel.getTimer().start()
 
         Box(
             modifier = Modifier
@@ -265,7 +266,7 @@ fun QuestionScreen(
                             if (questionIndex + 1 < questions.size) {
                                 navController.navigate("question/${category}/${difficulty}/${questionIndex + 1}")
                             } else {
-                                viewModel.stopTimer()
+                                viewModel.getTimer().stop()
                                 viewModel.setScore()
                                 navController.navigate("end")
                             }

@@ -101,6 +101,8 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
     val rotationY = remember { Animatable(0f) }
 
 
+
+
     LaunchedEffect(Unit) {
         rotationY.animateTo(
             targetValue = 360f,
@@ -196,8 +198,8 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
 
             Button(
                 onClick = {
-                    gameViewModel.resetTimer()
                     gameViewModel.setGameHistory()
+                    gameViewModel.getTimer().reset()
                     navController.navigate("homepage") {
                         popUpTo("homepage") { inclusive = true }
                         launchSingleTop = true
