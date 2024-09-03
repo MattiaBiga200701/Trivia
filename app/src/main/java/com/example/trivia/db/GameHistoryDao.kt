@@ -10,9 +10,6 @@ interface GameHistoryDao {
     @Insert
     fun insert(gameHistory: GameHistory)
 
-    @Query("SELECT * FROM game_history ORDER BY date DESC")
+    @Query("SELECT * FROM game_history")
     fun getAllHistory(): List<GameHistory>
-
-    @Query("SELECT category FROM game_history")
-    fun getScore(): String
 }

@@ -20,10 +20,10 @@ abstract class TriviaDB : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TriviaDB::class.java,
-                    "TriviaAppDB.db"
+                    "TriviaData.db"
                 )
                     .fallbackToDestructiveMigration()
-                    .createFromAsset("TriviaAppDB.db")
+                    .createFromAsset("TriviaData.db")
                     .build()
                 INSTANCE = instance
                 instance

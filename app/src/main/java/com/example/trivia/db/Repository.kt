@@ -113,9 +113,6 @@ class Repository(private val gameHistoryDao: GameHistoryDao) {
         return gameHistoryDao.getAllHistory()
     }
 
-    fun getScore(): String{
-        return gameHistoryDao.getScore()
-    }
 
 
 

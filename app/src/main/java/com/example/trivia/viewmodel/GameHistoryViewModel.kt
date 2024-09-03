@@ -1,7 +1,5 @@
 package com.example.trivia.viewmodel
 
-import android.util.Log
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.*
 import com.example.trivia.db.GameHistory
 import com.example.trivia.db.Repository
@@ -19,15 +17,13 @@ class GameHistoryViewModel(private val rep: Repository) : ViewModel() {
     fun insertGameHistory(newGameHistory: GameHistory) {
         viewModelScope.launch(Dispatchers.IO) {
             rep.insertGameHistory(newGameHistory)
-            Log.e("Message", rep.getScore())
-
         }
     }
 
 
     fun loadAllGameHistory(){
-
-        _gameHistoryList.postValue(rep.getAllGameHistory())
-
+        viewModelScope.launch(Dispatchers.IO){
+            _gameHistoryList.postValue(rep.getAllGameHistory())
+        }
     }
 }
