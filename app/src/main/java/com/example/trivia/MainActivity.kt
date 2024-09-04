@@ -24,7 +24,10 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.trivia.db.Repository
 import com.example.trivia.db.TriviaDB
+import com.example.trivia.screens.GameHistoryScreen
 import com.example.trivia.screens.QuestionScreen
+import com.example.trivia.viewmodel.GameHistoryModelFactory
+import com.example.trivia.viewmodel.GameHistoryViewModel
 import com.example.trivia.viewmodel.GameSessionViewModel
 import com.example.trivia.viewmodel.GameSessionModelFactory
 
@@ -51,12 +54,18 @@ class MainActivity : ComponentActivity() {
 
         val settingsViewModel: SettingsViewModel = viewModel()
 
-
         val context = LocalContext.current
         val db = TriviaDB.getInstance(context)
         val repository = Repository(db.gameHistoryDao())
+
+
         val gameViewModel: GameSessionViewModel = viewModel(
             factory = GameSessionModelFactory(repository)
+        )
+
+
+        val gameHistoryViewModel: GameHistoryViewModel = viewModel(
+            factory = GameHistoryModelFactory(repository)
         )
 
         NavHost(navController = navController, startDestination = "homepage") {
@@ -84,8 +93,9 @@ class MainActivity : ComponentActivity() {
                 )
             }
             composable("end") { EndScreen(navController, gameViewModel, settingsViewModel) }
+            composable("history") {
+                GameHistoryScreen(navController, gameHistoryViewModel)
+            }
         }
     }
 }
-
-

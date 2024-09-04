@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
@@ -57,7 +58,7 @@ fun Homepage(navController: NavController) {
 
     val context = LocalContext.current
 
-    var showExitDialog by remember {mutableStateOf(false)}
+    var showExitDialog by remember { mutableStateOf(false) }
 
 
     BackHandler {
@@ -68,8 +69,8 @@ fun Homepage(navController: NavController) {
 
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
-            title = { Text("Esci dall'app") },
-            text = { Text("Sei sicuro di voler uscire dall'applicazione?") },
+            title = { Text("Exit app") },
+            text = { Text("Are you sure you wanna exit?") },
             confirmButton = {
                 Button(
                     onClick = {
@@ -90,7 +91,6 @@ fun Homepage(navController: NavController) {
             }
         )
     }
-
 
     Box(
         modifier = Modifier
@@ -113,11 +113,8 @@ fun Homepage(navController: NavController) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "App Logo",
-                modifier = Modifier
-                    .size(logoSize)
-
+                modifier = Modifier.size(logoSize)
             )
-
 
             Spacer(modifier = Modifier.height(mediumSpace))
 
@@ -129,7 +126,6 @@ fun Homepage(navController: NavController) {
                     .fillMaxWidth()
                     .padding(vertical = smallPadding, horizontal = mediumPadding)
                     .height(standardButton)
-
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
@@ -142,7 +138,7 @@ fun Homepage(navController: NavController) {
 
             Button(
                 onClick = { navController.navigate("Options") },
-                colors = ButtonDefaults.buttonColors(containerColor= MyPink),
+                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,6 +152,25 @@ fun Homepage(navController: NavController) {
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
                 Text(text = "Options", color = Color.White, fontSize = fontSize)
+            }
+
+
+            Button(
+                onClick = { navController.navigate("history") },
+                colors = ButtonDefaults.buttonColors(containerColor = MyBlack),
+                shape = RoundedCornerShape(cornerRounding),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = smallPadding, horizontal = mediumPadding)
+                    .height(standardButton)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.DateRange,
+                    contentDescription = "History",
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(text = "History", color = Color.White, fontSize = fontSize)
             }
         }
     }
