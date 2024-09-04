@@ -47,7 +47,6 @@ import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.logoSize
 import com.example.trivia.ui.theme.mediumPadding
-import com.example.trivia.ui.theme.mediumSpace
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.ui.theme.smallSpace
 import com.example.trivia.ui.theme.standardButton
@@ -59,6 +58,8 @@ fun Homepage(navController: NavController) {
     val context = LocalContext.current
 
     var showExitDialog by remember { mutableStateOf(false) }
+
+
 
 
     BackHandler {
@@ -133,7 +134,7 @@ fun Homepage(navController: NavController) {
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "Play", color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.play_string), color = Color.White, fontSize = fontSize)
             }
 
             Button(
@@ -151,7 +152,7 @@ fun Homepage(navController: NavController) {
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "Options", color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.options_string), color = Color.White, fontSize = fontSize)
             }
 
 
@@ -170,7 +171,7 @@ fun Homepage(navController: NavController) {
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "History", color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.history_string), color = Color.White, fontSize = fontSize)
             }
         }
     }

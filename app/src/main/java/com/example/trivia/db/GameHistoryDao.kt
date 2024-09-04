@@ -21,4 +21,13 @@ interface GameHistoryDao {
     fun deleteAllHistory()
     */
 
+
+    @Query(""" SELECT * FROM game_history WHERE category = :categoryFilter""")
+    fun getHistoryFilterByCategory(categoryFilter: String): List<GameHistory>
+
+    @Query("""SELECT * FROM game_history WHERE date = :dateFilter""")
+    fun getHistoryFilterByDate(dateFilter: String): List<GameHistory>
+
+    @Query("""SELECT * FROM game_history WHERE date = :dateFilter AND category = :categoryFilter""")
+    fun getHistoryFilter(categoryFilter: String, dateFilter: String): List<GameHistory>
 }

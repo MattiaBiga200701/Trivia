@@ -59,6 +59,7 @@ fun PlayScreen(navController: NavController) {
 
     var selectedCategory by remember { mutableStateOf("") }
     var selectedDifficulty by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     val categories = listOf(
         "General Knowledge", "Vehicles", "Sports", "Entertainment: Video Games", "Entertainment: Film",
@@ -68,8 +69,9 @@ fun PlayScreen(navController: NavController) {
         "Art", "Entertainment: Comics", "Entertainment: Cartoon & Animations",
         "Entertainment: Japanese Anime & Manga", "Science: Gadgets"
     )
+
     val difficulties = listOf("easy", "medium", "hard")
-    val context = LocalContext.current
+
 
 
     Box(

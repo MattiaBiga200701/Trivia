@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- HomePage -->
+    <string name="play_string">Gioca</string>
+    <string name="options_string">Impostazioni</string>
+    <string name="history_string">Storico</string>
+
+    <!-- PreferencesScreen -->
+    <string name="category_string">Seleziona La Categoria</string>
+    <string name="difficulty_string">Seleziona La Difficoltà</string>
+    <string name="select_option_string">seleziona un\' opzione</string>
+    <string name="start_quiz_string">Inizia Il Quiz</string>
+</resources>
