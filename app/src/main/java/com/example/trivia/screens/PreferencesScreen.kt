@@ -39,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.trivia.R
 import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyCustomFont
@@ -94,7 +95,7 @@ fun PlayScreen(navController: NavController) {
         ) {
 
             Text(
-                text = "Select Category",
+                text = context.getString(R.string.category_string),
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 fontFamily = MyCustomFont,
@@ -109,7 +110,7 @@ fun PlayScreen(navController: NavController) {
                 shape = RoundedCornerShape(cornerRounding),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
-                MenuATendina(
+                SimpleDropDownMenu(
                     options = categories,
                     selectedOption = selectedCategory,
                     onOptionSelected = { selectedCategory = it }
@@ -119,7 +120,7 @@ fun PlayScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(mediumSpace))
 
             Text(
-                text = "Select Difficulty",
+                text = context.getString(R.string.difficulty_string),
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 fontFamily = MyCustomFont,
@@ -134,7 +135,7 @@ fun PlayScreen(navController: NavController) {
                 shape = RoundedCornerShape(cornerRounding),
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
-                MenuATendina(
+                SimpleDropDownMenu(
                     options = difficulties,
                     selectedOption = selectedDifficulty,
                     onOptionSelected = { selectedDifficulty = it }
@@ -172,25 +173,26 @@ fun PlayScreen(navController: NavController) {
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "Start Quiz", color = Color.White, fontSize = fontSize)
+                Text(context.getString(R.string.start_quiz_string), color = Color.White, fontSize = fontSize)
             }
         }
     }
 }
 
 @Composable
-fun MenuATendina(
+fun SimpleDropDownMenu(
     options: List<String>,
     selectedOption: String,
     onOptionSelected: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var opzioneSelezionata by remember { mutableStateOf(selectedOption) }
+    var optionSelected by remember { mutableStateOf(selectedOption) }
+    val context= LocalContext.current
 
     Column(modifier = Modifier.padding(mediumPadding)) {
 
         Text(
-            text = opzioneSelezionata.ifEmpty { "Select an option" },
+            text = optionSelected.ifEmpty { context.getString(R.string.select_option_string) },
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = true }
@@ -209,7 +211,7 @@ fun MenuATendina(
                     text = { Text(option) },
                     onClick = {
                         onOptionSelected(option)
-                        opzioneSelezionata = option
+                        optionSelected = option
                         expanded = false
                     }
                 )

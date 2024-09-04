@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.trivia.R
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
@@ -68,7 +69,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             Spacer(modifier = Modifier.height(60.dp))
 
             Text(
-                text = "Settings",
+                text = context.getString(R.string.settings_string),
                 fontSize = mediumFontSize,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -77,33 +78,33 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             Spacer(modifier = Modifier.height(bigSpace))
 
             SettingRow(
-                label = "Dark Theme",
+                label = context.getString(R.string.dark_theme_string),
                 checked = darkThemeEnabled,
                 onCheckedChange = { isChecked ->
                     viewModel.setThemeState(isChecked)
-                    toastMessage(message = "Dark Theme", context = context , check = isChecked )
+                    toastMessage(message = context.getString(R.string.dark_theme_string), context = context , check = isChecked )
                 }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             SettingRow(
-                label = "Enable Sound",
+                label = context.getString(R.string.sound_string),
                 checked = soundEnabled,
                 onCheckedChange = { isChecked ->
                     viewModel.setSoundState(isChecked)
-                    toastMessage(message = "Sound", context = context , check = isChecked )
+                    toastMessage(message = context.getString(R.string.sound_toast), context = context , check = isChecked )
                 }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             SettingRow(
-                label = "Enable Notifications",
+                label = context.getString(R.string.notifications_string),
                 checked = notificationsEnabled,
                 onCheckedChange = { isChecked ->
                     viewModel.setNotificationsState(isChecked)
-                    toastMessage(message = "Notifications", context = context , check = isChecked )
+                    toastMessage(message = context.getString(R.string.notification_toast), context = context , check = isChecked )
                 }
             )
 
@@ -126,7 +127,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Save & Return",
+                    text = context.getString(R.string.save_button),
                     color = Color.White,
                     fontSize = fontSize
                 )
@@ -162,7 +163,7 @@ fun SettingRow(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Un
 fun toastMessage(message: String, context: Context, check: Boolean){
     Toast.makeText(
         context,
-        message + " " + if (check) "Enabled" else "Disabled",
+        message + " " + if (check) "ON" else "OFF",
         Toast.LENGTH_SHORT
     ).show()
 }

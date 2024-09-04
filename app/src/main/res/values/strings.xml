@@ -11,4 +11,14 @@
     <string name="difficulty_string">Select Difficulty</string>
     <string name="select_option_string">Select Option</string>
     <string name="start_quiz_string">Start Quiz</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_string">Settings</string>
+    <string name="dark_theme_string">Dark Theme</string>
+    <string name="sound_string">Enable Sound</string>
+    <string name="notifications_string">Enable Notifications</string>
+    <string name="save_button">Save &amp; Return</string>
+    <string name="sound_toast">Sounds</string>
+    <string name="notification_toast">Notifications</string>
+
 </resources>

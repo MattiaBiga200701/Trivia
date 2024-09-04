@@ -11,4 +11,14 @@
     <string name="difficulty_string">Seleziona La Difficoltà</string>
     <string name="select_option_string">seleziona un\' opzione</string>
     <string name="start_quiz_string">Inizia Il Quiz</string>
+
+    <!-- SettingsScreen -->
+    <string name="settings_string">Impostazioni</string>
+    <string name="dark_theme_string">Tema Scuro</string>
+    <string name="sound_string">Attiva Suoni</string>
+    <string name="notifications_string">Attiva Notifiche</string>
+    <string name="save_button">Salva &amp; Ritorna</string>
+    <string name="sound_toast">Suoni</string>
+    <string name="notification_toast">Notifiche</string>
+
 </resources>
