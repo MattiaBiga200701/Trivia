@@ -79,7 +79,7 @@ fun Homepage(navController: NavController) {
                         (context as? Activity)?.finish()
                     }
                 ) {
-                    Text("Sì")
+                    Text("Yes")
                 }
             },
             dismissButton = {
@@ -108,7 +108,7 @@ fun Homepage(navController: NavController) {
             verticalArrangement = Arrangement.Center
         ) {
 
-            Spacer(modifier = Modifier.height(120.dp))
+            Spacer(modifier = Modifier.height(100.dp))
 
             Image(
                 painter = painterResource(id = R.drawable.logo),
@@ -116,7 +116,7 @@ fun Homepage(navController: NavController) {
                 modifier = Modifier.size(logoSize)
             )
 
-            Spacer(modifier = Modifier.height(mediumSpace))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Button(
                 onClick = { navController.navigate("Play") },
@@ -157,7 +157,7 @@ fun Homepage(navController: NavController) {
 
             Button(
                 onClick = { navController.navigate("history") },
-                colors = ButtonDefaults.buttonColors(containerColor = MyBlack),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF98FF98)),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()

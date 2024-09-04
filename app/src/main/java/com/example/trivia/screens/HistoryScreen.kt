@@ -126,6 +126,12 @@ fun GameHistoryItem(gameHistory: GameHistory) {
             fontWeight = FontWeight.SemiBold
         )
         Text(
+            text = "Time: ${gameHistory.time}",
+            color = Color.White,
+            fontSize = smallFontSize,
+            fontWeight = FontWeight.SemiBold
+        )
+        Text(
             text = "Date: ${gameHistory.date}",
             color = Color.White,
             fontSize = smallFontSize
