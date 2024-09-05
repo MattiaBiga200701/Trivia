@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
 
@@ -50,6 +51,7 @@ import com.example.trivia.R
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
+import com.example.trivia.ui.theme.MyRed
 
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
@@ -229,7 +231,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 onClick = {
                     navController.navigate("incorrectAnswers")
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                colors = ButtonDefaults.buttonColors(containerColor = MyRed),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -237,7 +239,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                     .height(standardButton)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Home,
+                    imageVector = Icons.Default.Clear,
                     contentDescription = "Error Screen",
                     tint = Color.White
                 )

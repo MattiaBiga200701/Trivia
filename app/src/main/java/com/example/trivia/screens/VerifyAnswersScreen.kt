@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +27,7 @@ import androidx.navigation.NavController
 import com.example.trivia.logic.GameLogic
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
+import com.example.trivia.ui.theme.MyRed
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
@@ -59,7 +62,8 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = mediumPadding),
+                .padding(horizontal = mediumPadding)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -100,13 +104,13 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
             )
             Text(
                 text = "Your Answer: $incorrectAnswer",
-                color = Color.Red,
+                color = MyRed,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.SemiBold
             )
             Text(
                 text = "Correct Answer: $correctAnswer",
-                color = Color.Green,
+                color = MyGreen,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.SemiBold
             )
