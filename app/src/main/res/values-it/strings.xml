@@ -35,4 +35,7 @@
     <string name="next_button">Prosegui</string>
     <string name="end_quiz_button">Termina Quiz</string>
 
+    <!-- HistoryScreen -->
+    <string name="history_title">Storico partite</string>
+
 </resources>

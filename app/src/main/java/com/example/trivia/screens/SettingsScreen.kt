@@ -66,7 +66,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(45.dp))
 
             Text(
                 text = context.getString(R.string.settings_string),

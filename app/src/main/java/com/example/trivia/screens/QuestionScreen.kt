@@ -159,6 +159,9 @@ fun QuestionScreen(
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
             ) {
+
+                Spacer(modifier = Modifier.height(30.dp))
+
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier

@@ -35,5 +35,9 @@
     <string name="next_button">Next</string>
     <string name="end_quiz_button">End Quiz</string>
 
+    <!-- HistoryScreen -->
+    <string name="history_title">Game History</string>
+
+
 
 </resources>
