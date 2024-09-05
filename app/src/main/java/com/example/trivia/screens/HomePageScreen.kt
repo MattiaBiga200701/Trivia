@@ -70,8 +70,8 @@ fun Homepage(navController: NavController) {
 
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
-            title = { Text("Exit app") },
-            text = { Text("Are you sure you wanna exit?") },
+            title = { Text(context.getString(R.string.alert_dialog_title)) },
+            text = { Text(context.getString(R.string.alert_dialog_question)) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -80,14 +80,14 @@ fun Homepage(navController: NavController) {
                         (context as? Activity)?.finish()
                     }
                 ) {
-                    Text("Yes")
+                    Text(context.getString(R.string.alert_dialog_choice_1))
                 }
             },
             dismissButton = {
                 Button(
                     onClick = { showExitDialog = false }
                 ) {
-                    Text("No")
+                    Text(context.getString(R.string.alert_dialog_choice_2))
                 }
             }
         )

@@ -192,7 +192,7 @@ fun QuestionScreen(
                 Spacer(modifier = Modifier.height(mediumPadding))
 
                 Text(
-                    text = "Category: $category",
+                    text = context.getString(R.string.category_title)  + " " + category,
                     fontSize = fontSize,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
@@ -200,7 +200,7 @@ fun QuestionScreen(
                 )
 
                 Text(
-                    text = "Difficulty: $difficulty",
+                    text = context.getString(R.string.difficulty_title) + " " + difficulty,
                     fontSize = fontSize,
                     color = Color.White,
                     fontWeight = FontWeight.SemiBold,
@@ -218,7 +218,7 @@ fun QuestionScreen(
                     Column(modifier = Modifier.padding(mediumPadding)) {
 
                         Text(
-                            text = "Question ${questionIndex + 1} of ${questions.size}",
+                            text = context.getString(R.string.question_string) + " " + (questionIndex + 1) + " " + context.getString(R.string.preposition_string) + " " + (questions.size),
                             fontSize = fontSize,
                             fontWeight = FontWeight.Bold,
                             color = Color.Gray

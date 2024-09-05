@@ -141,9 +141,9 @@ fun PlayScreen(navController: NavController) {
                     try {
 
                         if (selectedCategory.isEmpty()) {
-                            throw EmptyInputException("Select a Category First")
+                            throw EmptyInputException(context.getString(R.string.error_message_1))
                         } else if (selectedDifficulty.isEmpty()) {
-                            throw EmptyInputException("Select a Difficulty First")
+                            throw EmptyInputException(context.getString(R.string.error_message_2))
                         }
                         navController.navigate("question/${selectedCategory}/${selectedDifficulty}/${0}")
 
