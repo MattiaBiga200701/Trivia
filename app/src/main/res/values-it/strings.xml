@@ -44,6 +44,8 @@
     <string name="difficulty_title">Difficoltà:\</string>
     <string name="question_string">Domanda\</string>
     <string name="preposition_string">\Di\</string>
+    <string name="alert_dialog_title_1">Ritornare al Menù Principale</string>
+    <string name="alert_dialog_question_1">Sei sicuro di voler tornare al Menù Principale ?</string>
 
     <!-- HistoryScreen -->
     <string name="history_title">Storico partite</string>

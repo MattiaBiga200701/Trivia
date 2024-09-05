@@ -1,6 +1,8 @@
 package com.example.trivia.screens
 
 
+
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 
 import androidx.compose.foundation.clickable
@@ -19,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -35,6 +38,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
@@ -80,6 +84,8 @@ fun QuestionScreen(
 
     val timerDuration = 30
     val timeRemaining = remember { mutableIntStateOf(timerDuration) }
+
+    var showExitDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         while (timeRemaining.intValue > 0) {
@@ -141,6 +147,37 @@ fun QuestionScreen(
             )
         }
     } else {
+
+        BackHandler {
+            showExitDialog = true
+        }
+
+        if (showExitDialog) {
+
+            AlertDialog(
+                onDismissRequest = { showExitDialog = false },
+                title = { Text(context.getString(R.string.alert_dialog_title_1)) },
+                text = { Text(context.getString(R.string.alert_dialog_question_1)) },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showExitDialog = false
+
+                            navController.navigate("homepage")
+                        }
+                    ) {
+                        Text(context.getString(R.string.alert_dialog_choice_1))
+                    }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = { showExitDialog = false }
+                    ) {
+                        Text(context.getString(R.string.alert_dialog_choice_2))
+                    }
+                }
+            )
+        }
 
         viewModel.getTimer().start()
 
