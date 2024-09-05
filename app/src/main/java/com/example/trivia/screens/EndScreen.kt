@@ -76,10 +76,10 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
     val difficulty = questions[0].difficulty
 
     val message = when (score) {
-        in 9..10 -> "Incredible! You're a true champion!"
-        in 7..8 -> "Great job! You've scored really well!"
-        in 5..6 -> "Well done! Keep improving!"
-        else -> "You can do better!"
+        in 9..10 -> context.getString(R.string.first_place_string)
+        in 7..8 -> context.getString(R.string.second_place_string)
+        in 5..6 -> context.getString(R.string.third_place_string)
+        else -> context.getString(R.string.last_place_string)
 
     }
 
@@ -167,7 +167,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
 
             Spacer(modifier = Modifier.height(bigSpace))
 
-            Text(text = "Your Score:", fontSize = mediumFontSize, fontWeight = FontWeight.Bold,  color = Color.White)
+            Text(text = context.getString(R.string.score_string), fontSize = mediumFontSize, fontWeight = FontWeight.Bold,  color = Color.White)
 
             Spacer(modifier = Modifier.height(smallSpace))
 
@@ -193,7 +193,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 )
 
                 Spacer(modifier = Modifier.width(smallSpace))
-                Text(text = "Retry Quiz", color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.retry_button), color = Color.White, fontSize = fontSize)
             }
 
             Button(
@@ -219,7 +219,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
                 Text(
-                    text = "Main Menu",
+                    text = context.getString(R.string.main_menu_button),
                     color = Color.White,
                     fontSize = fontSize
                 )

@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 
 
 import androidx.navigation.NavController
+import com.example.trivia.R
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
@@ -133,7 +134,7 @@ fun QuestionScreen(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "No questions available",
+                text = context.getString(R.string.error_question),
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -286,7 +287,7 @@ fun QuestionScreen(
                     )
                     Spacer(modifier = Modifier.width(smallSpace))
                     Text(
-                        text = if (questionIndex + 1 < questions.size) "Next" else "End Quiz",
+                        text = if (questionIndex + 1 < questions.size) context.getString(R.string.next_button) else context.getString(R.string.end_quiz_button),
                         color = Color.White,
                         fontSize = fontSize
                     )

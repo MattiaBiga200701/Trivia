@@ -21,4 +21,19 @@
     <string name="sound_toast">Sounds</string>
     <string name="notification_toast">Notifications</string>
 
+    <!-- EndScreen -->
+    <string name="first_place_string">Incredible! You\'re a true champion!</string>
+    <string name="second_place_string">Great job! You\'ve scored really well!</string>
+    <string name="third_place_string">Well done! Keep improving!</string>
+    <string name="last_place_string">You can do better!</string>
+    <string name="score_string">Your Score:</string>
+    <string name="retry_button">Retry Quiz</string>
+    <string name="main_menu_button">Main Menu</string>
+
+    <!-- QuestionScreen -->
+    <string name="error_question">No questions available</string>
+    <string name="next_button">Next</string>
+    <string name="end_quiz_button">End Quiz</string>
+
+
 </resources>
