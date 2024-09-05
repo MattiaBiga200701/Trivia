@@ -31,6 +31,9 @@ class GameSessionViewModel(repository: Repository): ViewModel(){
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int> get() = _score
 
+    private val _answers = MutableLiveData<MutableMap<Int,String? >>()
+    val answers : LiveData<MutableMap<Int, String?>> get() = _answers
+
     private val selectedAnswers = mutableMapOf<Int, String?>()
 
     private var rep: Repository
@@ -62,8 +65,6 @@ class GameSessionViewModel(repository: Repository): ViewModel(){
         _isLoading.postValue(true)
         val categoryID = Category.fromCategoryName(category).id
         rep.fetchQuestions(context, categoryID, difficulty, this)
-
-
     }
 
     fun onQuestionFetched(questions: List<Question>){
@@ -103,6 +104,8 @@ class GameSessionViewModel(repository: Repository): ViewModel(){
 
     fun updateAnswer(questionIndex: Int, answer: String?) {
         selectedAnswers[questionIndex] = answer
+        _answers.postValue(selectedAnswers)
+
     }
 
 
