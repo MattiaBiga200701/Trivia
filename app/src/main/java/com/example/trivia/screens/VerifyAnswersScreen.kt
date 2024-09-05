@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.trivia.R
+import com.example.trivia.logic.GameLogic
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.mediumFontSize
@@ -33,6 +33,12 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
     val questions by viewModel.questions.observeAsState(initial = emptyList())
     val answers by viewModel.answers.observeAsState(initial = emptyMap())
     val context = LocalContext.current
+
+    val controller =  GameLogic()
+
+    controller.createIncorrectList(answers, questions)
+    val incorrectAnswers = controller.getIncorrectAnswers()
+    val incorrectQuestions = controller.getIncorrectQuestion()
 
     BoxWithConstraints(
         modifier = Modifier

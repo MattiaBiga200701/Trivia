@@ -109,6 +109,8 @@ class GameSessionViewModel(repository: Repository): ViewModel(){
     }
 
 
+
+
     fun setGameHistory(){
         val gameHistoryViewModel = GameHistoryViewModel(this.rep)
         val category = _questions.value?.get(0)?.category
