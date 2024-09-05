@@ -73,8 +73,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
             )
 
             for (i in incorrectAnswers.keys) {
-                //IncorrectComposable(question = incorrectQuestions[i].question, incorrectAnswer = , correctAnswer = )
-
+                IncorrectComposable(question = incorrectQuestions[i]?.question, incorrectAnswer = incorrectAnswers[i] , correctAnswer = incorrectQuestions[i]?.correctAnswer)
             }
 
 
@@ -89,7 +88,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 
 
     @Composable
-    fun IncorrectComposable(question: String?, incorrectAnswer: String, correctAnswer: String) {
+    fun IncorrectComposable(question: String?, incorrectAnswer: String?, correctAnswer: String?) {
 
         Column(
             modifier = Modifier
