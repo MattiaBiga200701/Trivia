@@ -13,6 +13,7 @@ import com.example.trivia.logic.GameLogic
 import com.example.trivia.db.Question
 import com.example.trivia.db.Repository
 import com.example.trivia.logic.SimpleTimer
+import com.example.trivia.logic.enums.Category
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -59,7 +60,7 @@ class GameSessionViewModel(repository: Repository): ViewModel(){
 
      fun loadQuestions(context: Context, category: String, difficulty: String) {
         _isLoading.postValue(true)
-        val categoryID = rep.getCategoryID(category)
+        val categoryID = Category.fromCategoryName(category).id
         rep.fetchQuestions(context, categoryID, difficulty, this)
 
 

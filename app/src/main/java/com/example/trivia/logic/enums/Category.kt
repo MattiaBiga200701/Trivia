@@ -1,61 +1,42 @@
 package com.example.trivia.logic.enums
 
-enum class Category(val id: String) {
+enum class Category(val id: String, val categoryName: String) {
 
-    GENERAL_KNOWLEDGE("9"),
-    VEHICLES("28"),
-    SPORTS("21"),
-    ENTERTAINMENT_VIDEO_GAMES("15"),
-    ENTERTAINMENT_FILM("11"),
-    SCIENCE_NATURE("17"),
-    CELEBRITIES("26"),
-    ANIMALS("27"),
-    ENTERTAINMENT_BOOKS("10"),
-    ENTERTAINMENT_MUSIC("12"),
-    ENTERTAINMENT_MUSICAL_THEATRES("13"),
-    ENTERTAINMENT_TELEVISION("14"),
-    ENTERTAINMENT_BOARD_GAMES("16"),
-    SCIENCE_COMPUTERS("18"),
-    SCIENCE_MATHEMATICS("19"),
-    MYTHOLOGY("20"),
-    HISTORY("23"),
-    GEOGRAPHY("22"),
-    POLITICS("24"),
-    ART("25"),
-    ENTERTAINMENT_COMICS("29"),
-    ENTERTAINMENT_CARTOON_ANIMATIONS("32"),
-    ENTERTAINMENT_JAPANESE_ANIME_MANGA("31"),
-    SCIENCE_GADGETS("30");
+    GENERAL_KNOWLEDGE("9", "General Knowledge"),
+    VEHICLES("28", "Vehicles"),
+    SPORTS("21", "Sports"),
+    ENTERTAINMENT_VIDEO_GAMES("15", "Entertainment: Video Games"),
+    ENTERTAINMENT_FILM("11", "Entertainment: Film"),
+    SCIENCE_NATURE("17", "Science & Nature"),
+    CELEBRITIES("26", "Celebrities"),
+    ANIMALS("27", "Animals"),
+    ENTERTAINMENT_BOOKS("10", "Entertainment: Books"),
+    ENTERTAINMENT_MUSIC("12", "Entertainment: Music"),
+    ENTERTAINMENT_MUSICAL_THEATRES("13", "Entertainment: Musical & Theatres"),
+    ENTERTAINMENT_TELEVISION("14", "Entertainment: Television"),
+    ENTERTAINMENT_BOARD_GAMES("16", "Entertainment: Board Games"),
+    SCIENCE_COMPUTERS("18", "Science: Computers"),
+    SCIENCE_MATHEMATICS("19", "Science: Mathematics"),
+    MYTHOLOGY("20", "Mythology"),
+    HISTORY("23", "History"),
+    GEOGRAPHY("22", "Geography"),
+    POLITICS("24", "Politics"),
+    ART("25", "Art"),
+    ENTERTAINMENT_COMICS("29", "Entertainment: Comics"),
+    ENTERTAINMENT_CARTOON_ANIMATIONS("32", "Entertainment: Cartoon & Animations"),
+    ENTERTAINMENT_JAPANESE_ANIME_MANGA("31", "Entertainment: Japanese Anime & Manga"),
+    SCIENCE_GADGETS("30", "Science: Gadgets");
+
 
     companion object {
         fun fromCategoryName(category: String): Category {
-            return when (category) {
-                "General Knowledge" -> GENERAL_KNOWLEDGE
-                "Vehicles" -> VEHICLES
-                "Sports" -> SPORTS
-                "Entertainment: Video Games" -> ENTERTAINMENT_VIDEO_GAMES
-                "Entertainment: Film" -> ENTERTAINMENT_FILM
-                "Science & Nature" -> SCIENCE_NATURE
-                "Celebrities" -> CELEBRITIES
-                "Animals" -> ANIMALS
-                "Entertainment: Books" -> ENTERTAINMENT_BOOKS
-                "Entertainment: Music" -> ENTERTAINMENT_MUSIC
-                "Entertainment: Musical & Theatres" -> ENTERTAINMENT_MUSICAL_THEATRES
-                "Entertainment: Television" -> ENTERTAINMENT_TELEVISION
-                "Entertainment: Board Games" -> ENTERTAINMENT_BOARD_GAMES
-                "Science: Computers" -> SCIENCE_COMPUTERS
-                "Science: Mathematics" -> SCIENCE_MATHEMATICS
-                "Mythology" -> MYTHOLOGY
-                "History" -> HISTORY
-                "Geography" -> GEOGRAPHY
-                "Politics" -> POLITICS
-                "Art" -> ART
-                "Entertainment: Comics" -> ENTERTAINMENT_COMICS
-                "Entertainment: Cartoon & Animations" -> ENTERTAINMENT_CARTOON_ANIMATIONS
-                "Entertainment: Japanese Anime & Manga" -> ENTERTAINMENT_JAPANESE_ANIME_MANGA
-                "Science: Gadgets" -> SCIENCE_GADGETS
-                else -> GENERAL_KNOWLEDGE
-            }
+            return entries.find { it.categoryName == category } ?: GENERAL_KNOWLEDGE // Default
         }
+
+        fun fromId(id: String): Category {
+            return entries.find { it.id == id } ?: GENERAL_KNOWLEDGE // Default
+        }
+
+
     }
 }

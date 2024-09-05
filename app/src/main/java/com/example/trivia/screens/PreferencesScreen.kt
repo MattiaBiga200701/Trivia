@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.exceptions.EmptyInputException
+import com.example.trivia.logic.enums.Category
+import com.example.trivia.logic.enums.Difficulty
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyCustomFont
 import com.example.trivia.ui.theme.MyGreen
@@ -61,18 +63,6 @@ fun PlayScreen(navController: NavController) {
     var selectedCategory by remember { mutableStateOf("") }
     var selectedDifficulty by remember { mutableStateOf("") }
     val context = LocalContext.current
-
-    val categories = listOf(
-        "General Knowledge", "Vehicles", "Sports", "Entertainment: Video Games", "Entertainment: Film",
-        "Science & Nature", "Celebrities", "Animals", "Entertainment: Books", "Entertainment: Music",
-        "Entertainment: Musical & Theatres", "Entertainment: Television", "Entertainment: Board Games",
-        "Science: Computers", "Science: Mathematics", "Mythology", "History", "Geography", "Politics",
-        "Art", "Entertainment: Comics", "Entertainment: Cartoon & Animations",
-        "Entertainment: Japanese Anime & Manga", "Science: Gadgets"
-    )
-
-    val difficulties = listOf("easy", "medium", "hard")
-
 
 
     Box(
@@ -111,7 +101,7 @@ fun PlayScreen(navController: NavController) {
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 SimpleDropDownMenu(
-                    options = categories,
+                    isCategory = true,
                     selectedOption = selectedCategory,
                     onOptionSelected = { selectedCategory = it }
                 )
@@ -136,7 +126,7 @@ fun PlayScreen(navController: NavController) {
                 elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
                 SimpleDropDownMenu(
-                    options = difficulties,
+                    isCategory = false,
                     selectedOption = selectedDifficulty,
                     onOptionSelected = { selectedDifficulty = it }
                 )
@@ -181,7 +171,7 @@ fun PlayScreen(navController: NavController) {
 
 @Composable
 fun SimpleDropDownMenu(
-    options: List<String>,
+    isCategory: Boolean,
     selectedOption: String,
     onOptionSelected: (String) -> Unit
 ) {
@@ -206,15 +196,25 @@ fun SimpleDropDownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(option) },
-                    onClick = {
-                        onOptionSelected(option)
-                        optionSelected = option
-                        expanded = false
-                    }
-                )
+
+            if(isCategory){
+                for(item in Category.entries){
+                    DropdownMenuItem(
+                        text = { Text(item.categoryName) },
+                        onClick = {
+                            onOptionSelected(item.categoryName)
+                            optionSelected = item.categoryName
+                            expanded = false })
+                }
+            }else {
+                for(item in Difficulty.entries){
+                    DropdownMenuItem(
+                        text = { Text(item.id) },
+                        onClick = {
+                            onOptionSelected(item.id)
+                            optionSelected = item.id
+                            expanded = false })
+                }
             }
         }
     }

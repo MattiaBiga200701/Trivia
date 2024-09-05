@@ -6,6 +6,7 @@ enum class Difficulty(val id: String) {
     MEDIUM("medium"),
     HARD("hard");
 
+
     companion object {
         fun fromString(id: String): Difficulty? {
             return entries.find { it.id == id }
