@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +27,8 @@ import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.smallFontSize
+import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.viewmodel.GameSessionViewModel
 
 @Composable
@@ -34,7 +38,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
     val answers by viewModel.answers.observeAsState(initial = emptyMap())
     val context = LocalContext.current
 
-    val controller =  GameLogic()
+    val controller = GameLogic()
 
     controller.createIncorrectList(answers, questions)
     val incorrectAnswers = controller.getIncorrectAnswers()
@@ -68,22 +72,53 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                 color = Color.White
             )
 
+            for (i in incorrectAnswers.keys) {
+                //IncorrectComposable(question = incorrectQuestions[i].question, incorrectAnswer = , correctAnswer = )
+
+            }
+
+
+
             Spacer(modifier = Modifier.height(15.dp))
 
 
         }
 
+    }
+}
 
+
+    @Composable
+    fun IncorrectComposable(question: String?, incorrectAnswer: String, correctAnswer: String) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = smallPadding)
+                .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
+                .padding(mediumPadding)
+        ) {
+            Text(
+                text = "Question: $question",
+                color = Color.White,
+                fontSize = smallFontSize,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Your Answer: $incorrectAnswer",
+                color = Color.Red,
+                fontSize = smallFontSize,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                text = "Correct Answer: $correctAnswer",
+                color = Color.Green,
+                fontSize = smallFontSize,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
     }
 
-}
 
 
 
-
-@Composable
-fun IncorrectComposable(){
-
-
-
-}
