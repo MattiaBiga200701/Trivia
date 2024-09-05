@@ -49,5 +49,8 @@
 
     <!-- HistoryScreen -->
     <string name="history_title">Storico partite</string>
+    <string name="score_string_1">Punteggio</string>
+    <string name="time">Tempo</string>
+    <string name="date">Data</string>
 
 </resources>

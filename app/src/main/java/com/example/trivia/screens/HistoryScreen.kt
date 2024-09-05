@@ -1,5 +1,6 @@
 package com.example.trivia.screens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -120,7 +121,7 @@ fun GameHistoryScreen(
                         .fillMaxSize()
                 ) {
                     items(gameHistoryList) { gameHistory ->
-                        GameHistoryItem(gameHistory)
+                        GameHistoryItem(gameHistory, context)
                         HorizontalDivider(color = Color.White)
                     }
                 }
@@ -130,7 +131,7 @@ fun GameHistoryScreen(
 }
 
 @Composable
-fun GameHistoryItem(gameHistory: GameHistory) {
+fun GameHistoryItem(gameHistory: GameHistory, context: Context) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -139,31 +140,31 @@ fun GameHistoryItem(gameHistory: GameHistory) {
             .padding(mediumPadding)
     ) {
         Text(
-            text = "Category: ${gameHistory.category}",
+            text = context.getString(R.string.category_title) + ": " + gameHistory.category,
             color = Color.White,
             fontSize = smallFontSize,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Difficulty: ${gameHistory.difficulty}",
+            text = context.getString(R.string.difficulty_title) + ": " + gameHistory.difficulty,
             color = Color.White,
             fontSize = smallFontSize,
             fontWeight = FontWeight.Bold
         )
         Text(
-            text = "Score: ${gameHistory.score}",
+            text = context.getString(R.string.score_string_1) + ": " + gameHistory.score,
             color = Color.White,
             fontSize = smallFontSize,
             fontWeight = FontWeight.SemiBold
         )
         Text(
-            text = "Time: ${gameHistory.time}",
+            text = context.getString(R.string.time) + ": " + gameHistory.time,
             color = Color.White,
             fontSize = smallFontSize,
             fontWeight = FontWeight.SemiBold
         )
         Text(
-            text = "Date: ${gameHistory.date}",
+            text = context.getString(R.string.date) + ": " + gameHistory.date,
             color = Color.White,
             fontSize = smallFontSize
         )

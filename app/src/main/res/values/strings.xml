@@ -49,6 +49,9 @@
 
     <!-- HistoryScreen -->
     <string name="history_title">Game History</string>
+    <string name="score_string_1">Score</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
 
 
 
