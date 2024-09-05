@@ -74,13 +74,8 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 
             for (i in incorrectAnswers.keys) {
                 IncorrectComposable(question = incorrectQuestions[i]?.question, incorrectAnswer = incorrectAnswers[i] , correctAnswer = incorrectQuestions[i]?.correctAnswer)
+                Spacer(modifier = Modifier.height(15.dp))
             }
-
-
-
-            Spacer(modifier = Modifier.height(15.dp))
-
-
         }
 
     }

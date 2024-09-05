@@ -24,6 +24,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.example.trivia.db.Repository
 import com.example.trivia.db.TriviaDB
+import com.example.trivia.screens.ErrorScreen
 import com.example.trivia.screens.GameHistoryScreen
 import com.example.trivia.screens.QuestionScreen
 import com.example.trivia.viewmodel.GameHistoryModelFactory
@@ -95,6 +96,9 @@ class MainActivity : ComponentActivity() {
             composable("end") { EndScreen(navController, gameViewModel, settingsViewModel) }
             composable("history") {
                 GameHistoryScreen(navController, gameHistoryViewModel)
+            }
+            composable("incorrectAnswers") {
+                ErrorScreen(navController, gameViewModel)
             }
         }
     }

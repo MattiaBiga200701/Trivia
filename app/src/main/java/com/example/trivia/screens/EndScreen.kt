@@ -225,6 +225,30 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 )
             }
 
+            Button(
+                onClick = {
+                    navController.navigate("incorrectAnswers")
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                shape = RoundedCornerShape(cornerRounding),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(mediumPadding)
+                    .height(standardButton)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Error Screen",
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(smallSpace))
+                Text(
+                    text = "View Errors",
+                    color = Color.White,
+                    fontSize = fontSize
+                )
+            }
+
         }
     }
 
