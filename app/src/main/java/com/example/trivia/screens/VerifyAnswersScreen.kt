@@ -2,6 +2,7 @@ package com.example.trivia.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,9 +10,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,10 +30,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.trivia.R
 import com.example.trivia.logic.GameLogic
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyRed
+import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
@@ -62,31 +70,65 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = mediumPadding)
-                .verticalScroll(rememberScrollState()),
+                .padding(horizontal = mediumPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(45.dp))
 
-            Text(
-                text = "Incorrect Answers",
-                fontSize = mediumFontSize,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp)
+            ) {
 
-            for (i in incorrectAnswers.keys) {
-                IncorrectComposable(question = incorrectQuestions[i]?.question, incorrectAnswer = incorrectAnswers[i] , correctAnswer = incorrectQuestions[i]?.correctAnswer)
-                Spacer(modifier = Modifier.height(15.dp))
+
+                IconButton(
+                    onClick = { navController.navigateUp() },
+                    modifier = Modifier
+                        .align(Alignment.CenterStart)
+                        .padding(start = 4.dp)
+                        .size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back to Homepage",
+                        tint = Color.White
+                    )
+                }
+
+
+                Text(
+                    text =context.getString(R.string.error_title),
+                    color = Color.White,
+                    fontSize = mediumFontSize,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = mediumPadding)
+            ) {
+                items(incorrectAnswers.keys.toList()) { i ->
+                    IncorrectComposable(
+                        question = incorrectQuestions[i]?.question,
+                        incorrectAnswer = incorrectAnswers[i],
+                        correctAnswer = incorrectQuestions[i]?.correctAnswer
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
             }
         }
-
     }
 }
 
-
-    @Composable
+@Composable
     fun IncorrectComposable(question: String?, incorrectAnswer: String?, correctAnswer: String?) {
 
         Column(

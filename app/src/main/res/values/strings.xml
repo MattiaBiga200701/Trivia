@@ -35,6 +35,7 @@
     <string name="score_string">Your Score:</string>
     <string name="retry_button">Retry Quiz</string>
     <string name="main_menu_button">Main Menu</string>
+    <string name="view_errors_button">View Errors</string>
 
     <!-- QuestionScreen -->
     <string name="error_question">No questions available</string>
@@ -53,6 +54,8 @@
     <string name="time">Time</string>
     <string name="date">Date</string>
 
+    <!-- ErrorScreen -->
+    <string name="error_title">Incorrect Answers</string>
 
 
 </resources>

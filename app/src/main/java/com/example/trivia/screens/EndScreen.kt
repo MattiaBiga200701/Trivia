@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Refresh
 
@@ -211,7 +211,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(mediumPadding)
+                    .padding(vertical= smallPadding, horizontal =mediumPadding)
                     .height(standardButton)
             ) {
                 Icon(
@@ -235,17 +235,17 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(mediumPadding)
+                    .padding(vertical= smallPadding, horizontal =mediumPadding)
                     .height(standardButton)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Clear,
+                    imageVector = Icons.Default.Close,
                     contentDescription = "Error Screen",
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(smallSpace))
                 Text(
-                    text = "View Errors",
+                    text = context.getString(R.string.view_errors_button),
                     color = Color.White,
                     fontSize = fontSize
                 )
