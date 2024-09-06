@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,7 +56,7 @@ import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.viewmodel.GameHistoryViewModel
 import java.util.Calendar
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun GameHistoryScreen(
     navController: NavController,
@@ -68,14 +68,8 @@ fun GameHistoryScreen(
     val selectedDate = remember { mutableStateOf<String?>(null) }
     val showDatePicker = remember { mutableStateOf(false) }
 
-    val expanded = remember { mutableStateOf(false) }
     val selectedCategory = remember { mutableStateOf<String?>(null) }
     val categories = Category.entries.map { it.categoryName }
-
-
-
-
-
 
     LaunchedEffect(Unit) {
         viewModel.loadAllGameHistory()
@@ -108,14 +102,12 @@ fun GameHistoryScreen(
 
             Spacer(modifier = Modifier.height(45.dp))
 
-
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
             ) {
-
 
                 IconButton(
                     onClick = { navController.navigateUp() },
@@ -131,7 +123,6 @@ fun GameHistoryScreen(
                     )
                 }
 
-
                 Text(
                     text = context.getString(R.string.history_title),
                     color = Color.White,
@@ -143,7 +134,6 @@ fun GameHistoryScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-
             OutlinedButton(
                 onClick = {
                     showDatePicker.value = true
@@ -151,52 +141,22 @@ fun GameHistoryScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = if (selectedDate.value.isNullOrEmpty()) "Select Date" else selectedDate.value
-                        ?: "",
+                    text = if (selectedDate.value.isNullOrEmpty()) "Select Date" else selectedDate.value ?: "",
                     color = Color.White
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            ExposedDropdownMenuBox(
-                expanded = expanded.value,
-                onExpandedChange = { expanded.value = !expanded.value },
-                modifier = Modifier.wrapContentSize()
-            ) {
 
-                TextField(
-                    value = selectedCategory.value ?: "Select Category",
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Category") },
-                    trailingIcon = {
-                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value)
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor()
-                )
-
-
-                ExposedDropdownMenu(
-                    expanded = expanded.value,
-                    onDismissRequest = { expanded.value = false }
-                ) {
-                    categories.forEach { category ->
-                        DropdownMenuItem(
-                            text = { Text(category) },
-                            onClick = {
-                                selectedCategory.value = category
-                                expanded.value = false
-                            }
-                        )
-                    }
-                }
-            }
+            CustomDropdownMenu(
+                label = "Category",
+                options = categories,
+                selectedOption = selectedCategory.value,
+                onOptionSelected = { selectedCategory.value = it }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
-
 
             if (gameHistoryList.isEmpty()) {
                 Box(
@@ -224,7 +184,6 @@ fun GameHistoryScreen(
         }
     }
 }
-
 
 
 @Composable
@@ -294,3 +253,56 @@ fun ShowDatePicker(context: Context, onDateSelected: (String) -> Unit, onDismiss
 
     datePickerDialog.show()
 }
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomDropdownMenu(
+    label: String,
+    options: List<String>,
+    selectedOption: String?,
+    onOptionSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val expanded = remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded.value,
+        onExpandedChange = { expanded.value = !expanded.value },
+        modifier = modifier.fillMaxWidth()
+    ) {
+
+        TextField(
+            value = selectedOption ?: "Select $label",
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            trailingIcon = {
+                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor()
+        )
+
+        ExposedDropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    onClick = {
+                        onOptionSelected(option)
+                        expanded.value = false
+                    }
+                )
+            }
+        }
+    }
+}
+
+
+
+
