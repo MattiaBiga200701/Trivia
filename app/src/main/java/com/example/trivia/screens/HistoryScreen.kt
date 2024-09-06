@@ -1,6 +1,8 @@
 package com.example.trivia.screens
 
+import android.app.DatePickerDialog
 import android.content.Context
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,19 +13,29 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.*
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.DropdownMenuItem
+
+
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -34,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.db.GameHistory
+import com.example.trivia.logic.enums.Category
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.mediumFontSize
@@ -41,7 +54,9 @@ import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.viewmodel.GameHistoryViewModel
+import java.util.Calendar
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameHistoryScreen(
     navController: NavController,
@@ -50,8 +65,33 @@ fun GameHistoryScreen(
     val gameHistoryList by viewModel.gameHistoryList.observeAsState(emptyList())
     val context = LocalContext.current
 
+    val selectedDate = remember { mutableStateOf<String?>(null) }
+    val showDatePicker = remember { mutableStateOf(false) }
+
+    val expanded = remember { mutableStateOf(false) }
+    val selectedCategory = remember { mutableStateOf<String?>(null) }
+    val categories = Category.entries.map { it.categoryName }
+
+
+
+
+
+
     LaunchedEffect(Unit) {
         viewModel.loadAllGameHistory()
+    }
+
+    if (showDatePicker.value) {
+        ShowDatePicker(
+            context = context,
+            onDateSelected = { date ->
+                selectedDate.value = date
+                showDatePicker.value = false
+            },
+            onDismiss = {
+                showDatePicker.value = false
+            }
+        )
     }
 
     Box(
@@ -103,6 +143,61 @@ fun GameHistoryScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
+            OutlinedButton(
+                onClick = {
+                    showDatePicker.value = true
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = if (selectedDate.value.isNullOrEmpty()) "Select Date" else selectedDate.value
+                        ?: "",
+                    color = Color.White
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            ExposedDropdownMenuBox(
+                expanded = expanded.value,
+                onExpandedChange = { expanded.value = !expanded.value },
+                modifier = Modifier.wrapContentSize()
+            ) {
+
+                TextField(
+                    value = selectedCategory.value ?: "Select Category",
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Category") },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .menuAnchor()
+                )
+
+
+                ExposedDropdownMenu(
+                    expanded = expanded.value,
+                    onDismissRequest = { expanded.value = false }
+                ) {
+                    categories.forEach { category ->
+                        DropdownMenuItem(
+                            text = { Text(category) },
+                            onClick = {
+                                selectedCategory.value = category
+                                expanded.value = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+
             if (gameHistoryList.isEmpty()) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -129,6 +224,8 @@ fun GameHistoryScreen(
         }
     }
 }
+
+
 
 @Composable
 fun GameHistoryItem(gameHistory: GameHistory, context: Context) {
@@ -169,4 +266,31 @@ fun GameHistoryItem(gameHistory: GameHistory, context: Context) {
             fontSize = smallFontSize
         )
     }
+}
+
+@Composable
+fun ShowDatePicker(context: Context, onDateSelected: (String) -> Unit, onDismiss: () -> Unit) {
+
+    val calendar = Calendar.getInstance()
+
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+
+            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            onDateSelected(selectedDate)
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+
+
+    datePickerDialog.setOnCancelListener {
+        onDismiss()
+    }
+
+
+    datePickerDialog.show()
 }
