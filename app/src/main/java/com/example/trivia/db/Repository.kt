@@ -80,6 +80,18 @@ class Repository(private val gameHistoryDao: GameHistoryDao) {
         return gameHistoryDao.getAllHistory()
     }
 
+    fun getHistoryFilterByDate(date: String): List<GameHistory> {
+        return gameHistoryDao.getHistoryFilterByDate(date)
+    }
+
+    fun getHistoryFilterByCategory(category: String): List<GameHistory> {
+        return gameHistoryDao.getHistoryFilterByCategory(category)
+    }
+
+    fun getHistoryFilter(category: String, date: String): List<GameHistory> {
+        return gameHistoryDao.getHistoryFilter(category, date)
+    }
+
 
 
 

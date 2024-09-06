@@ -29,4 +29,24 @@ class GameHistoryViewModel(private val rep: Repository) : ViewModel() {
         }
 
     }
+
+    fun loadHistoryFilterByDate(date: String){
+        viewModelScope.launch(Dispatchers.IO){
+            _gameHistoryList.postValue(rep.getHistoryFilterByDate(date))
+        }
+    }
+
+    fun loadHistoryFilterByCategory(category: String){
+        viewModelScope.launch(Dispatchers.IO){
+            _gameHistoryList.postValue(rep.getHistoryFilterByCategory(category))
+        }
+    }
+
+    fun loadHistoryFilter(category: String, date: String){
+
+        viewModelScope.launch(Dispatchers.IO){
+            _gameHistoryList.postValue(rep.getHistoryFilter(category, date))
+        }
+
+    }
 }

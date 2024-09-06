@@ -36,6 +36,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -49,12 +50,14 @@ import com.example.trivia.db.GameHistory
 import com.example.trivia.logic.enums.Category
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
+import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.viewmodel.GameHistoryViewModel
 import java.util.Calendar
+import java.util.Locale
 
 
 @Composable
@@ -65,21 +68,43 @@ fun GameHistoryScreen(
     val gameHistoryList by viewModel.gameHistoryList.observeAsState(emptyList())
     val context = LocalContext.current
 
-    val selectedDate = remember { mutableStateOf<String?>(null) }
-    val showDatePicker = remember { mutableStateOf(false) }
+    var selectedDate by remember { mutableStateOf<String?>(null) }
+    val showDatePicker =  remember { mutableStateOf(false) }
 
-    val selectedCategory = remember { mutableStateOf<String?>(null) }
+    var selectedCategory by remember { mutableStateOf<String?>(null) }
     val categories = Category.entries.map { it.categoryName }
 
     LaunchedEffect(Unit) {
         viewModel.loadAllGameHistory()
     }
 
+    LaunchedEffect(selectedDate, selectedCategory) {
+        when {
+            selectedDate != null && selectedCategory != null -> {
+
+                viewModel.loadHistoryFilter(selectedCategory!!, selectedDate!!)
+
+            }
+            selectedDate != null -> {
+                viewModel.loadHistoryFilterByDate(selectedDate!!)
+            }
+            selectedCategory != null -> {
+
+                viewModel.loadHistoryFilterByCategory(selectedCategory!!)
+            }
+            else -> {
+                viewModel.loadAllGameHistory()
+            }
+        }
+    }
+
+
+
     if (showDatePicker.value) {
         ShowDatePicker(
             context = context,
             onDateSelected = { date ->
-                selectedDate.value = date
+                selectedDate = date
                 showDatePicker.value = false
             },
             onDismiss = {
@@ -141,7 +166,7 @@ fun GameHistoryScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = if (selectedDate.value.isNullOrEmpty()) "Select Date" else selectedDate.value ?: "",
+                    text = if (selectedDate.isNullOrEmpty()) "Select Date" else selectedDate ?: "",
                     color = Color.White
                 )
             }
@@ -152,11 +177,24 @@ fun GameHistoryScreen(
             CustomDropdownMenu(
                 label = "Category",
                 options = categories,
-                selectedOption = selectedCategory.value,
-                onOptionSelected = { selectedCategory.value = it }
+                selectedOption = selectedCategory,
+                onOptionSelected = { selectedCategory = it }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedButton(
+                onClick = {
+                    selectedDate = null
+                    selectedCategory = null
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Clear Filters",
+                    color = MyPink
+                )
+            }
 
             if (gameHistoryList.isEmpty()) {
                 Box(
@@ -237,7 +275,9 @@ fun ShowDatePicker(context: Context, onDateSelected: (String) -> Unit, onDismiss
         context,
         { _, year, month, dayOfMonth ->
 
-            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            val formattedMonth = String.format(Locale.US, "%02d",month + 1)
+            val formattedDay = String.format(Locale.US, "%02d", dayOfMonth)
+            val selectedDate = "$year-$formattedMonth-$formattedDay"
             onDateSelected(selectedDate)
         },
         calendar.get(Calendar.YEAR),
