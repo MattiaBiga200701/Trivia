@@ -1,13 +1,19 @@
 package com.example.trivia
 
+import android.app.Activity
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
@@ -34,6 +40,8 @@ import com.example.trivia.viewmodel.GameSessionModelFactory
 
 
 class MainActivity : ComponentActivity() {
+
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -43,12 +51,26 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
                     TriviaApp()
                 }
             }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun setImmersiveMode(activity: Activity) {
+        activity.window.setDecorFitsSystemWindows(false)
+        val controller = activity.window.insetsController
+        controller?.let {
+            it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            it.hide(WindowInsets.Type.systemBars())
+        }
+    }
+
+
+
+    @RequiresApi(Build.VERSION_CODES.R)
     @Composable
     fun TriviaApp() {
         val navController = rememberNavController()
@@ -68,6 +90,11 @@ class MainActivity : ComponentActivity() {
         val gameHistoryViewModel: GameHistoryViewModel = viewModel(
             factory = GameHistoryModelFactory(repository)
         )
+
+        LaunchedEffect(Unit){
+            setImmersiveMode(this@MainActivity)
+        }
+
 
         NavHost(navController = navController, startDestination = "homepage") {
             composable("homepage") { Homepage(navController) }
