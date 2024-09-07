@@ -178,7 +178,10 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
             Spacer(modifier = Modifier.height(64.dp))
 
             Button(
-                onClick = { navController.navigate("question/${category}/${difficulty}/${0}") },
+                onClick = {
+                    gameViewModel.getTimer().reset()
+                    navController.navigate("question/${category}/${difficulty}/${0}")
+                          },
                 colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
