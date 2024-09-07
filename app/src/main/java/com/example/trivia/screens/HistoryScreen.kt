@@ -2,8 +2,10 @@ package com.example.trivia.screens
 
 import android.app.DatePickerDialog
 import android.content.Context
+import androidx.compose.foundation.BorderStroke
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 
@@ -28,7 +30,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
+
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,15 +44,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.db.GameHistory
 import com.example.trivia.logic.enums.Category
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
+
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
@@ -159,17 +163,27 @@ fun GameHistoryScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedButton(
+            Button(
                 onClick = {
                     showDatePicker.value = true
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color.White)
             ) {
                 Text(
                     text = if (selectedDate.isNullOrEmpty()) "Select Date" else selectedDate ?: "",
-                    color = Color.White
+                    color = Color.White,
+                    fontSize = smallFontSize
                 )
             }
+
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -183,18 +197,28 @@ fun GameHistoryScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            OutlinedButton(
+            Button(
                 onClick = {
                     selectedDate = null
                     selectedCategory = null
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Transparent,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color.White)
             ) {
                 Text(
                     text = "Clear Filters",
-                    color = MyPink
+                    color = Color.White,
+                    fontSize = smallFontSize
                 )
             }
+
 
             if (gameHistoryList.isEmpty()) {
                 Box(
@@ -316,13 +340,31 @@ fun CustomDropdownMenu(
             value = selectedOption ?: "Select $label",
             onValueChange = {},
             readOnly = true,
-            label = { Text(label) },
+            label = { Text(
+                text = label,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = Color.White
+            ) },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value)
             },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White
+            ),
             modifier = Modifier
                 .fillMaxWidth()
                 .menuAnchor()
+                .border(1.dp, Color.White, RoundedCornerShape(8.dp)),
+            textStyle = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+        )
         )
 
         ExposedDropdownMenu(
