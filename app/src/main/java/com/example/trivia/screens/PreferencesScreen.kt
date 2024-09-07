@@ -53,7 +53,7 @@ import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.mediumSpace
 import com.example.trivia.ui.theme.smallPadding
-import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.microSpace
 import com.example.trivia.ui.theme.standardButton
 
 
@@ -162,7 +162,7 @@ fun PlayScreen(navController: NavController) {
                     contentDescription = "Start Quiz",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(context.getString(R.string.start_quiz_string), color = Color.White, fontSize = fontSize)
             }
         }

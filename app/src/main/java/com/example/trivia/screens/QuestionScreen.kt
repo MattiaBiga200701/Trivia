@@ -60,7 +60,7 @@ import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.mediumSpace
 import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
-import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.microSpace
 import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.GameSessionViewModel
 import kotlinx.coroutines.delay
@@ -212,7 +212,7 @@ fun QuestionScreen(
                         CircularProgressIndicator(
                             progress = { timeRemaining.intValue / timerDuration.toFloat() },
                             modifier = Modifier.size(100.dp),
-                            strokeWidth = smallSpace,
+                            strokeWidth = microSpace,
                             color = Color.White
                         )
                         Text(
@@ -261,7 +261,7 @@ fun QuestionScreen(
                             color = Color.Gray
                         )
 
-                        Spacer(modifier = Modifier.height(smallSpace))
+                        Spacer(modifier = Modifier.height(microSpace))
 
                         Text(
                             text = questions[questionIndex].question,
@@ -270,7 +270,7 @@ fun QuestionScreen(
                             color = Color.Black
                         )
 
-                        Spacer(modifier = Modifier.height(smallSpace))
+                        Spacer(modifier = Modifier.height(microSpace))
 
                         questions[questionIndex].options.forEach { option ->
                             Row(
@@ -325,7 +325,7 @@ fun QuestionScreen(
                         contentDescription = "End Quiz",
                         tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(smallSpace))
+                    Spacer(modifier = Modifier.width(microSpace))
                     Text(
                         text = if (questionIndex + 1 < questions.size) context.getString(R.string.next_button) else context.getString(R.string.end_quiz_button),
                         color = Color.White,

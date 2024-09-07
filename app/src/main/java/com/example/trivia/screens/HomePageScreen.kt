@@ -48,7 +48,7 @@ import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.logoSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallPadding
-import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.microSpace
 import com.example.trivia.ui.theme.standardButton
 
 
@@ -133,7 +133,7 @@ fun Homepage(navController: NavController) {
                     contentDescription = "Play",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(text = context.getString(R.string.play_string), color = Color.White, fontSize = fontSize)
             }
 
@@ -151,7 +151,7 @@ fun Homepage(navController: NavController) {
                     contentDescription = "Options",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(text = context.getString(R.string.options_string), color = Color.White, fontSize = fontSize)
             }
 
@@ -170,7 +170,7 @@ fun Homepage(navController: NavController) {
                     contentDescription = "History",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(text = context.getString(R.string.history_string), color = Color.White, fontSize = fontSize)
             }
         }

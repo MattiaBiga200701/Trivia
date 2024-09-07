@@ -61,7 +61,7 @@ import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallPadding
 
-import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.microSpace
 import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.GameSessionViewModel
 
@@ -128,6 +128,8 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
     }
 
     BackHandler {
+        gameViewModel.setGameHistory()
+        gameViewModel.getTimer().reset()
         navController.navigate("homepage") {
             popUpTo("homepage") { inclusive = true }
             launchSingleTop = true
@@ -171,7 +173,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
 
             Text(text = context.getString(R.string.score_string), fontSize = mediumFontSize, fontWeight = FontWeight.Bold,  color = Color.White)
 
-            Spacer(modifier = Modifier.height(smallSpace))
+            Spacer(modifier = Modifier.height(microSpace))
 
             Text(text = "$score/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
 
@@ -197,7 +199,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                     tint = Color.White
                 )
 
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(text = context.getString(R.string.retry_button), color = Color.White, fontSize = fontSize)
             }
 
@@ -222,7 +224,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                     contentDescription = "Main Menu",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(
                     text = context.getString(R.string.main_menu_button),
                     color = Color.White,
@@ -246,7 +248,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                     contentDescription = "Error Screen",
                     tint = Color.White
                 )
-                Spacer(modifier = Modifier.width(smallSpace))
+                Spacer(modifier = Modifier.width(microSpace))
                 Text(
                     text = context.getString(R.string.view_errors_button),
                     color = Color.White,

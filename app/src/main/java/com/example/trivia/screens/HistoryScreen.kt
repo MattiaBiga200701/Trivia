@@ -21,6 +21,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.*
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -54,11 +57,17 @@ import com.example.trivia.db.GameHistory
 import com.example.trivia.logic.enums.Category
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
+import com.example.trivia.ui.theme.MyPink
+import com.example.trivia.ui.theme.borderStrokeSize
+import com.example.trivia.ui.theme.cornerRounding
 
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
+import com.example.trivia.ui.theme.microFontSize
 import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
+import com.example.trivia.ui.theme.smallSpace
+import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.GameHistoryViewModel
 import java.util.Calendar
 import java.util.Locale
@@ -161,7 +170,7 @@ fun GameHistoryScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(smallSpace))
 
             Button(
                 onClick = {
@@ -169,23 +178,23 @@ fun GameHistoryScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(standardButton),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
                     contentColor = Color.White
                 ),
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color.White)
+                shape = RoundedCornerShape(cornerRounding),
+                border = BorderStroke(borderStrokeSize, MyPink)
             ) {
                 Text(
                     text = if (selectedDate.isNullOrEmpty()) "Select Date" else selectedDate ?: "",
                     color = Color.White,
-                    fontSize = smallFontSize
+                    fontSize = microFontSize
                 )
             }
 
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(smallSpace))
 
 
             CustomDropdownMenu(
@@ -195,7 +204,7 @@ fun GameHistoryScreen(
                 onOptionSelected = { selectedCategory = it }
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(smallSpace))
 
             Button(
                 onClick = {
@@ -204,13 +213,13 @@ fun GameHistoryScreen(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp),
+                    .height(standardButton),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
+                    containerColor = MyPink,
                     contentColor = Color.White
                 ),
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color.White)
+                shape = RoundedCornerShape(cornerRounding),
+                //border = BorderStroke(1.dp, Color.White)
             ) {
                 Text(
                     text = "Clear Filters",
@@ -219,6 +228,7 @@ fun GameHistoryScreen(
                 )
             }
 
+            Spacer(modifier = Modifier.height(smallSpace))
 
             if (gameHistoryList.isEmpty()) {
                 Box(
@@ -254,7 +264,7 @@ fun GameHistoryItem(gameHistory: GameHistory, context: Context) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = smallPadding)
-            .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
+            .background(Color(0x80000000), shape = RoundedCornerShape(cornerRounding))
             .padding(mediumPadding)
     ) {
         Text(
@@ -343,11 +353,16 @@ fun CustomDropdownMenu(
             label = { Text(
                 text = label,
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                fontSize = microFontSize,
                 color = Color.White
             ) },
             trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value)
+                //ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value, )
+                Icon(
+                    imageVector = if (expanded.value) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = Color.White // Imposta il colore dell'icona qui
+                )
             },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
@@ -360,17 +375,16 @@ fun CustomDropdownMenu(
             modifier = Modifier
                 .fillMaxWidth()
                 .menuAnchor()
-                .border(1.dp, Color.White, RoundedCornerShape(8.dp)),
+                .border(borderStrokeSize, MyPink, RoundedCornerShape(cornerRounding)),
             textStyle = TextStyle(
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
+                fontSize = microFontSize
         )
         )
 
         ExposedDropdownMenu(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
-            modifier = Modifier.fillMaxWidth()
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
