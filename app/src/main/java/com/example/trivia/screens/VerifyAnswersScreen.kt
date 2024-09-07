@@ -1,5 +1,7 @@
 package com.example.trivia.screens
 
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,8 +22,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -41,12 +46,14 @@ import com.example.trivia.ui.theme.smallFontSize
 import com.example.trivia.ui.theme.smallPadding
 import com.example.trivia.viewmodel.GameSessionViewModel
 
+
 @Composable
 fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 
     val questions by viewModel.questions.observeAsState(initial = emptyList())
     val answers by viewModel.answers.observeAsState(initial = emptyMap())
     val context = LocalContext.current
+    val isClicked = remember { mutableStateOf(false) }
 
     val controller = GameLogic()
 
@@ -84,7 +91,17 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 
 
                 IconButton(
-                    onClick = { navController.navigateUp() },
+                    onClick = {
+                        if (!isClicked.value) {
+                            isClicked.value = true
+                            navController.navigateUp()
+
+
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                isClicked.value = false
+                            }, 300)
+                        }
+                    },
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 2.dp)
