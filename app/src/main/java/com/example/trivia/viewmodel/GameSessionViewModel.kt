@@ -103,8 +103,9 @@ class GameSessionViewModel(repository: Repository): ViewModel(){
     }
 
     fun updateAnswer(questionIndex: Int, answer: String?) {
+        Log.d("UpdateAnswer", "QuestionIndex: $questionIndex, Answer: $answer")
         selectedAnswers[questionIndex] = answer
-        _answers.postValue(selectedAnswers)
+        _answers.value = selectedAnswers
 
     }
 

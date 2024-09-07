@@ -35,7 +35,6 @@ import com.example.trivia.logic.GameLogic
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyRed
-import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
@@ -88,7 +87,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                     onClick = { navController.navigateUp() },
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(start = 4.dp)
+                        .padding(start = 2.dp)
                         .size(32.dp)
                 ) {
                     Icon(
@@ -104,7 +103,9 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                     color = Color.White,
                     fontSize = mediumFontSize,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(start = 20.dp)
                 )
             }
 
