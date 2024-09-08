@@ -2,7 +2,7 @@ package com.example.trivia.screens
 
 
 
-import android.util.Log
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 
@@ -309,7 +309,6 @@ fun QuestionScreen(
                                 navController.navigate("question/${category}/${difficulty}/${questionIndex + 1}")
                             } else {
                                 viewModel.getTimer().stop()
-                                Log.e("CHECK TIMER", viewModel.getTimer().getElapsedTimeFormatted())
                                 viewModel.setScore()
                                 navController.navigate("end")
                             }

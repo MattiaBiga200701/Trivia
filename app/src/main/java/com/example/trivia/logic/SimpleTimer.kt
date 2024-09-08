@@ -14,43 +14,42 @@ class SimpleTimer(private val updateInterval: Long = 1000L) {
     private val runnable = object : Runnable {
         override fun run() {
             if (isRunning) {
-                // Aggiorna il tempo solo se il timer è in esecuzione
                 elapsedTime = System.currentTimeMillis() - startTime
                 handler.postDelayed(this, updateInterval)  // Ricontrolla fra updateInterval ms
             }
         }
     }
 
-    // Start the timer
+
     fun start() {
         if (!isRunning && getElapsedTimeFormatted() == "00:00") {
             startTime = System.currentTimeMillis() - elapsedTime
             isRunning = true
             handler.post(runnable)
-            Log.d("SimpleTimer", "Timer started")
+
         } else {
             Log.d("SimpleTimer", "Timer start failed: Timer is already running or not at 00:00")
         }
     }
 
-    // Stop the timer
+
     fun stop() {
         if (isRunning) {
-            isRunning = false  // Imposta isRunning a false
-            handler.removeCallbacks(runnable)  // Rimuovi i callback in attesa
-            Log.d("SimpleTimer", "Timer stopped")
+            isRunning = false
+            handler.removeCallbacks(runnable)
+
         }
     }
 
-    // Reset the timer
+
     fun reset() {
-        stop()  // Ferma il timer prima di resettare
+        stop()
         elapsedTime = 0
         startTime = System.currentTimeMillis()
-        Log.d("SimpleTimer", "Timer reset")
+
     }
 
-    // Get elapsed time in milliseconds
+
     private fun getElapsedTime(): Long {
         return if (isRunning) {
             System.currentTimeMillis() - startTime
