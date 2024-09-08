@@ -28,3 +28,5 @@ val cornerRounding = 16.dp
 
 val logoSize = 260.dp
 val medalSize = 100.dp
+
+val iconSize = 32.dp

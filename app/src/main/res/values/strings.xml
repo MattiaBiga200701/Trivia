@@ -11,6 +11,7 @@
     <string name="alert_dialog_choice_2">No</string>
 
     <!-- PreferencesScreen -->
+    <string name="preference_screen_title">Game Options</string>
     <string name="category_string">Select Category</string>
     <string name="difficulty_string">Select Difficulty</string>
     <string name="select_option_string">Select Option</string>

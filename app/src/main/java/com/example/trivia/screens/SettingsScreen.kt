@@ -6,10 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -30,6 +32,7 @@ import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
+import com.example.trivia.ui.theme.iconSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallPadding
@@ -68,12 +71,37 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
         ) {
             Spacer(modifier = Modifier.height(45.dp))
 
-            Text(
-                text = context.getString(R.string.settings_string),
-                fontSize = mediumFontSize,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = mediumPadding)
+            ){
+
+                IconButton(
+                    onClick = { navController.navigateUp() },
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterStart)
+                        .padding(start = 4.dp)
+                        .size(iconSize)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back to Homepage",
+                        tint = Color.White
+                    )
+                }
+
+                Text(
+                    text = context.getString(R.string.settings_string),
+                    fontSize = mediumFontSize,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color.White
+
+                )
+
+            }
 
             Spacer(modifier = Modifier.height(bigSpace))
 

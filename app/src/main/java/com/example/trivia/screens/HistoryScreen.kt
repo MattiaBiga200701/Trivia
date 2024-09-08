@@ -21,7 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowDropDown
+
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,7 +50,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.db.GameHistory
@@ -60,6 +60,7 @@ import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.borderStrokeSize
 import com.example.trivia.ui.theme.cornerRounding
+import com.example.trivia.ui.theme.iconSize
 
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
@@ -144,7 +145,7 @@ fun GameHistoryScreen(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = mediumPadding)
             ) {
 
                 IconButton(
@@ -152,7 +153,7 @@ fun GameHistoryScreen(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 4.dp)
-                        .size(32.dp)
+                        .size(iconSize)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -317,7 +318,7 @@ fun ShowDatePicker(context: Context, onDateSelected: (String) -> Unit, onDismiss
         calendar.get(Calendar.YEAR),
         calendar.get(Calendar.MONTH),
         calendar.get(Calendar.DAY_OF_MONTH)
-    )
+     )
 
 
     datePickerDialog.setOnCancelListener {

@@ -11,6 +11,7 @@
     <string name="alert_dialog_choice_2">No</string>
 
     <!-- PreferencesScreen -->
+    <string name="preference_screen_title">Opzioni di Gioco</string>
     <string name="category_string">Seleziona La Categoria</string>
     <string name="difficulty_string">Seleziona La Difficoltà</string>
     <string name="select_option_string">seleziona un\' opzione</string>
@@ -41,8 +42,8 @@
     <string name="error_question">Nessuna domanda disponibile</string>
     <string name="next_button">Prosegui</string>
     <string name="end_quiz_button">Termina Quiz</string>
-    <string name="category_title">Categoria:\</string>
-    <string name="difficulty_title">Difficoltà:\</string>
+    <string name="category_title">Categoria</string>
+    <string name="difficulty_title">Difficoltà</string>
     <string name="question_string">Domanda\</string>
     <string name="preposition_string">\Di\</string>
     <string name="alert_dialog_title_1">Ritornare al Menù Principale</string>
