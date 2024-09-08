@@ -1,10 +1,11 @@
 package com.example.trivia
 
-
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
@@ -44,9 +45,7 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setImmersiveMode()
-
         enableEdgeToEdge()
         setContent {
             TriviaTheme {
@@ -62,12 +61,17 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun setImmersiveMode() {
-
+        // Verifica la versione dell'API
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-
+            // Per Android 11 (API 30) e superiori
             window.setDecorFitsSystemWindows(false)
+            window.insetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
         } else {
-
+            // Per versioni precedenti ad Android 11
+            @Suppress("DEPRECATION")
             window.decorView.systemUiVisibility = (
                     View.SYSTEM_UI_FLAG_FULLSCREEN
                             or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -75,6 +79,7 @@ class MainActivity : ComponentActivity() {
                     )
         }
     }
+
 
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -97,6 +102,7 @@ class MainActivity : ComponentActivity() {
         val gameHistoryViewModel: GameHistoryViewModel = viewModel(
             factory = GameHistoryModelFactory(repository)
         )
+
 
 
 
