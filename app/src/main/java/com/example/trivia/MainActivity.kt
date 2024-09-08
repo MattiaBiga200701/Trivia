@@ -61,16 +61,16 @@ class MainActivity : ComponentActivity() {
 
     @Suppress("DEPRECATION")
     private fun setImmersiveMode() {
-        // Verifica la versione dell'API
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // Per Android 11 (API 30) e superiori
+            // Version >= Android 11
             window.setDecorFitsSystemWindows(false)
             window.insetsController?.let { controller ->
                 controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 controller.hide(WindowInsets.Type.systemBars())
             }
         } else {
-            // Per versioni precedenti ad Android 11
+            // Version <  Android 11
             window.decorView.systemUiVisibility = (
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -80,10 +80,10 @@ class MainActivity : ComponentActivity() {
                             or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                     )
 
-            // Forza il ripristino della modalità immersiva quando l'utente interagisce
+
             window.decorView.setOnSystemUiVisibilityChangeListener { visibility ->
                 if ((visibility and View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
-                    // La modalità immersiva è stata modificata, ripristina
+
                     window.decorView.systemUiVisibility = (
                             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                                     or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
