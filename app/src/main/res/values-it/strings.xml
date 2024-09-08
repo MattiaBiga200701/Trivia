@@ -30,7 +30,7 @@
 
     <!-- EndScreen -->
     <string name="first_place_string">Incredibile! Sei un vero campione!</string>
-    <string name="second_place_string">Ottimo lavoro!Hai ottenuto un buon punteggio!</string>
+    <string name="second_place_string">Ottimo lavoro! Hai ottenuto un buon punteggio!</string>
     <string name="third_place_string">Ben fatto! Continua a migliorare!</string>
     <string name="last_place_string">Puoi fare di meglio!</string>
     <string name="score_string">Il tuo punteggio:</string>
