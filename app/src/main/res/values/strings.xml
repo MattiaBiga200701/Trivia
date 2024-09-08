@@ -57,6 +57,9 @@
 
     <!-- ErrorScreen -->
     <string name="error_title">Incorrect Answers</string>
+    <string name="question">Question</string>
+    <string name="answer_string">Your Answer</string>
+    <string name="correct_answer_string">Correct Answer</string>
 
 
 </resources>

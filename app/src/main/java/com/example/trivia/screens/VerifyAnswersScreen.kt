@@ -149,6 +149,8 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 @Composable
     fun IncorrectComposable(question: String?, incorrectAnswer: String?, correctAnswer: String?) {
 
+        val context= LocalContext.current
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -157,19 +159,19 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                 .padding(mediumPadding)
         ) {
             Text(
-                text = "Question: $question",
+                text = context.getString(R.string.question) + ": " + question,
                 color = Color.White,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Your Answer: $incorrectAnswer",
+                text = context.getString(R.string.answer_string) + ": " + incorrectAnswer,
                 color = MyRed,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = "Correct Answer: $correctAnswer",
+                text = context.getString(R.string.correct_answer_string) + ": " + correctAnswer,
                 color = MyGreen,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.SemiBold
