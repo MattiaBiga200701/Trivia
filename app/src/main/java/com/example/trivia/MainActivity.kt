@@ -1,6 +1,6 @@
 package com.example.trivia
 
-import android.app.Activity
+
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -59,6 +59,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun setImmersiveMode() {
         // Verifica la versione dell'API
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
