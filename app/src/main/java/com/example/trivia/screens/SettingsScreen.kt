@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -50,13 +51,15 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
     val soundEnabled by viewModel.soundState.observeAsState(initial = false)
     val notificationsEnabled by viewModel.notificationsState.observeAsState(initial = false)
 
+    val colors = MaterialTheme.colorScheme
+
     Box(
 
         modifier = Modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
+                    colors = listOf(colors.background, colors.primary)
                 )
             )
             .padding(mediumPadding),
@@ -88,7 +91,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back to Homepage",
-                        tint = Color.White
+                        tint = colors.onBackground
                     )
                 }
 
@@ -97,7 +100,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                     fontSize = mediumFontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.Center),
-                    color = Color.White
+                    color = colors.onBackground
 
                 )
 
@@ -140,7 +143,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
 
             Button(
                 onClick = { navController.navigate("homepage") },
-                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.primary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -151,7 +154,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = "Save",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
@@ -167,6 +170,8 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
 
 @Composable
 fun SettingRow(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
+
+    val colors = MaterialTheme.colorScheme
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -179,10 +184,10 @@ fun SettingRow(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Un
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color(0xFF23FFCD),
-                uncheckedThumbColor = Color(0xFFF231AA),
-                checkedTrackColor = Color(0xFF23FFCD).copy(alpha = 0.5f),
-                uncheckedTrackColor = Color(0xFFF231AA).copy(alpha = 0.5f)
+                checkedThumbColor = colors.primary,
+                uncheckedThumbColor = colors.secondary,
+                checkedTrackColor = colors.primary.copy(alpha = 0.5f),
+                uncheckedTrackColor = colors.secondary.copy(alpha = 0.5f)
             )
         )
     }

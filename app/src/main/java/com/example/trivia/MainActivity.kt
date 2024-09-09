@@ -9,12 +9,15 @@ import android.view.WindowInsetsController
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.rememberNavController
@@ -42,17 +45,21 @@ import com.example.trivia.viewmodel.GameSessionModelFactory
 
 class MainActivity : ComponentActivity() {
 
+    private val settingsViewModel: SettingsViewModel by viewModels()
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            TriviaTheme {
+
+            val darkThemeEnabled by settingsViewModel.themeState.observeAsState(initial = false)
+
+            TriviaTheme(darkTheme = darkThemeEnabled) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     TriviaApp()
                 }
             }
@@ -104,7 +111,7 @@ class MainActivity : ComponentActivity() {
     fun TriviaApp() {
         val navController = rememberNavController()
 
-        val settingsViewModel: SettingsViewModel = viewModel()
+        val settingsViewModel = this.settingsViewModel
 
         val context = LocalContext.current
         val db = TriviaDB.getInstance(context)
