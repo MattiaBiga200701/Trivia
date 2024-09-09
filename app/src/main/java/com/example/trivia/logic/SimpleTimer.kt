@@ -58,7 +58,6 @@ class SimpleTimer(private val updateInterval: Long = 1000L) {
         }
     }
 
-    // Convert elapsed time to mm:ss format
     fun getElapsedTimeFormatted(): String {
         val elapsedMillis = getElapsedTime()
         val seconds = (elapsedMillis / 1000) % 60

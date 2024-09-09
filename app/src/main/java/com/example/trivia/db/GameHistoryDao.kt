@@ -16,12 +16,6 @@ interface GameHistoryDao {
         """)
     fun getAllHistory(): List<GameHistory>
 
-    /* Query di test
-    @Query("""DELETE FROM game_history""")
-    fun deleteAllHistory()
-    */
-
-
     @Query(""" SELECT * FROM game_history WHERE category = :categoryFilter""")
     fun getHistoryFilterByCategory(categoryFilter: String): List<GameHistory>
 
