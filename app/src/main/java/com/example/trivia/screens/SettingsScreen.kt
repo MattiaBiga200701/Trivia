@@ -176,7 +176,7 @@ fun SettingRow(label: String, checked: Boolean, onCheckedChange: (Boolean) -> Un
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = label, fontSize = fontSize, fontWeight = FontWeight.Bold, color = Color.White)
+        Text(text = label, fontSize = fontSize, fontWeight = FontWeight.Bold, color = colors.onBackground)
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,

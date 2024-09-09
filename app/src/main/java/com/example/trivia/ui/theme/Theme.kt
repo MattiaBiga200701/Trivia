@@ -66,8 +66,8 @@ private val DarkColorScheme = darkColorScheme(
     error = MyRedDark,
     onPrimary = Color.White,
     onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
+    onBackground = MyTextOnDarkBackground,
+    onSurface = MyTextOnDarkSurface,
     onError = Color.Black
 )
 
