@@ -26,7 +26,7 @@
     <string name="notifications_string">Enable Notifications</string>
     <string name="save_button">Save &amp; Return</string>
     <string name="sound_toast">Sounds</string>
-    <string name="notification_toast">Notifications</string>
+    <string name="notification_toast">Notifications Not Implemented</string>
 
     <!-- EndScreen -->
     <string name="first_place_string">Incredible! You\'re a true champion!</string>
@@ -48,6 +48,7 @@
     <string name="preposition_string">Of</string>
     <string name="alert_dialog_title_1">Return to Main Menu</string>
     <string name="alert_dialog_question_1">Are you sure you want to return to the main menu ?</string>
+    <string name="empty_input_message">Answer the question first</string>
 
     <!-- HistoryScreen -->
     <string name="history_title">Game History</string>

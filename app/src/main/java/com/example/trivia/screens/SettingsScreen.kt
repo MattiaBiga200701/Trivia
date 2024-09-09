@@ -132,7 +132,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 checked = notificationsEnabled,
                 onCheckedChange = { isChecked ->
                     viewModel.setNotificationsState(isChecked)
-                    toastMessage(message = context.getString(R.string.notification_toast), context = context , check = isChecked )
+                    Toast.makeText(context, context.getString(R.string.notification_toast), Toast.LENGTH_SHORT).show()
                 }
             )
 

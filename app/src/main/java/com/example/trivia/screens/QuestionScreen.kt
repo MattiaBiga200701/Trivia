@@ -3,6 +3,7 @@ package com.example.trivia.screens
 
 
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 
@@ -52,6 +53,7 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavController
 import com.example.trivia.R
+import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyPink
@@ -303,15 +305,19 @@ fun QuestionScreen(
 
                 Button(
                     onClick = {
-                        if (selectedOption.value != null) {
-                            viewModel.updateAnswer(questionIndex, selectedOption.value)
-                            if (questionIndex + 1 < questions.size) {
-                                navController.navigate("question/${category}/${difficulty}/${questionIndex + 1}")
-                            } else {
-                                viewModel.getTimer().stop()
-                                viewModel.setScore()
-                                navController.navigate("end")
-                            }
+                        try {
+                            if (selectedOption.value != null) {
+                                viewModel.updateAnswer(questionIndex, selectedOption.value)
+                                if (questionIndex + 1 < questions.size) {
+                                    navController.navigate("question/${category}/${difficulty}/${questionIndex + 1}")
+                                } else {
+                                    viewModel.getTimer().stop()
+                                    viewModel.setScore()
+                                    navController.navigate("end")
+                                }
+                            } else throw EmptyInputException(context.getString(R.string.empty_input_message))
+                        }catch(e: EmptyInputException){
+                            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                         }
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MyPink),

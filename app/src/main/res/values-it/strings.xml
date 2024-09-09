@@ -26,7 +26,7 @@
     <string name="notifications_string">Attiva Notifiche</string>
     <string name="save_button">Salva &amp; Ritorna</string>
     <string name="sound_toast">Suoni</string>
-    <string name="notification_toast">Notifiche</string>
+    <string name="notification_toast">Notifiche Non Implementate</string>
 
     <!-- EndScreen -->
     <string name="first_place_string">Incredibile! Sei un vero campione!</string>
@@ -48,6 +48,7 @@
     <string name="preposition_string">\Di\</string>
     <string name="alert_dialog_title_1">Ritornare al Menù Principale</string>
     <string name="alert_dialog_question_1">Sei sicuro di voler tornare al Menù Principale ?</string>
+    <string name="empty_input_message">Rispondi alla domanda prima</string>
 
     <!-- HistoryScreen -->
     <string name="history_title">Storico partite</string>
