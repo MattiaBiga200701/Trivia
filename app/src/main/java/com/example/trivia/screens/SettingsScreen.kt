@@ -27,9 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
-import com.example.trivia.ui.theme.MyBlack
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -143,7 +140,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
 
             Button(
                 onClick = { navController.navigate("homepage") },
-                colors = ButtonDefaults.buttonColors(containerColor = colors.primary),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.secondary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -159,7 +156,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = context.getString(R.string.save_button),
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = fontSize
                 )
             }

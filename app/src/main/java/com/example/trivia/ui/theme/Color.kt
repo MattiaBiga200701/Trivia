@@ -19,18 +19,3 @@ val MyBlackDark = Color(0xFF000000)
 val MyGreenDark = Color(0xFF1B997A)
 val MyPinkDark = Color(0xFFB12285)
 val MyRedDark = Color(0xFFA10C32)
-
-
-// Light Mode Colors
-val LightPrimaryColor = MyGreen
-val LightSecondaryColor = MyPink
-val LightBackgroundColor = MyBlack
-val LightTextColor = Color.White
-val LightButtonColor = MyPink
-
-// Dark Mode Colors
-val DarkPrimaryColor = MyGreenDark
-val DarkSecondaryColor = MyPinkDark
-val DarkBackgroundColor = MyBlackDark
-val DarkTextColor = Color.White
-val DarkButtonColor = MyPinkDark
