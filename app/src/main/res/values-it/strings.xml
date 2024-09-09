@@ -14,7 +14,7 @@
     <string name="preference_screen_title">Opzioni di Gioco</string>
     <string name="category_string">Seleziona La Categoria</string>
     <string name="difficulty_string">Seleziona La Difficoltà</string>
-    <string name="select_option_string">seleziona un\' opzione</string>
+    <string name="select_option_string">Seleziona un\' opzione</string>
     <string name="start_quiz_string">Inizia Il Quiz</string>
     <string name="error_message_1">Seleziona Prima Una Categoria</string>
     <string name="error_message_2">Seleziona Prima Una Difficoltà</string>
@@ -51,7 +51,7 @@
     <string name="empty_input_message">Rispondi alla domanda prima</string>
 
     <!-- HistoryScreen -->
-    <string name="history_title">Storico partite</string>
+    <string name="history_title">Storico Partite</string>
     <string name="score_string_1">Punteggio</string>
     <string name="time">Tempo</string>
     <string name="date">Data</string>
