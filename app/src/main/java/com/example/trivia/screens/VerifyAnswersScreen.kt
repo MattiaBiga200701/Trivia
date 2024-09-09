@@ -40,6 +40,7 @@ import com.example.trivia.logic.GameLogic
 import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyGreen
 import com.example.trivia.ui.theme.MyRed
+import com.example.trivia.ui.theme.iconSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallFontSize
@@ -105,7 +106,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 2.dp)
-                        .size(32.dp)
+                        .size(iconSize)
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
