@@ -21,7 +21,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,7 +47,7 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
     val darkThemeEnabled by viewModel.themeState.observeAsState(initial = false)
     val soundEnabled by viewModel.soundState.observeAsState(initial = false)
     val notificationsEnabled by viewModel.notificationsState.observeAsState(initial = false)
-
+    var isEnabled by remember { mutableStateOf(true) }
     val colors = MaterialTheme.colorScheme
 
     Box(
@@ -79,10 +79,16 @@ fun OptionsScreen(navController: NavController, viewModel: SettingsViewModel) {
             ){
 
                 IconButton(
-                    onClick = { navController.navigateUp() },
+                    onClick = {
+                        if (isEnabled) {
+                            isEnabled = false
+                            navController.navigateUp()
+                        }
+                    },
+                    enabled = isEnabled,
                     modifier = Modifier
-                        .align(alignment = Alignment.CenterStart)
-                        .padding(start = 4.dp)
+                        .align(Alignment.CenterStart)
+                        .padding(start = 2.dp)
                         .size(iconSize)
                 ) {
                     Icon(

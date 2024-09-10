@@ -84,7 +84,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp)
+                    .padding(vertical = mediumPadding)
             ) {
 
 
@@ -116,7 +116,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .align(Alignment.Center)
-                        .padding(start = 20.dp)
+                        //.padding(start = 20.dp)
                 )
             }
 

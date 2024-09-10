@@ -57,7 +57,7 @@
     <string name="date">Data</string>
 
     <!-- ErrorScreen -->
-    <string name="error_title">Risposte Sbagliate</string>
+    <string name="error_title">Errori</string>
     <string name="question">Domanda</string>
     <string name="answer_string">La Tua Risposta</string>
     <string name="correct_answer_string">Risposta Corretta</string>

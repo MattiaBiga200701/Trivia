@@ -86,6 +86,7 @@ fun GameHistoryScreen(
 
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     val categories = Category.entries.map { it.categoryName }
+    var isEnabled by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
         viewModel.loadAllGameHistory()
@@ -148,10 +149,16 @@ fun GameHistoryScreen(
             ) {
 
                 IconButton(
-                    onClick = { navController.navigateUp() },
+                    onClick = {
+                        if (isEnabled) {
+                            isEnabled = false
+                            navController.navigateUp()
+                        }
+                    },
+                    enabled = isEnabled,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
-                        .padding(start = 4.dp)
+                        .padding(start = 2.dp)
                         .size(iconSize)
                 ) {
                     Icon(

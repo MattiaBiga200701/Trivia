@@ -71,6 +71,7 @@ fun PlayScreen(navController: NavController) {
 
     var selectedCategory by remember { mutableStateOf<String?>(null) }
     var selectedDifficulty by remember { mutableStateOf<String?>(null) }
+    var isEnabled by remember { mutableStateOf(true) }
     val context = LocalContext.current
 
     val categories = Category.entries.map { it.categoryName }
@@ -103,10 +104,16 @@ fun PlayScreen(navController: NavController) {
             ) {
 
                 IconButton(
-                    onClick = { navController.navigateUp() },
+                    onClick = {
+                        if (isEnabled) {
+                            isEnabled = false
+                            navController.navigateUp()
+                        }
+                    },
+                    enabled = isEnabled,
                     modifier = Modifier
-                        .align(alignment = Alignment.CenterStart)
-                        .padding(start = 4.dp)
+                        .align(Alignment.CenterStart)
+                        .padding(start = 2.dp)
                         .size(iconSize)
                 ) {
                     Icon(
@@ -121,7 +128,7 @@ fun PlayScreen(navController: NavController) {
                     fontSize = mediumFontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(start= 20.dp)
+                        //.padding(start= 20.dp)
                         .align(Alignment.Center),
                     color = colors.onBackground
 
