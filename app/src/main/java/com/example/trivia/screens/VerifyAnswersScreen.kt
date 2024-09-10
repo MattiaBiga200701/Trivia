@@ -97,7 +97,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 
                             Handler(Looper.getMainLooper()).postDelayed({
                                 isClicked.value = false
-                            }, 300)
+                            }, 600)
                         }
                     },
                     modifier = Modifier
