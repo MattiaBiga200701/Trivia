@@ -160,8 +160,8 @@ fun QuestionScreen(
 
             AlertDialog(
                 onDismissRequest = { showExitDialog = false },
-                title = { Text(context.getString(R.string.alert_dialog_title_1)) },
-                text = { Text(context.getString(R.string.alert_dialog_question_1)) },
+                title = { Text(context.getString(R.string.alert_dialog_title_1), color = colors.onBackground) },
+                text = { Text(context.getString(R.string.alert_dialog_question_1), color = colors.onBackground) },
                 confirmButton = {
                     Button(
                         onClick = {
@@ -179,7 +179,9 @@ fun QuestionScreen(
                     ) {
                         Text(context.getString(R.string.alert_dialog_choice_2))
                     }
-                }
+                },
+
+                containerColor = Color(0xFF333333)
             )
         }
 

@@ -33,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 
@@ -70,8 +71,15 @@ fun Homepage(navController: NavController) {
 
         AlertDialog(
             onDismissRequest = { showExitDialog = false },
-            title = { Text(context.getString(R.string.alert_dialog_title)) },
-            text = { Text(context.getString(R.string.alert_dialog_question)) },
+            title = { Text(context.getString(R.string.alert_dialog_title), color = colors.onBackground) },
+            text = { Text(context.getString(R.string.alert_dialog_question), color = colors.onBackground) },
+            dismissButton = {
+                Button(
+                    onClick = { showExitDialog = false }
+                ) {
+                    Text(context.getString(R.string.alert_dialog_choice_2))
+                }
+            },
             confirmButton = {
                 Button(
                     onClick = {
@@ -83,13 +91,11 @@ fun Homepage(navController: NavController) {
                     Text(context.getString(R.string.alert_dialog_choice_1))
                 }
             },
-            dismissButton = {
-                Button(
-                    onClick = { showExitDialog = false }
-                ) {
-                    Text(context.getString(R.string.alert_dialog_choice_2))
-                }
-            }
+
+
+           containerColor = Color(0xFF333333)
+
+
         )
     }
 
