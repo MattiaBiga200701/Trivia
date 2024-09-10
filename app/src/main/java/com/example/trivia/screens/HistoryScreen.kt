@@ -359,7 +359,7 @@ fun CustomDropdownMenu(
                 text = label,
                 fontWeight = FontWeight.Bold,
                 fontSize = microFontSize,
-                color = Color.White
+                color = colors.onBackground
             ) },
             trailingIcon = {
                 //ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded.value, )
@@ -390,6 +390,7 @@ fun CustomDropdownMenu(
         ExposedDropdownMenu(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
+            modifier = Modifier.background(Color(0xFF009688))
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
@@ -397,7 +398,10 @@ fun CustomDropdownMenu(
                     onClick = {
                         onOptionSelected(option)
                         expanded.value = false
-                    }
+                    },
+                    modifier = Modifier
+                        .background(Color(0xFF009688))
+                        .fillMaxSize()
                 )
             }
         }
