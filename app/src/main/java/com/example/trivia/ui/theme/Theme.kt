@@ -61,6 +61,7 @@ private val DarkColorScheme = darkColorScheme(
 
     primary = MyGreenDark,
     secondary = MyPinkDark,
+    tertiary = MyMintDark,
     background = MyBlackDark,
     surface = MyBlackDark,
     error = MyRedDark,
@@ -75,6 +76,7 @@ private val LightColorScheme = lightColorScheme(
 
     primary = MyGreen,
     secondary = MyPink,
+    tertiary = MyMint,
     background = MyBlack,
     surface = MyBlack,
     error = MyRed,

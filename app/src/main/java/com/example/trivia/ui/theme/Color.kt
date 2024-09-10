@@ -14,10 +14,12 @@ val MyBlack=Color(0xFF1A1A1A)
 val MyGreen=Color(0xFF23FFCD)
 val MyPink=Color(0xFFF231AA)
 val MyRed=Color(0xFFDC143C)
+val MyMint = Color(0xFF98FF98)
 
 val MyBlackDark = Color(0xFF000000)
 val MyGreenDark = Color(0xFF1B997A)
 val MyPinkDark = Color(0xFFB12285)
 val MyRedDark = Color(0xFFA10C32)
+val MyMintDark = Color(0xFF78CC78)
 val MyTextOnDarkBackground = Color(0xFFE0E0E0) // Testo chiaro sul background scuro
 val MyTextOnDarkSurface = Color(0xFFB0B0B0)
