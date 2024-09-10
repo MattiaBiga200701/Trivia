@@ -390,7 +390,7 @@ fun CustomDropdownMenu(
         ExposedDropdownMenu(
             expanded = expanded.value,
             onDismissRequest = { expanded.value = false },
-            modifier = Modifier.background(Color(0xFF009688))
+            modifier = Modifier.background(Color((0xFF333333)))
         ) {
             options.forEach { option ->
                 DropdownMenuItem(
@@ -400,7 +400,7 @@ fun CustomDropdownMenu(
                         expanded.value = false
                     },
                     modifier = Modifier
-                        .background(Color(0xFF009688))
+                        .background(Color(0xFF333333))
                         .fillMaxSize()
                 )
             }
