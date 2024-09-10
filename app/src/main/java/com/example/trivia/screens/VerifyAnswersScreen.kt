@@ -145,38 +145,38 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 }
 
 @Composable
-    fun IncorrectComposable(question: String?, incorrectAnswer: String?, correctAnswer: String?) {
+fun IncorrectComposable(question: String?, incorrectAnswer: String?, correctAnswer: String?) {
 
-        val context= LocalContext.current
-        val colors=MaterialTheme.colorScheme
+    val context= LocalContext.current
+    val colors=MaterialTheme.colorScheme
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = smallPadding)
-                .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
-                .padding(mediumPadding)
-        ) {
-            Text(
-                text = context.getString(R.string.question) + ": " + question,
-                color = colors.onBackground,
-                fontSize = smallFontSize,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = context.getString(R.string.answer_string) + ": " + incorrectAnswer,
-                color = colors.error,
-                fontSize = smallFontSize,
-                fontWeight = FontWeight.SemiBold
-            )
-            Text(
-                text = context.getString(R.string.correct_answer_string) + ": " + correctAnswer,
-                color = colors.primary,
-                fontSize = smallFontSize,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = smallPadding)
+            .background(Color(0x80000000), shape = RoundedCornerShape(8.dp))
+            .padding(mediumPadding)
+    ) {
+        Text(
+            text = context.getString(R.string.question) + ": " + question,
+            color = colors.onBackground,
+            fontSize = smallFontSize,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = context.getString(R.string.answer_string) + ": " + incorrectAnswer,
+            color = colors.error,
+            fontSize = smallFontSize,
+            fontWeight = FontWeight.SemiBold
+        )
+        Text(
+            text = context.getString(R.string.correct_answer_string) + ": " + correctAnswer,
+            color = colors.primary,
+            fontSize = smallFontSize,
+            fontWeight = FontWeight.SemiBold
+        )
     }
+}
 
 
 

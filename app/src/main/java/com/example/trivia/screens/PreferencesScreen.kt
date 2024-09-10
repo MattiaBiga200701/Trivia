@@ -4,7 +4,8 @@ package com.example.trivia.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.border
+
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,16 +20,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -39,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -48,13 +53,14 @@ import com.example.trivia.logic.enums.Category
 import com.example.trivia.logic.enums.Difficulty
 import com.example.trivia.ui.theme.MyCustomFont
 import com.example.trivia.ui.theme.bigSpace
+import com.example.trivia.ui.theme.borderStrokeSize
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.iconSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.mediumSpace
-import com.example.trivia.ui.theme.smallPadding
+import com.example.trivia.ui.theme.microFontSize
 import com.example.trivia.ui.theme.microSpace
 
 import com.example.trivia.ui.theme.standardButton
@@ -63,9 +69,12 @@ import com.example.trivia.ui.theme.standardButton
 @Composable
 fun PlayScreen(navController: NavController) {
 
-    var selectedCategory by remember { mutableStateOf("") }
-    var selectedDifficulty by remember { mutableStateOf("") }
+    var selectedCategory by remember { mutableStateOf<String?>(null) }
+    var selectedDifficulty by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
+
+    val categories = Category.entries.map { it.categoryName }
+    val difficulties = Difficulty.entries.map {it.id}
 
     val colors=MaterialTheme.colorScheme
 
@@ -79,7 +88,7 @@ fun PlayScreen(navController: NavController) {
             )
             .padding(mediumPadding),
     ) {
-        //Spacer(modifier = Modifier.height(45.dp))
+
 
         Column {
 
@@ -133,19 +142,12 @@ fun PlayScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = mediumPadding)
             )
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = smallPadding),
-                shape = RoundedCornerShape(cornerRounding),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) {
-                SimpleDropDownMenu(
-                    isCategory = true,
-                    selectedOption = selectedCategory,
-                    onOptionSelected = { selectedCategory = it }
-                )
-            }
+            DropDownMenu(
+                label = "Category",
+                options = categories,
+                selectedOption = selectedCategory,
+                onOptionSelected = { selectedCategory = it }
+            )
 
             Spacer(modifier = Modifier.height(mediumSpace))
 
@@ -158,19 +160,12 @@ fun PlayScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = mediumPadding)
             )
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = smallPadding),
-                shape = RoundedCornerShape(cornerRounding),
-                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-            ) {
-                SimpleDropDownMenu(
-                    isCategory = false,
-                    selectedOption = selectedDifficulty,
-                    onOptionSelected = { selectedDifficulty = it }
-                )
-            }
+            DropDownMenu(
+                label = "Difficulty",
+                options = difficulties,
+                selectedOption = selectedDifficulty,
+                onOptionSelected = { selectedDifficulty = it }
+            )
 
             Spacer(modifier = Modifier.height(bigSpace))
 
@@ -180,9 +175,9 @@ fun PlayScreen(navController: NavController) {
 
                     try {
 
-                        if (selectedCategory.isEmpty()) {
+                        if (selectedCategory?.isEmpty() == true) {
                             throw EmptyInputException(context.getString(R.string.error_message_1))
-                        } else if (selectedDifficulty.isEmpty()) {
+                        } else if (selectedDifficulty?.isEmpty() == true) {
                             throw EmptyInputException(context.getString(R.string.error_message_2))
                         }
                         navController.navigate("question/${selectedCategory}/${selectedDifficulty}/${0}")
@@ -209,52 +204,77 @@ fun PlayScreen(navController: NavController) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SimpleDropDownMenu(
-    isCategory: Boolean,
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit
+fun DropDownMenu(
+    label: String,
+    options: List<String>,
+    selectedOption: String?,
+    onOptionSelected: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    var optionSelected by remember { mutableStateOf(selectedOption) }
-    val context= LocalContext.current
+    val expanded = remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.padding(mediumPadding)) {
+    val colors=MaterialTheme.colorScheme
 
-        Text(
-            text = optionSelected.ifEmpty { context.getString(R.string.select_option_string) },
+    ExposedDropdownMenuBox(
+        expanded = expanded.value,
+        onExpandedChange = { expanded.value = !expanded.value },
+        modifier = modifier.fillMaxWidth()
+    ) {
+
+        TextField(
+            value = selectedOption ?: "Select $label",
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(
+                text = label,
+                fontWeight = FontWeight.Bold,
+                fontSize = microFontSize,
+                color = colors.onBackground
+            ) },
+            trailingIcon = {
+
+                Icon(
+                    imageVector = if (expanded.value) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    tint = colors.onBackground
+                )
+            },
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                focusedTextColor = colors.onBackground,
+                unfocusedTextColor = colors.onBackground
+            ),
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { expanded = true }
-                .padding(mediumPadding),
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary
+                .menuAnchor()
+                .border(borderStrokeSize, colors.secondary, RoundedCornerShape(cornerRounding)),
+            textStyle = TextStyle(
+                fontWeight = FontWeight.Bold,
+                fontSize = microFontSize
+            )
         )
 
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
+        ExposedDropdownMenu(
+            expanded = expanded.value,
+            onDismissRequest = { expanded.value = false },
+            modifier = Modifier.background(Color((0xFF333333)))
         ) {
-
-            if(isCategory){
-                for(item in Category.entries){
-                    DropdownMenuItem(
-                        text = { Text(item.categoryName) },
-                        onClick = {
-                            onOptionSelected(item.categoryName)
-                            optionSelected = item.categoryName
-                            expanded = false })
-                }
-            }else {
-                for(item in Difficulty.entries){
-                    DropdownMenuItem(
-                        text = { Text(item.id) },
-                        onClick = {
-                            onOptionSelected(item.id)
-                            optionSelected = item.id
-                            expanded = false })
-                }
+            options.forEach { option ->
+                DropdownMenuItem(
+                    text = { Text(option) },
+                    onClick = {
+                        onOptionSelected(option)
+                        expanded.value = false
+                    },
+                    modifier = Modifier
+                        .background(Color(0xFF333333))
+                        .fillMaxSize()
+                )
             }
         }
     }
