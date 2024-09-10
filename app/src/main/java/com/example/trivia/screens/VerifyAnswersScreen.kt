@@ -5,7 +5,7 @@ import android.os.Looper
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -60,7 +60,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
     val incorrectAnswers = controller.getIncorrectAnswers()
     val incorrectQuestions = controller.getIncorrectQuestion()
 
-    BoxWithConstraints(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
@@ -69,8 +69,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                 )
             ), contentAlignment = Alignment.Center
     ) {
-        val boxWidth = maxWidth
-        val boxHeight = maxHeight
+
 
         Column(
             modifier = Modifier

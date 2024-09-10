@@ -253,7 +253,7 @@ fun QuestionScreen(
                         .fillMaxWidth()
                         .padding(vertical = smallPadding),
                     shape = RoundedCornerShape(cornerRounding),
-                    colors = CardDefaults.cardColors(containerColor =  Color.White),
+                    colors = CardDefaults.cardColors(containerColor =  colors.onBackground),
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {
                     Column(modifier = Modifier.padding(mediumPadding)) {
@@ -271,7 +271,7 @@ fun QuestionScreen(
                             text = questions[questionIndex].question,
                             fontSize = fontSize,
                             fontWeight = FontWeight.Bold,
-                            color = Color.Black
+                            color = colors.background
                         )
 
                         Spacer(modifier = Modifier.height(microSpace))
@@ -295,7 +295,7 @@ fun QuestionScreen(
                                     text = option,
                                     fontSize = smallFontSize,
                                     fontWeight = FontWeight.SemiBold,
-                                    color = Color.Black
+                                    color = colors.background
                                 )
                             }
                         }

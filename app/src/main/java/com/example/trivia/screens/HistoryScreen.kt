@@ -55,9 +55,7 @@ import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.db.GameHistory
 import com.example.trivia.logic.enums.Category
-import com.example.trivia.ui.theme.MyBlack
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
+
 import com.example.trivia.ui.theme.borderStrokeSize
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.iconSize
@@ -81,6 +79,7 @@ fun GameHistoryScreen(
 ) {
     val gameHistoryList by viewModel.gameHistoryList.observeAsState(emptyList())
     val context = LocalContext.current
+    val colors=MaterialTheme.colorScheme
 
     var selectedDate by remember { mutableStateOf<String?>(null) }
     val showDatePicker =  remember { mutableStateOf(false) }
@@ -132,7 +131,7 @@ fun GameHistoryScreen(
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
+                    colors = listOf(colors.background, colors.primary)
                 )
             )
             .padding(mediumPadding)
@@ -158,13 +157,13 @@ fun GameHistoryScreen(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back to Homepage",
-                        tint = Color.White
+                        tint = colors.onBackground
                     )
                 }
 
                 Text(
                     text = context.getString(R.string.history_title),
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = mediumFontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.align(Alignment.Center)
@@ -182,14 +181,14 @@ fun GameHistoryScreen(
                     .height(standardButton),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.Transparent,
-                    contentColor = Color.White
+                    contentColor = colors.onBackground
                 ),
                 shape = RoundedCornerShape(cornerRounding),
-                border = BorderStroke(borderStrokeSize, MyPink)
+                border = BorderStroke(borderStrokeSize, colors.secondary)
             ) {
                 Text(
                     text = if (selectedDate.isNullOrEmpty()) "Select Date" else selectedDate ?: "",
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = microFontSize
                 )
             }
@@ -216,15 +215,15 @@ fun GameHistoryScreen(
                     .fillMaxWidth()
                     .height(standardButton),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MyPink,
-                    contentColor = Color.White
+                    containerColor = colors.secondary,
+                    contentColor = colors.onBackground
                 ),
                 shape = RoundedCornerShape(cornerRounding),
                 //border = BorderStroke(1.dp, Color.White)
             ) {
                 Text(
                     text = "Clear Filters",
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = smallFontSize
                 )
             }
@@ -238,7 +237,7 @@ fun GameHistoryScreen(
                 ) {
                     Text(
                         text = "No game history available",
-                        color = Color.White,
+                        color = colors.onBackground,
                         fontSize = smallFontSize,
                         fontWeight = FontWeight.Bold
                     )
@@ -250,7 +249,7 @@ fun GameHistoryScreen(
                 ) {
                     items(gameHistoryList) { gameHistory ->
                         GameHistoryItem(gameHistory, context)
-                        HorizontalDivider(color = Color.White)
+                        HorizontalDivider(color = colors.onBackground)
                     }
                 }
             }
@@ -261,6 +260,9 @@ fun GameHistoryScreen(
 
 @Composable
 fun GameHistoryItem(gameHistory: GameHistory, context: Context) {
+
+    val colors=MaterialTheme.colorScheme
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -270,31 +272,31 @@ fun GameHistoryItem(gameHistory: GameHistory, context: Context) {
     ) {
         Text(
             text = context.getString(R.string.category_title) + ": " + gameHistory.category,
-            color = Color.White,
+            color = colors.onBackground,
             fontSize = smallFontSize,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = context.getString(R.string.difficulty_title) + ": " + gameHistory.difficulty,
-            color = Color.White,
+            color = colors.onBackground,
             fontSize = smallFontSize,
             fontWeight = FontWeight.Bold
         )
         Text(
             text = context.getString(R.string.score_string_1) + ": " + gameHistory.score,
-            color = Color.White,
+            color = colors.onBackground,
             fontSize = smallFontSize,
             fontWeight = FontWeight.SemiBold
         )
         Text(
             text = context.getString(R.string.time) + ": " + gameHistory.time,
-            color = Color.White,
+            color = colors.onBackground,
             fontSize = smallFontSize,
             fontWeight = FontWeight.SemiBold
         )
         Text(
             text = context.getString(R.string.date) + ": " + gameHistory.date,
-            color = Color.White,
+            color = colors.onBackground,
             fontSize = smallFontSize
         )
     }
@@ -341,6 +343,8 @@ fun CustomDropdownMenu(
 ) {
     val expanded = remember { mutableStateOf(false) }
 
+    val colors=MaterialTheme.colorScheme
+
     ExposedDropdownMenuBox(
         expanded = expanded.value,
         onExpandedChange = { expanded.value = !expanded.value },
@@ -362,7 +366,7 @@ fun CustomDropdownMenu(
                 Icon(
                     imageVector = if (expanded.value) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
             },
             colors = TextFieldDefaults.colors(
@@ -370,13 +374,13 @@ fun CustomDropdownMenu(
                 unfocusedContainerColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White
+                focusedTextColor = colors.onBackground,
+                unfocusedTextColor = colors.onBackground
             ),
             modifier = Modifier
                 .fillMaxWidth()
                 .menuAnchor()
-                .border(borderStrokeSize, MyPink, RoundedCornerShape(cornerRounding)),
+                .border(borderStrokeSize, colors.secondary, RoundedCornerShape(cornerRounding)),
             textStyle = TextStyle(
                 fontWeight = FontWeight.Bold,
                 fontSize = microFontSize
