@@ -1,7 +1,6 @@
 package com.example.trivia.screens
 
-import android.os.Handler
-import android.os.Looper
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -52,7 +52,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
     val questions by viewModel.questions.observeAsState(initial = emptyList())
     val answers by viewModel.answers.observeAsState(initial = emptyMap())
     val context = LocalContext.current
-    val isClicked = remember { mutableStateOf(false) }
+    var isEnabled by remember { mutableStateOf(true) }
     val colors=MaterialTheme.colorScheme
     val controller = GameLogic()
 
@@ -90,16 +90,12 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
 
                 IconButton(
                     onClick = {
-                        if (!isClicked.value) {
-                            isClicked.value = true
+                        if (isEnabled) {
+                            isEnabled = false
                             navController.navigateUp()
-
-
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                isClicked.value = false
-                            }, 600)
                         }
                     },
+                    enabled = isEnabled,
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 2.dp)
