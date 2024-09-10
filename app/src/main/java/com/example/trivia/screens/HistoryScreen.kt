@@ -362,7 +362,7 @@ fun CustomDropdownMenu(
                 Icon(
                     imageVector = if (expanded.value) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
-                    tint = Color.White // Imposta il colore dell'icona qui
+                    tint = Color.White
                 )
             },
             colors = TextFieldDefaults.colors(

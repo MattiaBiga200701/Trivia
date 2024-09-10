@@ -23,6 +23,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,10 +40,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
-import com.example.trivia.ui.theme.MyBlack
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
-
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.logoSize
@@ -58,6 +55,10 @@ fun Homepage(navController: NavController) {
     val context = LocalContext.current
 
     var showExitDialog by remember { mutableStateOf(false) }
+
+    val colors= MaterialTheme.colorScheme
+
+
 
 
 
@@ -98,7 +99,7 @@ fun Homepage(navController: NavController) {
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
+                    colors = listOf(colors.background, colors.primary)
                 )
             )
             .padding(mediumPadding),
@@ -121,7 +122,7 @@ fun Homepage(navController: NavController) {
 
             Button(
                 onClick = { navController.navigate("Play") },
-                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.primary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -131,15 +132,15 @@ fun Homepage(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
                     contentDescription = "Play",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(microSpace))
-                Text(text = context.getString(R.string.play_string), color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.play_string), color = colors.onBackground, fontSize = fontSize)
             }
 
             Button(
                 onClick = { navController.navigate("Options") },
-                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.secondary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -149,10 +150,10 @@ fun Homepage(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.Settings,
                     contentDescription = "Options",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(microSpace))
-                Text(text = context.getString(R.string.options_string), color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.options_string), color = colors.onBackground, fontSize = fontSize)
             }
 
 
@@ -168,10 +169,10 @@ fun Homepage(navController: NavController) {
                 Icon(
                     imageVector = Icons.Default.DateRange,
                     contentDescription = "History",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(microSpace))
-                Text(text = context.getString(R.string.history_string), color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.history_string), color = colors.onBackground, fontSize = fontSize)
             }
         }
     }

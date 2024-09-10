@@ -30,6 +30,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
@@ -54,9 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.exceptions.EmptyInputException
-import com.example.trivia.ui.theme.MyBlack
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
+
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
 import com.example.trivia.ui.theme.mediumPadding
@@ -80,6 +79,8 @@ fun QuestionScreen(
     val questions by viewModel.questions.observeAsState(emptyList())
     val isLoading by viewModel.isLoading.observeAsState(true)
     val context = LocalContext.current
+
+    val colors= MaterialTheme.colorScheme
 
 
     val selectedOption = remember { mutableStateOf<String?>(null) }
@@ -124,12 +125,12 @@ fun QuestionScreen(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(MyBlack, MyGreen)
+                        colors = listOf(colors.background, colors.primary)
                     )
                 ),
             contentAlignment = Alignment.Center
         ) {
-            CircularProgressIndicator(color = Color.White)
+            CircularProgressIndicator(color = colors.onBackground)
         }
     } else if (questions.isEmpty()) {
         Box(
@@ -137,7 +138,7 @@ fun QuestionScreen(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(MyBlack, MyGreen)
+                        colors = listOf(colors.background, colors.primary)
                     )
                 ),
             contentAlignment = Alignment.Center
@@ -146,7 +147,7 @@ fun QuestionScreen(
                 text = context.getString(R.string.error_question),
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = colors.onBackground
             )
         }
     } else {
@@ -189,7 +190,7 @@ fun QuestionScreen(
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colors = listOf(MyBlack, MyGreen)
+                        colors = listOf(colors.background, colors.primary)
                     )
                 )
                 .padding(mediumPadding)
@@ -216,13 +217,13 @@ fun QuestionScreen(
                             progress = { timeRemaining.intValue / timerDuration.toFloat() },
                             modifier = Modifier.size(100.dp),
                             strokeWidth = microSpace,
-                            color = Color.White
+                            color = colors.onBackground
                         )
                         Text(
                             text = formattedTime,
                             fontSize = fontSize,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = colors.onBackground
                         )
                     }
                 }
@@ -235,14 +236,14 @@ fun QuestionScreen(
                     text = context.getString(R.string.category_title)  + " " + category,
                     fontSize = fontSize,
                     fontWeight = FontWeight.Bold,
-                    color = Color.White,
+                    color = colors.onBackground,
                     modifier = Modifier.padding(bottom = smallPadding)
                 )
 
                 Text(
                     text = context.getString(R.string.difficulty_title) + " " + difficulty,
                     fontSize = fontSize,
-                    color = Color.White,
+                    color =  colors.onBackground,
                     fontWeight = FontWeight.SemiBold,
                     modifier = Modifier.padding(bottom = mediumPadding)
                 )
@@ -252,7 +253,7 @@ fun QuestionScreen(
                         .fillMaxWidth()
                         .padding(vertical = smallPadding),
                     shape = RoundedCornerShape(cornerRounding),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    colors = CardDefaults.cardColors(containerColor =  Color.White),
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {
                     Column(modifier = Modifier.padding(mediumPadding)) {
@@ -320,7 +321,7 @@ fun QuestionScreen(
                             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                    colors = ButtonDefaults.buttonColors(containerColor = colors.secondary),
                     shape = RoundedCornerShape(cornerRounding),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -330,12 +331,12 @@ fun QuestionScreen(
                     Icon(
                         imageVector = Icons.Default.Check,
                         contentDescription = "End Quiz",
-                        tint = Color.White
+                        tint = colors.onBackground
                     )
                     Spacer(modifier = Modifier.width(microSpace))
                     Text(
                         text = if (questionIndex + 1 < questions.size) context.getString(R.string.next_button) else context.getString(R.string.end_quiz_button),
-                        color = Color.White,
+                        color = colors.onBackground,
                         fontSize = fontSize
                     )
                 }

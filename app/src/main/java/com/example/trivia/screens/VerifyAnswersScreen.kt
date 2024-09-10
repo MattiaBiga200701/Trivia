@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
@@ -37,9 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.trivia.R
 import com.example.trivia.logic.GameLogic
-import com.example.trivia.ui.theme.MyBlack
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyRed
 import com.example.trivia.ui.theme.iconSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
@@ -55,7 +53,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
     val answers by viewModel.answers.observeAsState(initial = emptyMap())
     val context = LocalContext.current
     val isClicked = remember { mutableStateOf(false) }
-
+    val colors=MaterialTheme.colorScheme
     val controller = GameLogic()
 
     controller.createIncorrectList(answers, questions)
@@ -67,7 +65,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
+                    colors = listOf(colors.background, colors.primary)
                 )
             ), contentAlignment = Alignment.Center
     ) {
@@ -111,14 +109,14 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back to Homepage",
-                        tint = Color.White
+                        tint = colors.onBackground
                     )
                 }
 
 
                 Text(
                     text =context.getString(R.string.error_title),
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = mediumFontSize,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -151,6 +149,7 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
     fun IncorrectComposable(question: String?, incorrectAnswer: String?, correctAnswer: String?) {
 
         val context= LocalContext.current
+        val colors=MaterialTheme.colorScheme
 
         Column(
             modifier = Modifier
@@ -161,19 +160,19 @@ fun ErrorScreen(navController: NavController, viewModel: GameSessionViewModel) {
         ) {
             Text(
                 text = context.getString(R.string.question) + ": " + question,
-                color = Color.White,
+                color = colors.onBackground,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = context.getString(R.string.answer_string) + ": " + incorrectAnswer,
-                color = MyRed,
+                color = colors.error,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.SemiBold
             )
             Text(
                 text = context.getString(R.string.correct_answer_string) + ": " + correctAnswer,
-                color = MyGreen,
+                color = colors.primary,
                 fontSize = smallFontSize,
                 fontWeight = FontWeight.SemiBold
             )

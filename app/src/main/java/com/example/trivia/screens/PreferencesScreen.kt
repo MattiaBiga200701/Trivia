@@ -46,10 +46,7 @@ import com.example.trivia.R
 import com.example.trivia.exceptions.EmptyInputException
 import com.example.trivia.logic.enums.Category
 import com.example.trivia.logic.enums.Difficulty
-import com.example.trivia.ui.theme.MyBlack
 import com.example.trivia.ui.theme.MyCustomFont
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -70,13 +67,14 @@ fun PlayScreen(navController: NavController) {
     var selectedDifficulty by remember { mutableStateOf("") }
     val context = LocalContext.current
 
+    val colors=MaterialTheme.colorScheme
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
+                    colors = listOf(colors.background, colors.primary)
                 )
             )
             .padding(mediumPadding),
@@ -105,7 +103,7 @@ fun PlayScreen(navController: NavController) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back to Homepage",
-                        tint = Color.White
+                        tint = colors.onBackground
                     )
                 }
 
@@ -116,7 +114,7 @@ fun PlayScreen(navController: NavController) {
                     modifier = Modifier
                         .padding(start= 20.dp)
                         .align(Alignment.Center),
-                    color = Color.White
+                    color = colors.onBackground
 
                 )
 
@@ -131,7 +129,7 @@ fun PlayScreen(navController: NavController) {
                 fontSize = fontSize,
                 fontWeight = FontWeight.Bold,
                 fontFamily = MyCustomFont,
-                color = Color.White,
+                color = colors.onBackground,
                 modifier = Modifier.padding(bottom = mediumPadding)
             )
 
@@ -193,7 +191,7 @@ fun PlayScreen(navController: NavController) {
                         Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
                     }
                           },
-                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.secondary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -202,10 +200,10 @@ fun PlayScreen(navController: NavController) {
                 Icon(
                     imageVector = Icons.AutoMirrored. Filled. ArrowForward,
                     contentDescription = "Start Quiz",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(microSpace))
-                Text(context.getString(R.string.start_quiz_string), color = Color.White, fontSize = fontSize)
+                Text(context.getString(R.string.start_quiz_string), color = colors.onBackground, fontSize = fontSize)
             }
         }
     }

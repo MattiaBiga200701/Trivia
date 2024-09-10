@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -38,21 +39,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-
 import androidx.navigation.NavController
 import com.example.trivia.R
-import com.example.trivia.ui.theme.MyBlack
-import com.example.trivia.ui.theme.MyGreen
-import com.example.trivia.ui.theme.MyPink
-import com.example.trivia.ui.theme.MyRed
-
 import com.example.trivia.ui.theme.bigSpace
 import com.example.trivia.ui.theme.cornerRounding
 import com.example.trivia.ui.theme.fontSize
@@ -60,7 +54,6 @@ import com.example.trivia.ui.theme.medalSize
 import com.example.trivia.ui.theme.mediumFontSize
 import com.example.trivia.ui.theme.mediumPadding
 import com.example.trivia.ui.theme.smallPadding
-
 import com.example.trivia.ui.theme.microSpace
 import com.example.trivia.ui.theme.standardButton
 import com.example.trivia.viewmodel.GameSessionViewModel
@@ -76,6 +69,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
     val questions by gameViewModel.questions.observeAsState(initial = emptyList())
     val category = questions[0].category
     val difficulty = questions[0].difficulty
+    val colors=MaterialTheme.colorScheme
 
     val message = when (score) {
         in 9..10 -> context.getString(R.string.first_place_string)
@@ -141,7 +135,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    colors = listOf(MyBlack, MyGreen)
+                    colors = listOf(colors.background, colors.primary)
                 )
             ),
         contentAlignment = Alignment.Center
@@ -156,7 +150,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 fontSize = mediumFontSize,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                color = Color.White
+                color = colors.onBackground
             )
 
             Spacer(modifier = Modifier.height(bigSpace))
@@ -171,11 +165,11 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
 
             Spacer(modifier = Modifier.height(bigSpace))
 
-            Text(text = context.getString(R.string.score_string), fontSize = mediumFontSize, fontWeight = FontWeight.Bold,  color = Color.White)
+            Text(text = context.getString(R.string.score_string), fontSize = mediumFontSize, fontWeight = FontWeight.Bold,  color = colors.onBackground)
 
             Spacer(modifier = Modifier.height(microSpace))
 
-            Text(text = "$score/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(text = "$score/10", fontSize = mediumFontSize, fontWeight = FontWeight.Bold, color = colors.onBackground)
 
             Spacer(modifier = Modifier.height(64.dp))
 
@@ -184,7 +178,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                     gameViewModel.getTimer().reset()
                     navController.navigate("question/${category}/${difficulty}/${0}")
                           },
-                colors = ButtonDefaults.buttonColors(containerColor = MyGreen),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.primary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -196,11 +190,11 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 Icon(
                     imageVector = Icons.Default.Refresh,
                     contentDescription = "Retry",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
 
                 Spacer(modifier = Modifier.width(microSpace))
-                Text(text = context.getString(R.string.retry_button), color = Color.White, fontSize = fontSize)
+                Text(text = context.getString(R.string.retry_button), color = colors.onBackground, fontSize = fontSize)
             }
 
             Button(
@@ -212,7 +206,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                         launchSingleTop = true
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MyPink),
+                colors = ButtonDefaults.buttonColors(containerColor =colors.secondary),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -222,12 +216,12 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 Icon(
                     imageVector = Icons.Default.Home,
                     contentDescription = "Main Menu",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(microSpace))
                 Text(
                     text = context.getString(R.string.main_menu_button),
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = fontSize
                 )
             }
@@ -236,7 +230,7 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 onClick = {
                     navController.navigate("incorrectAnswers")
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MyRed),
+                colors = ButtonDefaults.buttonColors(containerColor = colors.error),
                 shape = RoundedCornerShape(cornerRounding),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -246,12 +240,12 @@ fun EndScreen(navController: NavController, gameViewModel: GameSessionViewModel,
                 Icon(
                     imageVector = Icons.Default.Close,
                     contentDescription = "Error Screen",
-                    tint = Color.White
+                    tint = colors.onBackground
                 )
                 Spacer(modifier = Modifier.width(microSpace))
                 Text(
                     text = context.getString(R.string.view_errors_button),
-                    color = Color.White,
+                    color = colors.onBackground,
                     fontSize = fontSize
                 )
             }
