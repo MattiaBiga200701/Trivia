@@ -42,8 +42,8 @@
     <string name="error_question">No questions available</string>
     <string name="next_button">Next</string>
     <string name="end_quiz_button">End Quiz</string>
-    <string name="category_title">Category:</string>
-    <string name="difficulty_title">Difficulty:</string>
+    <string name="category_title">Category</string>
+    <string name="difficulty_title">Difficulty</string>
     <string name="question_string">Question</string>
     <string name="preposition_string">Of</string>
     <string name="alert_dialog_title_1">Return to Main Menu</string>
