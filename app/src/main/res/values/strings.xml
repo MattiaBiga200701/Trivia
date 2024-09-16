@@ -18,6 +18,7 @@
     <string name="start_quiz_string">Start Quiz</string>
     <string name="error_message_1">Select Category First</string>
     <string name="error_message_2">Select Difficulty First</string>
+    <string name="select_string">Select</string>
 
     <!-- SettingsScreen -->
     <string name="settings_string">Settings</string>
@@ -55,6 +56,9 @@
     <string name="score_string_1">Score</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
+    <string name="filter_string">Clear Filters</string>
+    <string name="history_errror">No Game History Available</string>
+    <string name="date_string">Select Date</string>
 
     <!-- ErrorScreen -->
     <string name="error_title">Errors</string>

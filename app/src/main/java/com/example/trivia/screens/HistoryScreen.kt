@@ -194,7 +194,7 @@ fun GameHistoryScreen(
                 border = BorderStroke(borderStrokeSize, colors.secondary)
             ) {
                 Text(
-                    text = if (selectedDate.isNullOrEmpty()) "Select Date" else selectedDate ?: "",
+                    text = if (selectedDate.isNullOrEmpty()) context.getString(R.string.date_string) else selectedDate ?: "",
                     color = colors.onBackground,
                     fontSize = microFontSize
                 )
@@ -229,7 +229,7 @@ fun GameHistoryScreen(
                 //border = BorderStroke(1.dp, Color.White)
             ) {
                 Text(
-                    text = "Clear Filters",
+                    text = context.getString(R.string.filter_string),
                     color = colors.onBackground,
                     fontSize = smallFontSize
                 )
@@ -243,7 +243,7 @@ fun GameHistoryScreen(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = "No game history available",
+                        text = context.getString(R.string.history_errror),
                         color = colors.onBackground,
                         fontSize = smallFontSize,
                         fontWeight = FontWeight.Bold
@@ -349,7 +349,7 @@ fun CustomDropdownMenu(
     modifier: Modifier = Modifier
 ) {
     val expanded = remember { mutableStateOf(false) }
-
+    val context = LocalContext.current
     val colors=MaterialTheme.colorScheme
 
     ExposedDropdownMenuBox(
@@ -359,7 +359,7 @@ fun CustomDropdownMenu(
     ) {
 
         TextField(
-            value = selectedOption ?: "Select $label",
+            value = selectedOption ?: context.getString(R.string.category_string),
             onValueChange = {},
             readOnly = true,
             label = { Text(

@@ -150,7 +150,7 @@ fun PlayScreen(navController: NavController) {
             )
 
             DropDownMenu(
-                label = "Category",
+                label = context.getString(R.string.category_title),
                 options = categories,
                 selectedOption = selectedCategory,
                 onOptionSelected = { selectedCategory = it }
@@ -168,7 +168,7 @@ fun PlayScreen(navController: NavController) {
             )
 
             DropDownMenu(
-                label = "Difficulty",
+                label = context.getString(R.string.difficulty_title),
                 options = difficulties,
                 selectedOption = selectedDifficulty,
                 onOptionSelected = { selectedDifficulty = it }
@@ -221,7 +221,7 @@ fun DropDownMenu(
     modifier: Modifier = Modifier
 ) {
     val expanded = remember { mutableStateOf(false) }
-
+    val context = LocalContext.current
     val colors=MaterialTheme.colorScheme
 
     ExposedDropdownMenuBox(
@@ -231,7 +231,7 @@ fun DropDownMenu(
     ) {
 
         TextField(
-            value = selectedOption ?: "Select $label",
+            value = selectedOption ?: (context.getString(R.string.select_string) + " " + label),
             onValueChange = {},
             readOnly = true,
             label = { Text(

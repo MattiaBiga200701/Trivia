@@ -18,6 +18,7 @@
     <string name="start_quiz_string">Inizia Il Quiz</string>
     <string name="error_message_1">Seleziona Prima Una Categoria</string>
     <string name="error_message_2">Seleziona Prima Una Difficoltà</string>
+    <string name="select_string">Seleziona Una</string>
 
     <!-- SettingsScreen -->
     <string name="settings_string">Impostazioni</string>
@@ -55,6 +56,9 @@
     <string name="score_string_1">Punteggio</string>
     <string name="time">Tempo</string>
     <string name="date">Data</string>
+    <string name="filter_string">Elimina Filtri</string>
+    <string name="history_errror">Storico Partite Vuoto</string>
+    <string name="date_string">Seleziona Una Data</string>
 
     <!-- ErrorScreen -->
     <string name="error_title">Errori</string>
